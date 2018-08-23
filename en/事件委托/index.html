@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>事件委托 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="为什么要进行事件委托？事件委托是什么？由于事件处理程序可以为现代的web应用程序提供交互能力，因此在添加页面上的事件处理程序的数量没有一个严格的限制，将会直接关系到页面的整体运行性能。导致这个问题是多方面的。首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。所以对于“事件处理程序过多”的解决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件委托">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/事件委托/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="为什么要进行事件委托？事件委托是什么？由于事件处理程序可以为现代的web应用程序提供交互能力，因此在添加页面上的事件处理程序的数量没有一个严格的限制，将会直接关系到页面的整体运行性能。导致这个问题是多方面的。首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。所以对于“事件处理程序过多”的解决">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件委托">
+<meta name="twitter:description" content="为什么要进行事件委托？事件委托是什么？由于事件处理程序可以为现代的web应用程序提供交互能力，因此在添加页面上的事件处理程序的数量没有一个严格的限制，将会直接关系到页面的整体运行性能。导致这个问题是多方面的。首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。所以对于“事件处理程序过多”的解决">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-事件委托" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件委托/" class="article-date">
+  <time datetime="2017-03-20T12:08:58.000Z" itemprop="datePublished">2017-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      事件委托
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>为什么要进行事件委托？事件委托是什么？<br>由于事件处理程序可以为现代的web应用程序提供交互能力，因此在添加页面上的事件处理程序的数量没有一个严格的限制，将会直接关系到页面的整体运行性能。导致这个问题是多方面的。首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。<br>所以对于“事件处理程序过多”的解决方案就是<strong>事件委托也称为事件代理</strong>。事件委托利用了事件冒泡，指定一个事件处理程序，就可以管理某一类型的所有事件。以下面的代码为例：</p>
+<pre><code>   &lt;ul id = &quot;myLinks&quot;&gt;
+            &lt;li id = &quot;mylink1&quot;&gt;Link1&lt;/li&gt;
+            &lt;li id = &quot;mylink2&quot;&gt;Link2&lt;/li&gt;
+            &lt;li id = &quot;mylink3&quot;&gt;Link3&lt;/li&gt;
+    &lt;/ul&gt;
+
+以上的三个li元素都添加了点击后执行相同的个操作，一般的做法就是获得它们所有的id，再逐个添加事件，如下：
+
+window.onload = function(){
+var list= document.getElementById(&quot;myLinks&quot;);
+var Li = list.getElementsByTagName(&apos;li&apos;);
+for(var i=0;i&lt;Li.length;i++){
+    Li[i].onclick = function(){
+       //do something
+    }
+}
+</code></pre><p>}<br>大多数人都会这样实现。我们看看有多少次的dom操作，首先要找到ul，然后遍历li，然后点击li的时候，又要找一次目标的li的位置，才能执行最后的操作，每次点击都要找一次li；</p>
+<p>那么我们用事件委托的方式做又会怎么样呢？</p>
+<p>window.onload = function(){<br>var list = document.getElementById(“myLinks”);<br>list.onclick = function(){<br>//do something<br>}<br>}<br>在这里找到了<code>&lt;li&gt;</code>的父元素<code>&lt;ul&gt;</code>对父元素添加事件，由于冒泡原理，每次点击<code>&lt;li&gt;</code>的时候就会向父级冒泡，最终触发父级的事件。<br>那么这里是相同的操作，当子元素点击都会触发不同的操作，怎么处理？同样是最上面的例子，很多人可能会这样做：</p>
+<pre><code>var item1 = document.getElementById(&quot;mylink1&quot;);
+var item2 = document.getElementById(&quot;mylink2&quot;);
+var item3 = document.getElementById(&quot;mylink3&quot;);
+
+item1.onclick = function(){
+    alert(&quot;Link1&quot;);
+}
+    item2.onclick = function(){
+    alert(&quot;Link2&quot;);
+}
+    item3.onclick = function(){
+    alert(&quot;Link3&quot;);
+}
+</code></pre><p>如果在一个复杂的web应用程序中，对所有可单击元素都采用这种方式，结果就会有数不清的代码用于添加事件处理程序。<br>所以解决办法就是利用事件委托技术，将同一类型的事件处理程序进行统一管理。<br>利用事件委托，只需在DOM树中尽量高的层次上添加一个事件处理程序。将上面的例子改造为：</p>
+<pre><code>var list = document.getElementById(&quot;myLinks&quot;);
+list.onclick = function(event){
+ var event = event || window.event; 
+ var target = event.target || event.srcElement;
+
+        switch(target.id){
+            case  &quot;mylink1&quot;:
+                  //do something;
+                    break;
+            case  &quot;mylink2&quot;:
+                    //do something;
+                    break;
+
+            case  &quot;mylink3&quot;:
+                    //do something
+                    break;
+    }
+</code></pre><p>Event对象提供了一个属性叫target，可以返回事件的目标节点，我们称为为事件源，也就是说，target就可以表示为当前的事件操作的dom，但是不是真正操作dom，当然，这个是有兼容性的，标准浏览器用ev.target，IE浏览器用event.srcElement。</p>
+<p>我们采用事件委托只为 <code>&lt;ul&gt;</code> 元素添加了一个onclick事件处理程序。所有列表项都是这个元素的子节点，而它们的事件会冒泡，所以单击事件最终会被这个函数处理。用事件委托就可以只用一次dom操作就能完成所有的效果，比上面的性能肯定是要好一些的 。</p>
+<p>当用事件委托的时候，根本就不需要去遍历元素的子节点，只需要给父级元素添加事件就好了，其他的都是在js里面的执行，这样可以大大的减少dom操作，这才是事件委托的精髓所在。<br>最适合事件委托技术的事件包括：click、mousedown、mouseup、keydown、keyup、keypress等。虽然mouseover和mouseout事件也冒泡，但是要适当处理它们并不容易，而且经常需要计算元素的位置。<br>如果可行的话，为document对象添加一个事件处理程序，用以处理页面上发生的某种特定类型的事件，这样做将会有以下优点：<br>1.document对象很快就可以访问，而且可以在页面生命周期的任何时间点上为它添加事件处理程序（无需等待load或者DOMContentLoaded事件），简单地说，只要单击的元素呈现在页面上，就可以立即具备适当的功能。<br>2.页面中设置事件处理程序所需的时间更少。只添加一个事件处理程序 所需的DOM引用更少，所花的时间也更少。<br>3.整个页面占用的内存空间更少，能够提升整体性能。</p>
+<h2 id="移除事件处理程序"><a href="#移除事件处理程序" class="headerlink" title="移除事件处理程序"></a><strong>移除事件处理程序</strong></h2><p>每当将事件处理程序指定给元素时，运行中的浏览器代码与支持页面交互的js代码之间就会建立一个链接，这种连接越多，页面执行起来就越慢。所以就可以采用事件委托技术，限制建立连接的数量，另外在不需要的时候移除事件处理程序。<br>内存中留有那些过时不用的“空事件处理程序”也是造成web应用程序内存性能问题的原因。主要有两个方面：<br>1. 从文档中移除带有事件处理的元素时，可能是 纯粹的DOM操作。例如使用removeChild(),replaceChild()方法，更多的发生在innerHTML替换页面的某一部分的时候，如果带有事件处理的元素被innerHTML替换了，那么原来元素中的事件处理程序可能无法被当做垃圾回收，针对这一事件在，在替换前应手工删除。（手工删除：哪种方法添加的事件就用哪种方法删除，前篇已经讲到了三种事件的添加及移除）<br>2. 卸载页面时也容易导致“空事件处理程序”，如果在页面卸载之前没有清理干净事件处理程序，它们就会滞留在内存中，每次加载完页面再卸载，就会导致内存中滞留的对象数目增加。所以解决办法就是在页面卸载之前通过onunload事件处理程序移除所有事件处理程序。如果要unload的事件进行了委托，那么就再次表现了事件委托的优势——需要跟踪的事件处理程序少，移除越容易。移除时，只要通过onload添加，就通过onunload移除。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件委托/" data-id="cjl60q3k5000n75tfxsox4dhe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/几种常用的排序算法总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          几种常用的排序算法总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/事件对象/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">事件对象</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

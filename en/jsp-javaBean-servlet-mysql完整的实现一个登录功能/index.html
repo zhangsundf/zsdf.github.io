@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>jsp+javaBean+servlet+mysql完整的实现一个登录功能 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="以前对于这种功能就只是复制粘贴，并没有真正的深入了解过，现在就来深入的一步一步的实现功能；1.在eclipse中新建一个动态的web工程；2.在webContent目录下创建一个jsp页面，命名为login.jsp3.在JavaResource的src目录下创建一个servlet包，（com.arvin.servlet）,并在该包底下创建一个处理登录的servlet类(LoginServlet.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jsp+javaBean+servlet+mysql完整的实现一个登录功能">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="以前对于这种功能就只是复制粘贴，并没有真正的深入了解过，现在就来深入的一步一步的实现功能；1.在eclipse中新建一个动态的web工程；2.在webContent目录下创建一个jsp页面，命名为login.jsp3.在JavaResource的src目录下创建一个servlet包，（com.arvin.servlet）,并在该包底下创建一个处理登录的servlet类(LoginServlet.">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jsp+javaBean+servlet+mysql完整的实现一个登录功能">
+<meta name="twitter:description" content="以前对于这种功能就只是复制粘贴，并没有真正的深入了解过，现在就来深入的一步一步的实现功能；1.在eclipse中新建一个动态的web工程；2.在webContent目录下创建一个jsp页面，命名为login.jsp3.在JavaResource的src目录下创建一个servlet包，（com.arvin.servlet）,并在该包底下创建一个处理登录的servlet类(LoginServlet.">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jsp-javaBean-servlet-mysql完整的实现一个登录功能" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/" class="article-date">
+  <time datetime="2017-07-31T09:27:50.000Z" itemprop="datePublished">2017-07-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jsp+javaBean+servlet+mysql完整的实现一个登录功能
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>以前对于这种功能就只是复制粘贴，并没有真正的深入了解过，现在就来深入的一步一步的实现功能；<br>1.在eclipse中新建一个动态的web工程；<br>2.在webContent目录下创建一个jsp页面，命名为login.jsp<br>3.在JavaResource的src目录下创建一个servlet包，（com.arvin.servlet）,并在该包底下创建一个处理登录的servlet类(LoginServlet.java);<br>4.打开mysql创建相应的数据库和表，并插入数据；<br>5.利用jdbc连接数据库。<br>5.1 首先要下载connector/J地址：<a href="http://www.mysql.com/downloads/connector/j/" target="_blank" rel="noopener">http://www.mysql.com/downloads/connector/j/</a></p>
+<p>这是MySQL官方提供的连接方式：</p>
+<p>解压后得到jar库文件，需要在工程中导入该库文件,放在webContent/WEB-INF/lib目录下。<br>5.2. 也是重点，先创建一个关于数据库的包（com.arvin.db）,在该包底下创建一个用于打开关闭数据库操作的类(ConnDB.java),内容如下:</p>
+<pre><code> package com.arvin.db;
+
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+public class ConnDB {
+
+    //数据库的用户名和密码
+    public static String username = &quot;root&quot;;
+    public static String password = &quot;150916&quot;;
+
+    //获得连接对象，statement对象和结果集
+    public static  Connection conn = null;
+    public static Statement state = null;
+    public static ResultSet  rs = null; 
+
+    //数据库驱动，在刚开始下载的文件中
+    public static String driver_class = &quot;com.mysql.jdbc.Driver&quot;;
+
+    //oilServer是数据库名，其他的不变
+        public static String url = &quot;jdbc:mysql://localhost/oilServer&quot;;
+
+
+    //获得数据库的连接的方法
+    public static Connection getConnection(){
+    try {
+        Class.forName(driver_class);//指定连接类型 
+        System.out.println(&quot;load db driver success......&quot;);
+        conn = DriverManager.getConnection(url,username,password);//获取连接 
+           System.out.println(&quot;get db connection success....&quot;);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return  conn;
+        }
+
+
+    //执行数据库的查询操作，返回的为结果集
+public static ResultSet excuteQuery(String sql){
+    try {
+        state = conn.createStatement();
+        rs = state.executeQuery(sql);
+        return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
+
+    //关闭数据库
+    public static void closeDb(){
+        try {
+            if(rs != null)
+                rs.close();
+            if(conn != null)
+                conn.close();
+            if(state != null)
+                state.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><ol>
+<li><p>在servlet中进行事务处理。<br>在这里先将数据库的查询操作写在servlet中。</p>
+<p>6.1. 因为在 com.arvin.db.ConnDB定义了打开关闭数据库的操作，以及查询sql语句的操作，所以在servlet中引入<br>import com.arvin.db.ConnDB;</p>
+<pre><code>getConnection()方法和excuteQuery(sql)方法都在ConnDB类中创建了，在这里可以直接引用
+</code></pre></li>
+</ol>
+<pre><code>try {
+    //获得连接并执行sql语句
+    ConnDB.getConnection();
+    String sql = &quot;select * from t_userinfo&quot;;
+    ResultSet rs = ConnDB.excuteQuery(sql);
+
+    //通过结果集获得数据库中的username的值存在变量   db_username 中，password的值存在变量db_password 
+
+while(rs.next()){
+    db_username = rs.getString(&quot;username&quot;);
+    db_password = rs.getString(&quot;password&quot;);
+//进行逐条比对
+if((db_username.equals(key))&amp;&amp;(db_password.equals(value))){
+    System.out.println(&quot;匹配成功&quot;);
+    request.setAttribute(&quot;name&quot;, key);
+//比对成功后跳转成功页面                       request.getRequestDispatcher(&quot;/success.jsp&quot;).forward(request, response);
+    }
+
+//如果密码账号都不对而且是最后一个就跳转到登录失败页面
+if(!(db_username.equals(key))&amp;&amp;！(db_password.equals(value))&amp;&amp;(!rs.next())){             request.getRequestDispatcher(&quot;/failure.jsp&quot;).forward(request, response);
+                    }
+                }
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+</code></pre><p>源码<br>在我的资源中可以看，我上传了文件</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/" data-id="cjl60q3jv000e75tfuoupooat" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/js实现点击div隐藏相应部分，再次点击显示/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          js实现点击div隐藏相应部分，再次点击显示
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/打印出如下图形/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">打印出如下图形</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

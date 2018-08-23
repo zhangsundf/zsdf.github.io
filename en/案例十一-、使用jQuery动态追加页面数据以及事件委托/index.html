@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例十一 、使用jQuery动态追加页面数据以及事件委托 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我们要执行的任务是页面起初有一部分图片，我们在底下有一个More Photos的链接，点击后，向当前页面后加载一部分图片，再点击该链接，继续加载，直到将我们列出的页面加载完成，此时该链接也消失了。 首先效果图如下：这个只截取了最底下的一部分页面。在鼠标悬停在图片上时，还会有文字出现，鼠标移出时文字消失。我们现在要做的就是点击底下的MorePhotos链接时，再加载一部分数据，然后再点击在加载一部">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例十一 、使用jQuery动态追加页面数据以及事件委托">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例十一-、使用jQuery动态追加页面数据以及事件委托/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="我们要执行的任务是页面起初有一部分图片，我们在底下有一个More Photos的链接，点击后，向当前页面后加载一部分图片，再点击该链接，继续加载，直到将我们列出的页面加载完成，此时该链接也消失了。 首先效果图如下：这个只截取了最底下的一部分页面。在鼠标悬停在图片上时，还会有文字出现，鼠标移出时文字消失。我们现在要做的就是点击底下的MorePhotos链接时，再加载一部分数据，然后再点击在加载一部">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170406211625118?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例十一 、使用jQuery动态追加页面数据以及事件委托">
+<meta name="twitter:description" content="我们要执行的任务是页面起初有一部分图片，我们在底下有一个More Photos的链接，点击后，向当前页面后加载一部分图片，再点击该链接，继续加载，直到将我们列出的页面加载完成，此时该链接也消失了。 首先效果图如下：这个只截取了最底下的一部分页面。在鼠标悬停在图片上时，还会有文字出现，鼠标移出时文字消失。我们现在要做的就是点击底下的MorePhotos链接时，再加载一部分数据，然后再点击在加载一部">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170406211625118?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例十一-、使用jQuery动态追加页面数据以及事件委托" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十一-、使用jQuery动态追加页面数据以及事件委托/" class="article-date">
+  <time datetime="2017-04-06T14:45:25.000Z" itemprop="datePublished">2017-04-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例十一 、使用jQuery动态追加页面数据以及事件委托
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>我们要执行的任务是页面起初有一部分图片，我们在底下有一个More Photos的链接，点击后，向当前页面后加载一部分图片，再点击该链接，继续加载，直到将我们列出的页面加载完成，此时该链接也消失了。</p>
+<p>首先效果图如下：<br><img src="https://img-blog.csdn.net/20170406211625118?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这个只截取了最底下的一部分页面。在鼠标悬停在图片上时，还会有文字出现，鼠标移出时文字消失。<br>我们现在要做的就是点击底下的MorePhotos链接时，再加载一部分数据，然后再点击在加载一部分数据，直到数据加载完。<br>首先body中代码如下：</p>
+<pre><code>&lt;div id = &quot;container&quot;&gt;
+&lt;h1&gt; Photo Gallery&lt;/h1&gt;
+
+&lt;div id = &quot;gallery&quot;&gt;
+    &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/1.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye ....&lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/2.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye.... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/3.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye.... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+.
+.
+.
+.
+//若干图片
+
+&lt;/div&gt;
+
+ &lt;div class = &quot;link&quot;&gt;&lt;a id = &quot;more-photos&quot; href = &quot;1.html&quot;&gt; More Photos &amp;gt;&amp;gt;&lt;/a&gt;&lt;/div&gt; 
+&lt;/div&gt;
+</code></pre><p>然后在同一根目录下写几个HTML代码片段，用于加载。</p>
+<p>如，我这有一个1.html代码如下</p>
+<pre><code>&lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/1.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/2.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/3.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/4.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/5.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/6.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+</code></pre><p>在这个HTML片段中我引入了6个图片。其他的片段如2.html等等都可以仿照上面的这个来写。在定义好了许多个HTML片段后，利用jQuery进行动态追加数据。</p>
+<p>首先引入一个jquery库 <a href="http://libs.baidu.com/jquery/1.9.0/jquery.js" target="_blank" rel="noopener">http://libs.baidu.com/jquery/1.9.0/jquery.js</a></p>
+<pre><code>&lt;script&gt;
+    $(document).ready(function(){
+    //首先定义一个变量来记录当前是多少页
+        var pageNum = 1;
+
+        //给链接添加点击事件
+        $(&quot;#more-photos&quot;).click(function(event){
+            event.preventDefault();
+            var $link = $(this);
+
+            //获得当前所点链接的url
+            var url = $link.attr(&apos;href&apos;);
+
+            //如果该链接的url存在，进行页面追加
+            if(url){
+                $.get(url, function(data){
+                    $(&quot;#gallery&quot;).append(data);
+                });
+
+        pageNum ++;
+    //总共有十个片段要追加，名称分别为1.html,2.html ...10.html
+        当当前页面的总数小于总数时，进行链接更新。
+        if(pageNum &lt; 10){
+            $link.attr(&apos;href&apos;, &apos;./&apos;+pageNum+&apos;.html&apos;);
+                }
+
+        //当将所有片段追加完成后，移除链接。
+            else{
+                $link.remove();
+            }
+            }
+        })
+    });
+</code></pre><p>以上的代码就可以进行动态的向页面追加数据了。</p>
+<p>但是在谷歌的浏览器中会出现以下的错误：</p>
+<p>jquery.js:8475 XMLHttpRequest cannot load file:///C:/Users/%E9%95%BF%E5%AD%99%E4%B8%B9%E5%87%A4/Desktop/webtest/1.html. Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https.</p>
+<p>在IE10的环境下进行测试的，没问题。<br>解决办法就是装一个web服务器，然后将文件拷到项目中，以web服务器中的路径访问，就没有问题啦！形如<a href="http://localhost:8080/ajax/ajaxLoad.html" target="_blank" rel="noopener">http://localhost:8080/ajax/ajaxLoad.html</a></p>
+<p>由于还有鼠标悬浮事件，当我们将鼠标悬浮在某个图片上时，就会出现文字，移出时，图片上的文字消失。</p>
+<pre><code>$(document).ready(function(){
+        $(&apos;div .photo&apos;).hover(function(){
+            $(this).find(&apos;.details&apos;).fadeTo(&apos;slow&apos;, 0.7);
+        },function(){
+                $(this).find(&apos;.details&apos;).fadeOut(&apos;slow&apos;);
+        })
+    });
+或者可以将上面的代码组合起来减少冗余代码：
+
+$(document).ready(function(){
+    $(&apos;div.photo&apos;).on(&apos;mouseenter mouseleave&apos;, 
+            function(event){
+            var $details = $(this).find(&apos;.details&apos;);
+            if(event.type == &apos;mouseenter&apos;){
+                $details.fadeTo(&apos;slow&apos;, 0.7);
+                //0.7代表的是透明度
+            }
+            else{
+                $details.fadeOut(&apos;slow&apos;);
+            }
+        })
+});
+</code></pre><p><strong>当我们使用上面的两种代码为每个图片添加鼠标悬浮事件时，只有最初页面上的那些图片才会被绑定事件，而经过动态加载的图片上却没能绑定上事件。因为事件处理程序只会添加到调用方法时已经存在的元素上，像通过这种动态追加的元素，不会绑定那些事件。</strong><br><strong>所以有两种解决方案：</strong><br><strong>1. 在动态加载后重新绑定事件处理程序</strong><br><strong>2. 一开始就把事件绑定在存在的元素上，依赖于事件冒泡。</strong></p>
+<p>接下来就是使用jquery的委托方法;</p>
+<pre><code>$(document).ready(function(){
+        $(&apos;#gallery&apos;).on(&apos;mouseenter mouseleave&apos;, &apos;div.photo&apos;, function(event){
+
+            var $details = $(this).find(&apos;.details&apos;);
+            if(event.type == &apos;mouseenter&apos;){
+                $details.fadeTo(&apos;slow&apos;, 0.7);
+            }
+            else{
+                $details.fadeOut(&apos;slow&apos;);
+            }
+        })
+    })
+</code></pre><p><strong>$(‘#gallery’).on(‘mouseenter mouseleave’, ‘div.photo’, function(event)中，在将’div.photo’作为第二个参数的情况下，.on()方法会把 this映射到 gallery中与该选择符匹配的元素。换句话说，就是this指向gallery中的 div class= ‘photo’的元素。</strong></p>
+<p>所以在最后追加的页面中，由于都属于gallery 下的元素，所以每一个图片都会加上相应的事件。<br>或许在你不知道要添加的页面属于哪个父级元素的话，可以将$(‘#gallery’).on( )中的’#gallery’替换成document。这样就不必担心选错容器。因为document是页面中所有元素的祖先。<br>但使用document有弊端：<br>当DOM嵌套结构很深，事件冒泡通过大量的祖先元素会有较大的性能损失。<br>但是还会有其他的原因让我们选择document作为委托作用域。<br>一般来说，只有当相应的DOM元素加载完毕，才会给它绑定事件处理程序。这就是为什么我们要把代码放到<code>$(document).ready(function(){}</code>内部的原因。可是document元素是随着页面加载几乎就立即可以调用的。把处理程序绑定到document不用等到完整的DOM构建结束。如上面的代码可以写为：‘</p>
+<pre><code>(function($){
+        $(document).on(&apos;mouseenter mouseleave&apos;, &apos;div.photo&apos;, function(event){
+
+            var $details = $(this).find(&apos;.details&apos;);
+            if(event.type == &apos;mouseenter&apos;){
+                $details.fadeTo(&apos;slow&apos;, 0.7);
+            }
+            else{
+                $details.fadeOut(&apos;slow&apos;);
+            }
+        })
+    })(jQuery);
+</code></pre><p>因为没有等到整个文档就绪，所以可以确保所有<code>&lt;div class= &#39;photo&#39;&gt;</code>元素只要呈现在页面上，就可以应用mouseenter 和mouseleave行为。</p>
+<p>上面就是关于利用jQuery动态追加页面数据以及事件委托的全部知识。下面附上源代码；</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;动态加载&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;http://libs.baidu.com/jquery/1.9.0/jquery.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+
+    #container{
+        position: relative;
+        width: 1300px;
+        margin: 0 auto;
+        /*background-color: #ccc;
+        height: auto;*/
+    }
+    #gallery{
+        position: relative;
+        width: 1300px;
+        margin: 0 auto;
+
+    }
+    .details{
+        display: none;
+    }
+
+    .photo{
+        padding: 20px;
+        border-radius: 5px;
+        border:1px solid #ccc;
+        box-shadow: 0 0 5px #ccc;
+        float: left;
+        margin: 8px;
+    }
+
+    .photo img{
+
+        /*z-index: 1;*/
+        width: 200px;
+        height: 300px;
+        clear: both;
+    }
+
+    .photo .details{
+        position: absolute;
+        z-index: 2;
+        padding-left: 20px;
+        margin-top:-200px;
+        /*clear: both;*/
+        overflow: hidden;
+    }
+    .description{
+        overflow: hidden;
+        width: 200px;
+        color: lightgreen;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .date{
+        font-size:16px;
+        margin: 20px 0px;
+        color: red; 
+    }
+    .photographer{
+        font-size:14px;
+        font-family: &quot;Arial&quot; ;
+    }
+    .link a{
+
+        clear: both;
+        text-decoration: none;
+        padding-left: 90%;
+
+
+    }
+    h1{
+        text-align: center; 
+    }
+    &lt;/style&gt;
+
+    &lt;script&gt;
+    $(document).ready(function(){
+
+        var pageNum = 1;
+        $(&quot;#more-photos&quot;).click(function(event){
+            event.preventDefault();
+            var $link = $(this);
+            var url = $link.attr(&apos;href&apos;);
+            console.log(url);
+            if(url){
+                $.get(url, function(data){
+                    $(&quot;#gallery&quot;).append(data);
+                });
+
+                pageNum ++;
+                if(pageNum &lt; 4){
+                    $link.attr(&apos;href&apos;, &apos;./&apos;+pageNum+&apos;.html&apos;);
+                }
+
+
+            else{
+                $link.remove();
+            }
+            }
+        })
+    })
+
+    // $(document).ready(function(){
+    //  $(&apos;div .photo&apos;).hover(function(){
+    //      $(this).find(&apos;.details&apos;).fadeTo(&apos;slow&apos;, 0.7);
+    //  },function(){
+    //          $(this).find(&apos;.details&apos;).fadeOut(&apos;slow&apos;);
+    //  })
+    // })
+
+    $(document).ready(function(){
+        $(&apos;#gallery&apos;).on(&apos;mouseenter mouseleave&apos;, &apos;div.photo&apos;, function(event){
+
+            var $details = $(this).find(&apos;.details&apos;);
+            if(event.type == &apos;mouseenter&apos;){
+                $details.fadeTo(&apos;slow&apos;, 0.7);
+            }
+            else{
+                $details.fadeOut(&apos;slow&apos;);
+            }
+        })
+    })
+
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &quot;container&quot;&gt;
+&lt;h1&gt; Photo Gallery&lt;/h1&gt;
+
+&lt;div id = &quot;gallery&quot;&gt;
+    &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/1.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye ....&lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/2.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye.... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/3.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye.... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/4.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye .....&lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/5.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye ....&lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/6.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye ...&lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/7.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye.... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/8.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye..... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/9.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye ...... &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/10.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/11.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/12.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/13.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/14.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div class = &quot;photo&quot;&gt;
+        &lt;img src = &quot;./images/15.jpg&quot;&gt;
+        &lt;div class = &quot;details&quot;&gt;
+            &lt;div class = &quot;description&quot;&gt;The Cullin Mountains, Isle of skye &lt;/div&gt;
+            &lt;div class = &quot;date&quot;&gt;12/24/2000&lt;/div&gt;
+            &lt;div class = &quot;photographer&quot;&gt; Alasdair Dougall&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+
+ &lt;div class = &quot;link&quot;&gt;&lt;a id = &quot;more-photos&quot; href = &quot;1.html&quot;&gt; More Photos &amp;gt;&amp;gt;&lt;/a&gt;&lt;/div&gt; 
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十一-、使用jQuery动态追加页面数据以及事件委托/" data-id="cjl60q3lj001z75tfo7i06x8h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/理解立即调用函数-function/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          理解立即调用函数(function(){ ...})();
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例十-、JavaScript瀑布流布局/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例十 、JavaScript瀑布流布局</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

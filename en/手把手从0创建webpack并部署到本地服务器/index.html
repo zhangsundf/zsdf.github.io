@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>手把手从0创建webpack并部署到本地服务器 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="webpack是js应用程序的静态资源的模块打包器，webpack在处理应用时，在内部会有一个各个模块的依赖图，然后将所有同类型的静态文件资源打包成一个或者多个bulder。相信的初学者看到webpack是一脸懵逼，好不容易学会了一种前端框架，但在大型项目中的webpack也是必不可少的，所以有时候需要自己去动手改造一下webpack，接下来就是消除对webpack的恐惧和逃避心理，从建立一个j">
+<meta property="og:type" content="article">
+<meta property="og:title" content="手把手从0创建webpack并部署到本地服务器">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/手把手从0创建webpack并部署到本地服务器/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="webpack是js应用程序的静态资源的模块打包器，webpack在处理应用时，在内部会有一个各个模块的依赖图，然后将所有同类型的静态文件资源打包成一个或者多个bulder。相信的初学者看到webpack是一脸懵逼，好不容易学会了一种前端框架，但在大型项目中的webpack也是必不可少的，所以有时候需要自己去动手改造一下webpack，接下来就是消除对webpack的恐惧和逃避心理，从建立一个j">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20180816161934160?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5fenNkZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180816162217664?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5fenNkZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="手把手从0创建webpack并部署到本地服务器">
+<meta name="twitter:description" content="webpack是js应用程序的静态资源的模块打包器，webpack在处理应用时，在内部会有一个各个模块的依赖图，然后将所有同类型的静态文件资源打包成一个或者多个bulder。相信的初学者看到webpack是一脸懵逼，好不容易学会了一种前端框架，但在大型项目中的webpack也是必不可少的，所以有时候需要自己去动手改造一下webpack，接下来就是消除对webpack的恐惧和逃避心理，从建立一个j">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180816161934160?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5fenNkZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-手把手从0创建webpack并部署到本地服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/手把手从0创建webpack并部署到本地服务器/" class="article-date">
+  <time datetime="2018-08-16T09:37:48.000Z" itemprop="datePublished">2018-08-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      手把手从0创建webpack并部署到本地服务器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>webpack是js应用程序的静态资源的模块打包器，webpack在处理应用时，在内部会有一个各个模块的依赖图，然后将所有同类型的静态文件资源打包成一个或者多个bulder。<br>相信的初学者看到webpack是一脸懵逼，好不容易学会了一种前端框架，但在大型项目中的webpack也是必不可少的，所以有时候需要自己去动手改造一下webpack，接下来就是消除对webpack的恐惧和逃避心理，从建立一个js文件开始逐步实现webpack的打包以及部署到本地服务端。让你看到webpack不再逃避，而是很有兴趣去研究它。<br><img src="https://img-blog.csdn.net/20180816161934160?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5fenNkZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>这个是网上经常出现的关于webpack作用的形象图。<br>在使用的webpack4版本和以前的版本略有不同。</p>
+<p>先下载webpack和webpac-cli，4版本以后，webpack-cli和webpack分开了，两者都使用全局安装<br>接下来创建一个文件夹，底下包含一个简单的html，js，css文件，这个就是我们从0实现webpack的打包部署的第一步。</p>
+<p>简单的目录如下：<img src="https://img-blog.csdn.net/20180816162217664?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2NzZG5fenNkZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>index.js文件是项目的入口文件，所有有关的依赖都将在这个文件中进行处理。<br>middle.js是一个js文件，将被在index.js中调用。<br>style.css是一个css的样式文件，也将在index.js中引用。</p>
+<pre><code>// miidle.js
+const json = {
+    str : &apos;第一个webpack打包文件&apos;
+}
+moudule.exports = json
+
+// style.css
+.mian {
+    background: &apos;#f7f7f7&apos;,
+    color: &apos;lightgreen&apos;
+}
+
+// index.js
+const json = require(&apos;./middle.js&apos;)
+require(&apos;!style-loader!css-loader!./style.css&apos;)
+
+document.write(`&lt;div class = &apos;main&apos;&gt;${json.str}&lt;/div&gt;&apos;)
+</code></pre><p>由于webpack不支持非js文件的直接打包，所以我们需要对css进行打包的时候，使用style-loader和css-loader，顺序不能反。<br>先下载这两个依赖包，然后在进行引用，下载方法就是正常下载。不做介绍。<br>index.html中引入一个不存在的目录./dist/main.js’，先不要管，就这样用</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+  &lt;title&gt;Document&lt;/title&gt;
+  &lt;script type = &apos;text/javascript&apos; src = &apos;./dist/main.js&apos;&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>完成之后，这四个文件进行保存，cd到文件夹下，webpack4现在不支持使用命令webpack a.js b.js的命令了。直接使用webpack index.js，按回车，就会发现项目下多出了一个dist文件夹，底下还有一个main.js文件，打开文件，看不懂。但是将index.html在浏览器中打开可以看到加了前景色和后景色的<strong>第一个webpack打包文件</strong>的字，和想象中是一样的。此时简单的一个webpack手动构建就完成了。</p>
+<p>若还要引入第三方库，如jquery的时候，先下载npm install jquery<br>接下来在index.js中引入。</p>
+<pre><code>// index.js
+    const json = require(&apos;./middle.js&apos;)
+    require(&apos;!style-loader!css-loader!./style.css&apos;)
+    const $ = require(&apos;jquery&apos;)
+    document.write(`&lt;div class = &apos;main&apos;&gt;${json.str}&lt;/div&gt;&apos;)
+    $(&apos;.main&apos;).html(&apos;我是被jquery修改的内容&apos;).css({&apos;background&apos;:&apos;red&apos;})
+</code></pre><p>执行webpack index.js 重新打包一下，刷新浏览器，出现想要的结果，说明webpack打包引入第三方库也没有问题。</p>
+<p>难道每次修改了文件就需要webpack index.js？ 更间接地方法就是，接下来npm init 一下，发现根目录下出现一个package.json, 在当前根目录下新建一个webpack.config.js，内容如下</p>
+<pre><code>module.exports = {
+  entry: &apos;./src/index.js&apos;,
+  output: {
+    path: __dirname+&apos;/dist&apos;,
+    filename:&apos;main.js&apos;
+  },
+   module: {
+    rules: [{
+      test: /\.css$/,
+      loader: &apos;style-loader!css-loader&apos;
+    }]
+  },
+  devtool: &apos;eval-source-map&apos;
+}
+</code></pre><p>在这个里面有一个入口文件就是我们将所有东西都集中的文件，出口文件是dist/main.js。<br>module中的rules是数组，由于js不能直接处理非js文件，所以可以有多种加载器来进行转化，为js可以处理的文件。如vue-loader、sass-loader.<br>devtool, 是文件出错点击错误直接跳到出错对应的源码，否则会跳到编译后的main.js文件中，难定位错误。</p>
+<pre><code>{
+        test: /\.js$/,
+        loader: &apos;babel-loader&apos;,
+        include: projectRoot,
+        exclude: /node_modules/
+      },
+      {
+        test: /\.html$/,
+        loader: &apos;vue-html-loader&apos;,
+        exclude: /node_modules/,
+      },
+      {
+        test: /icons\/.*\.svg$/,
+        loader: &apos;external-svg-sprite-loader&apos;,
+        options: {
+          name: &apos;static/img/sprite.svg&apos;,
+          prefix: &apos;icon&apos;,
+          svgoOptions: {
+            plugins: [
+              {
+                removeTitle: true
+              },
+              {
+                removeUselessStrokeAndFill: true
+              }
+            ]
+          }
+        }
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|cur)(\?.*)?$/,
+        exclude: /assets\/icons/,
+        loader: &apos;url-loader&apos;,
+        options: {
+          limit: 10000,
+          name: utils.assetsPath(&apos;img/[name].[hash:7].[ext]&apos;)
+        }
+      }
+</code></pre><p>以上都是一些常用的loader和使用方法，其中的exclude就是不会匹配node_modules底下的文件，其他地方的文件都可以匹配到并进行loader转换。<br>好了，这个webpack.config.js目前是配置好了，再回到package.json中找到script字段，清空，在该字段下添加”dev”: “webpack”<br>进行以上修改配置后，在启动项目使用npm run dev这样就可以实现和webpack index.js一样的效果了。</p>
+<p>但是我们又还想将这个项目部署到本地服务器，每次修改内容后，浏览器自动刷新的效果。<br>接下来就要说到webpack-dev-server了，它就是一个小型的服务器。忽然发现每次使用webpack init的vue项目可以跑在本地服务器上，应该就是webpack-dev-serverde作用吧。<br>接下来下载 npm install webpack-dev-server –save-dev -g<br>安装成功后你的node_modules和package.json中会出现webpack-dev-server文件夹或者文件名。</p>
+<p>同样在package.json中的script中修改为这样</p>
+<pre><code>&quot;start&quot;: &quot;webpack-dev-server --entry ./src/index.js --output-filename ./dist/main.js&quot;,
+&quot;dev&quot;: &quot;webpack  --watch&quot;
+</code></pre><p>启动两个服务，npm run dev<br>npm start // 默认启动8080端口，可以在webpack.config.js添加devServer{port：3000}修改端口号。</p>
+<p>–watch的作用就是检测内容的变化，只要保存就会触发，服务器刷新，浏览器变化。<br>这样就实现了文件随时修改浏览器实时刷新。</p>
+<p>webpack.config.js必须是这个名字吗？ 不一定，这只是默认的名字你可以修改为任何你认为有特定意义的名称。如webpack.base.config.js,但是在package.json中dev改成这样</p>
+<pre><code>&quot;dev&quot;: &quot;webpack --config webpack.base.config.js --watch --mode development&quot;
+</code></pre><p>其实从一开始这个mode就必须指定，在webpack4版本后，不指定会有提示，</p>
+<pre><code>WARNING in configuration
+The &apos;mode&apos; option has not been set, webpack will fallback to &apos;production&apos; for this value. Set &apos;mode&apos; option to &apos;development&apos; or &apos;production&apos; to enable defaults for each environment.
+You can also set it to &apos;none&apos; to disable any default behavior. Learn more: https://webpack.js.org/concepts/mode/
+</code></pre><p>其中可以指定为development或者production,即开发环境和生产环境。</p>
+<pre><code>开发环境与生产环境的区别
+开发环境
+NODE_ENV 为 development
+启用模块热更新（hot module replacement）
+额外的 webpack-dev-server 配置项，API Proxy 配置项
+输出 Sourcemap
+生产环境
+NODE_ENV 为 production
+将 React、jQuery 等常用库设置为 external，直接采用 CDN 线上的版本
+样式源文件（如 css、less、scss 等）需要通过 ExtractTextPlugin 独立抽取成 css 文件
+启用 post-css
+启用 optimize-minimize（如 uglify 等）
+中大型的商业网站生产环境下，是绝对不能有 console.log() 的，所以要为 babel 
+</code></pre><p>配置 Remove console transform</p>
+<p>有时候一些项目中会出现三个webpack文件，一般为webpack.base.config.js、webpack.dev.config.js、webpack.prod.config.js。分别为开发环境和生产环境的通用配置，开发环境配置，生产环境配置。<br>后两者肯定是继承于前者的。</p>
+<p>更详细的介绍参考<a href="https://zhuanlan.zhihu.com/p/29161762" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29161762</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/手把手从0创建webpack并部署到本地服务器/" data-id="cjl60q3l8001q75tfrp2h1gtn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/hello-world/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hello World
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/字符-字符集-编码-以及乱码/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">字符 字符集 编码 以及乱码</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

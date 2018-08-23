@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例五 、利用jQuery写一个弹幕 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在要写一个弹幕案例的时候，首先要清楚每一步要干什么。首先搭好框架之后在要发送弹幕时应该准备进行如下步骤：  获取到要发送到弹幕上的内容，即获取到文本框输入的内容。通过jquery的var str = $(“#文本框的id”).val(); 生成一个元素。利用jQuery的 var createSpan =$(““)生成一个span元素，以便发送。 给刚创建的span赋值，即获取到的文本框中的值c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例五 、利用jQuery写一个弹幕">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例五-、利用jQuery写一个弹幕/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在要写一个弹幕案例的时候，首先要清楚每一步要干什么。首先搭好框架之后在要发送弹幕时应该准备进行如下步骤：  获取到要发送到弹幕上的内容，即获取到文本框输入的内容。通过jquery的var str = $(“#文本框的id”).val(); 生成一个元素。利用jQuery的 var createSpan =$(““)生成一个span元素，以便发送。 给刚创建的span赋值，即获取到的文本框中的值c">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170324231525957?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例五 、利用jQuery写一个弹幕">
+<meta name="twitter:description" content="在要写一个弹幕案例的时候，首先要清楚每一步要干什么。首先搭好框架之后在要发送弹幕时应该准备进行如下步骤：  获取到要发送到弹幕上的内容，即获取到文本框输入的内容。通过jquery的var str = $(“#文本框的id”).val(); 生成一个元素。利用jQuery的 var createSpan =$(““)生成一个span元素，以便发送。 给刚创建的span赋值，即获取到的文本框中的值c">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170324231525957?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例五-、利用jQuery写一个弹幕" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例五-、利用jQuery写一个弹幕/" class="article-date">
+  <time datetime="2017-03-24T15:16:55.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例五 、利用jQuery写一个弹幕
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在要写一个弹幕案例的时候，首先要清楚每一步要干什么。<br>首先搭好框架之后在要发送弹幕时应该准备进行如下步骤：</p>
+<ol>
+<li>获取到要发送到弹幕上的内容，即获取到文本框输入的内容。通过jquery的var str = $(“#文本框的id”).val();</li>
+<li>生成一个元素。<br>利用jQuery的 var createSpan =$(““)生成一个span元素，以便发送。</li>
+<li>给刚创建的span赋值，即获取到的文本框中的值<br>createSpan.text(str );</li>
+<li>设置元素的动画效果,是元素动起来。利用jQuery的animate(css样式值，时间， 执行完动画调用的方法)。执行完动画得手动移除刚刚所添加的元素。</li>
+</ol>
+<p>里面还有许多细节，仔细看就会有收获！</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;弹幕案例&lt;/title&gt;
+    &lt;script src = &quot;http://libs.baidu.com/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+    $(function(){
+        var boxDom = $(&quot;#boxDom&quot;);
+        //var domContent = $(&quot;#domContent&quot;);
+
+        var top, right;
+
+        var pageWidth = parseInt($(document).width());
+        var pageHeight =parseInt($(document).height());
+
+        //点击按钮
+        $(&quot;#btn&quot;).bind(&quot;click&quot;,auto);//按钮绑定方法
+        //按下回车
+        document.onkeydown = function(){
+            if(event.keyCode == 13){
+                auto();
+            }
+        }
+        function auto(){
+        //1.获取输入的字符串
+        var str = $(&quot;.text&quot;).val();
+        //2.生成一个元素
+        var createSpan = $(&quot;&lt;span class = &apos;string&apos; &gt;&lt;/span&gt;&quot;);
+
+        //3.给生成的元素赋值
+
+        createSpan.text(str);
+
+        //为了页面友好，清空刚刚输入的值
+        $(&quot;.text&quot;).val(&quot;&quot;);
+
+    //生成元素一个随机的位置，为了使每条弹幕都出现在屏幕上不同的位置
+        top = Math.floor(Math.random()*pageHeight);
+
+
+    createSpan.css({&quot;top&quot;:top, &quot;right&quot;: -400, &quot;color&quot;: getRandomColor()});
+        boxDom.append(createSpan);
+
+        //4.设置元素的动画效果，animate(css样式值，时间， 执行完动画调用的方法)
+
+        //页面上有N个span，只让最后一个动起来
+        var spandom = $(&quot;#boxDom&gt;span:last-child&quot;);//找到最后一个span
+        spandom.animate({&quot;right&quot;:pageWidth+300},10000,function(){
+            //移除元素
+            $(this).remove();
+
+        });
+        }
+        //定义一个可以生成随机颜色的方法,可以使每条弹幕的颜色不同
+        function getRandomColor(){
+            var colorArr = [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;,&apos;4&apos;,&apos;5&apos;,&apos;6&apos;,&apos;7&apos;,&apos;8&apos;,&apos;9&apos;,&apos;A&apos;,&apos;B&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;F&apos;];
+            var color = &quot;&quot;;
+            for(var i = 0; i &lt; 6; i++){
+                color += colorArr[Math.floor(Math.random()*16)]; 
+            }
+            return &quot;#&quot;+color;
+        }
+
+    });
+    &lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    html,body{
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        font-family: &quot;微软雅黑&quot;;
+        background: #ccc;
+    }
+    .boxDom{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .idDom{
+        width: 100%;
+        height: 60px;
+        background:#666;
+        position: fixed;
+        bottom: 0px;
+    }
+    .contet{
+        width: 500px;
+        height: 40px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        margin:  auto;
+
+    }
+    .title{
+        display: inline;
+        font-size: 24px;
+        vertical-align: bottom;
+        color: #ffffff;
+        padding-left: 300px;
+    }
+
+    .text{
+        width: 300px;
+        height: 30px;
+        border:none;
+        border-radius:5px;
+        font-size: 20px;
+        margin-left:60px;
+    }
+    .btn{
+        width: 60px;
+        height: 30px;
+        color: #ffffff;
+        background-color: red;
+        border:none;
+        font-size:16px;
+        margin-left:60px;
+        margin-top: 20px;
+    }
+    .string {
+            width: 300px;
+            height: 40px;
+            margin-top: 20px;
+            position: absolute;
+            color: #000;
+            font-size: 20px;
+            font-family: &quot;微软雅黑&quot;;
+
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class = &quot;boxDom&quot; id = &quot;boxDom&quot;&gt;
+    &lt;img src=&quot;../images/bg_2.jpg&quot; style=&quot;width:100%; height:100%&quot;  /&gt;
+    &lt;div id = &quot;idDom&quot; class = &quot;idDom&quot;&gt;
+        &lt;div class = &quot;content&quot;&gt;
+            &lt;p class = &quot;title&quot;&gt; 说点什么:&lt;/p&gt;
+            &lt;input type = &quot;text&quot; class = &quot;text&quot;/&gt;
+            &lt;button type = &quot;button&quot; class = &quot;btn&quot; id = &quot;btn&quot; &gt;发送&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170324231525957?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例五-、利用jQuery写一个弹幕/" data-id="cjl60q3kl001775tfk7ashh6l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/拖放/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          拖放
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/理解Canvas的save-和restore-方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">理解Canvas的save()和restore()方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

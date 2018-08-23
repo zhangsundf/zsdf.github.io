@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>jQuery中DOM操作方法的简单总结 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于jQuery提供的大量的DOM操作方法，应该根据要完成的任务和元素的位置做出不同的选择，这里先列举一些常见的DOM操作方法。 1。要在HTML中创建新元素，使用$()函数。例如： $(&amp;apos;&amp;lt;a href = &amp;quot;#top&amp;quot;&amp;gt; back to top &amp;lt;/a&amp;gt;&amp;apos;); $(&amp;apos;&amp;lt;a id = &amp;quot;top&amp;quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jQuery中DOM操作方法的简单总结">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/jQuery中DOM操作方法的简单总结/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="对于jQuery提供的大量的DOM操作方法，应该根据要完成的任务和元素的位置做出不同的选择，这里先列举一些常见的DOM操作方法。 1。要在HTML中创建新元素，使用$()函数。例如： $(&amp;apos;&amp;lt;a href = &amp;quot;#top&amp;quot;&amp;gt; back to top &amp;lt;/a&amp;gt;&amp;apos;); $(&amp;apos;&amp;lt;a id = &amp;quot;top&amp;quot;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170331193453406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170331194724427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170331195125658?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170331195629041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170331201020029?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jQuery中DOM操作方法的简单总结">
+<meta name="twitter:description" content="对于jQuery提供的大量的DOM操作方法，应该根据要完成的任务和元素的位置做出不同的选择，这里先列举一些常见的DOM操作方法。 1。要在HTML中创建新元素，使用$()函数。例如： $(&amp;apos;&amp;lt;a href = &amp;quot;#top&amp;quot;&amp;gt; back to top &amp;lt;/a&amp;gt;&amp;apos;); $(&amp;apos;&amp;lt;a id = &amp;quot;top&amp;quot;">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170331193453406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-jQuery中DOM操作方法的简单总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/jQuery中DOM操作方法的简单总结/" class="article-date">
+  <time datetime="2017-03-31T12:16:49.000Z" itemprop="datePublished">2017-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      jQuery中DOM操作方法的简单总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>对于jQuery提供的大量的DOM操作方法，应该根据要完成的任务和元素的位置做出不同的选择，这里先列举一些常见的DOM操作方法。</p>
+<p>1。要在HTML中创建新元素，使用$()函数。<br>例如：</p>
+<pre><code>$(&apos;&lt;a href = &quot;#top&quot;&gt; back to top &lt;/a&gt;&apos;);
+$(&apos;&lt;a id = &quot;top&quot;&gt;&lt;/a&gt;&apos;);
+</code></pre><p>第一行创建了一个back to top 的链接，第二行则创建了一个作为目标的锚。<br>2。要在每个匹配的元素中插入新元素，使用：<br>①. .append();<br>②. .appendTo();<br>③. .prepend();<br>④. .prependTo();</p>
+<p><strong>.append() 与 .appendTo()</strong><br>都是在现有元素<strong>内部、之后</strong> 添加内容</p>
+<pre><code>$(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;).appendTo(&quot;#container&quot;);
+$(&quot;#container&quot;).append(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;);
+</code></pre><p><strong>.prepend() 和 .prependTo()</strong><br>都是在现有元素<strong>内部、之前</strong>添加内容</p>
+<pre><code>$(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;).prependTo(&quot;#container&quot;);
+$(&quot;#container&quot;).prepend(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;);
+</code></pre><p>如果执行以下代码</p>
+<pre><code>$(document).ready(function(){
+
+   $(&quot;&lt;p&gt;prependTo Hello World1&lt;/p&gt;&quot;)
+   .prependTo(&quot;#container&quot;);
+    $(&quot;#container&quot;).prepend(&quot;&lt;p&gt; prepend Hello  World2&lt;/p&gt;&quot;);
+    $(&quot;&lt;p&gt;Hello World1&lt;/p&gt;&quot;).appendTo(&quot;#container&quot;);
+    $(&quot;#container&quot;).append(&quot;&lt;p&gt;Hello World2&lt;/p&gt;&quot;);
+
+    });
+</code></pre><p>同样都是向container中添加元素，结果如下<br><img src="https://img-blog.csdn.net/20170331193453406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上面代码说明了.prepend() 和 .prependTo()添加内容时，向目标元素中倒序插入内容，就相当于每一个插入的元素直接跟在被插入元素的后面。</p>
+<p>3。要在每个匹配元素相邻的位置上插入新元素，使用：<br>①. .after()<br>②. .insertAfter()<br>③. .before()<br>④. .insertBefore()</p>
+<p>.after()与 .insertAfter() 和 <strong>.append() 与 .appendTo()</strong>用法一样，只不过这两个方法添加的内容在container之外。如执行</p>
+<pre><code>$(&quot;&lt;p&gt;prependTo Hello World1&lt;/p&gt;&quot;).insertAfter(&quot;#container&quot;);
+$(&quot;#container&quot;).after(&quot;&lt;p&gt;Hello World2&lt;/p&gt;&quot;);
+</code></pre><p>解释器解释的实际代码为<br><img src="https://img-blog.csdn.net/20170331194724427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>.before() 和 .insertBefore()<br>都是在现有元素<strong>外部、之前</strong>添加内容</p>
+<pre><code>$(&quot;&lt;p&gt; Hello World 1&lt;/p&gt;&quot;).insertBefore(&quot;#container&quot;);
+$(&quot;#container&quot;).before(&quot;&lt;p&gt;Hello World 2&lt;/p&gt;&quot;);
+</code></pre><p>解释器解释的实际代码为<br><img src="https://img-blog.csdn.net/20170331195125658?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>4。 要在每个匹配元素的外部插入新元素。使用<br>①. .wrap()<br>将匹配元素包裹</p>
+<pre><code>$(&quot;#container&quot;).wrap(&quot;&lt;ol&gt;&lt;/ol&gt;&quot;);
+</code></pre><p>解析为：<br><img src="https://img-blog.csdn.net/20170331195629041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>②. .wrapAll()</p>
+<pre><code>&lt;div id = &quot;main&quot;&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt; 
+&lt;/div&gt;
+
+$(&quot;#main .container&quot;).wrapAll(&quot;&lt;ol id = &apos;note&apos;&gt;&lt;/ol&gt;&quot;)
+.wrap(&quot;&lt; li &gt;&lt; /li&gt;&quot;);
+</code></pre><p>将会用ol包裹整个class为container的块，然后用li包裹每一个container</p>
+<p>解析为：<br><img src="https://img-blog.csdn.net/20170331201020029?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>③. .wrapInner()</p>
+<p>5。要用新元素或文本替换每个匹配的元素<br>①. .html()<br>②. .text()<br>③. .repalceWith()</p>
+<p>6。要移除每个匹配元素中的元素<br>.empty()</p>
+<p>7。从文档中移除每个匹配元素及其后代，但不实际删除它们<br>①. .remove()<br>②. .detach()</p>
+<p>8。复制元素<br>.clone()</p>
+<pre><code>$( &apos;div.chapter p:eq(1)&apos; ).clone().insertBefore(&apos; div . chapter&apos;);
+</code></pre><p>这样同一个段落就会出现两次。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/jQuery中DOM操作方法的简单总结/" data-id="cjl60q3jr000b75tfh6kt77vo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/案例八-、jquery点个赞吧/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          案例八 、jquery点个赞吧
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例七-、jquery模仿微信聊天界面/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例七 、jquery模仿微信聊天界面</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

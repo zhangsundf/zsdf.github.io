@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例十二、JavaScript实现无穷滚动加载数据 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先实现滚动要借助onscroll事件处理程序。无穷滚动就是滑动滚动条，实现数据块的无穷加载。我们以瀑布流的布局来实现无穷加载。瀑布流就是一些等宽不等高的数据块布局。在滚动条下拉时，它会进行加载。那么问题就是在判断什么时候应该加载。我们首先应该明白瀑布流布局的特点。它将下一个图片总是放在当前列数最低的那一列。所以当加载最后一个蓝色的图片时，也就无疑是最后一个图片了。所以要判断该图片加载到什么程度">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例十二、JavaScript实现无穷滚动加载数据">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="首先实现滚动要借助onscroll事件处理程序。无穷滚动就是滑动滚动条，实现数据块的无穷加载。我们以瀑布流的布局来实现无穷加载。瀑布流就是一些等宽不等高的数据块布局。在滚动条下拉时，它会进行加载。那么问题就是在判断什么时候应该加载。我们首先应该明白瀑布流布局的特点。它将下一个图片总是放在当前列数最低的那一列。所以当加载最后一个蓝色的图片时，也就无疑是最后一个图片了。所以要判断该图片加载到什么程度">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170417193550795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例十二、JavaScript实现无穷滚动加载数据">
+<meta name="twitter:description" content="首先实现滚动要借助onscroll事件处理程序。无穷滚动就是滑动滚动条，实现数据块的无穷加载。我们以瀑布流的布局来实现无穷加载。瀑布流就是一些等宽不等高的数据块布局。在滚动条下拉时，它会进行加载。那么问题就是在判断什么时候应该加载。我们首先应该明白瀑布流布局的特点。它将下一个图片总是放在当前列数最低的那一列。所以当加载最后一个蓝色的图片时，也就无疑是最后一个图片了。所以要判断该图片加载到什么程度">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170417193550795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例十二、JavaScript实现无穷滚动加载数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/" class="article-date">
+  <time datetime="2017-04-17T12:12:07.000Z" itemprop="datePublished">2017-04-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例十二、JavaScript实现无穷滚动加载数据
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先实现滚动要借助onscroll事件处理程序。<br>无穷滚动就是滑动滚动条，实现数据块的无穷加载。<br>我们以瀑布流的布局来实现无穷加载。瀑布流就是一些等宽不等高的数据块布局。在滚动条下拉时，它会进行加载。那么问题就是在判断什么时候应该加载。<br><img src="https://img-blog.csdn.net/20170417193550795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>我们首先应该明白瀑布流布局的特点。它将下一个图片总是放在当前列数最低的那一列。所以当加载最后一个蓝色的图片时，也就无疑是最后一个图片了。所以要判断该图片加载到什么程度来触发滚动事件。<br>图上灰色的表示页面的大小，后面蓝色边框表示窗口的大小。当拖动滚动条时，灰色部分上移。我们希望页面最后一个图片（蓝色图片）加载一半时触发滚动事件。那么就要形成参照。</p>
+<p>下来写代码：</p>
+<pre><code>//检测是否具备滚动条加载数据块的条件
+
+function checkScrollSlide(){
+
+    var oparent = document.getElementById(&apos;main&apos;);
+
+    var oBoxs = getByClass(oparent,&apos;box&apos;);
+
+    var scrollH = document.body.scrollTop || document.documentElement.scrollTop + document.body.clientHeight || document.documentElement.clientHeight;
+
+   var lastBoxH = oBoxs[oBoxs.length - 1].offsetTop + Math.floor(oBoxs[oBoxs.length - 1].offsetHeight/2);
+
+    return (lastBoxH &lt; scrollH )? true : false;
+}
+</code></pre><p>getClass是根据类名查找元素集合的自己写的函数，待会儿会附上源码</p>
+<p><strong>我们要进行加载的数据块的格式是这样的.每个图片被一个class= pic的div包裹。最后整体属于父元素main</strong></p>
+<pre><code>&lt;div id = &quot;main&quot;&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/0.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/1.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/2.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;div&gt;
+</code></pre><p>首先我们要加载的数据块应该是从后台传过来的，在这里我们用json模拟一下就可以：</p>
+<pre><code>var DataIn = {&quot;data&quot;:[{&quot;src&quot;:&apos;0.jpg&apos;},{&quot;src&quot;:&apos;1.jpg&apos;},{&quot;src&quot;:&apos;2.jpg&apos;},{&quot;src&quot;:&apos;3.jpg&apos;},{&quot;src&quot;:&apos;4.jpg&apos;},{&quot;src&quot;:&apos;5.jpg&apos;}]};
+</code></pre><p>比如这个就是后台传过来的数据。</p>
+<p>上面的函数返回一个布尔值，当为true时，触发滚动事件。</p>
+<pre><code>  window.onscroll = function(){
+    var oparent = document.getElementById(&apos;main&apos;);
+    //当满足加载条件时，就要向页面中加载数据块
+    if(checkScrollSlide){
+        for(var i = 0; i&lt; DataIn.data.length; i++){
+                var oBox = document.createElement(&apos;div&apos;);
+                oBox.className = &apos;box&apos;;
+                oparent.appendChild(oBox);
+
+                var opic = document.createElement(&apos;div&apos;);
+                opic.className = &apos;pic&apos;;
+                oBox.appendChild(opic);
+
+                var oImg = document.createElement(&apos;img&apos;);
+                oImg.src = &apos;./images/&apos;+DataIn.data[i].src;
+                opic.appendChild(oImg);
+
+            }
+            waterFull(&apos;main&apos;,&apos;box&apos;);
+        }
+    }
+}
+</code></pre><p>附上源码：<br>css和html</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+&lt;script src = &quot;./jswaterfll.js&quot;&gt;&lt;/script&gt;
+    &lt;title&gt;瀑布流布局&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #main{
+        position: relative;
+
+    }
+    .box{
+/*      display: inline-block;*/
+        padding: 15px 0px 0px 15px;
+        float: left;
+
+    }
+    .pic{
+        padding: 10px;
+        border-radius: 5px;
+        border:1px solid #ccc;
+        box-shadow: 0 0 5px #ccc;
+    }
+
+    .pic img{
+        width: 165px;
+        height: auto;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &apos;main&apos;&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/3.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/20.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/21.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/2.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/3.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/5.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/6.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/7.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/8.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/9.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/10.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/11.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/17.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/18.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/19.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/5.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/6.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/7.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/8.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/11.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/12.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/13.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/14.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/15.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/16.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/17.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/18.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/19.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/20.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/21.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>js代码：</p>
+<pre><code>window.onload = function(){
+    waterFull(&apos;main&apos;,&apos;box&apos;);
+
+    var DataIn = {&quot;data&quot;:[{&quot;src&quot;:&apos;0.jpg&apos;},{&quot;src&quot;:&apos;1.jpg&apos;},{&quot;src&quot;:&apos;2.jpg&apos;},{&quot;src&quot;:&apos;3.jpg&apos;},{&quot;src&quot;:&apos;4.jpg&apos;},{&quot;src&quot;:&apos;5.jpg&apos;}]};
+    window.onscroll = function(){
+        var oparent = document.getElementById(&apos;main&apos;);
+        if(checkScrollSlide){
+            for(var i = 0; i&lt; DataIn.data.length; i++){
+                var oBox = document.createElement(&apos;div&apos;);
+                oBox.className = &apos;box&apos;;
+                oparent.appendChild(oBox);
+
+                var opic = document.createElement(&apos;div&apos;);
+                opic.className = &apos;pic&apos;;
+                oBox.appendChild(opic);
+
+                var oImg = document.createElement(&apos;img&apos;);
+                oImg.src = &apos;./images/&apos;+DataIn.data[i].src;
+                opic.appendChild(oImg);
+
+            }
+            waterFull(&apos;main&apos;,&apos;box&apos;);
+        }
+    }
+}
+
+function waterFull(parent,children){
+    var oParent = document.getElementById(parent);
+    //var oBoxs = parent.querySelectorAll(&quot;.box&quot;);
+
+     var oBoxs = getByClass(oParent,children);
+
+    //计算整个页面显示的列数
+
+    var oBoxW = oBoxs[0].offsetWidth;
+
+    var cols = Math.floor(document.documentElement.clientWidth/oBoxW);
+
+    //设置main的宽度，并且居中
+
+    oParent.style.cssText = &apos;width:&apos;+oBoxW * cols +&apos;px; margin: 0 auto&apos;;
+
+    //找出高度最小的图片，将下一个图片放在下面
+
+    //定义一个数组，存放每一列的高度，初始化存的是第一行的所有列的高度
+
+    var arrH = [];
+
+    for(var i = 0; i&lt; oBoxs.length ; i++){
+        if(i &lt; cols){
+            arrH.push(oBoxs[i].offsetHeight);
+        }
+        else{
+            var minH = Math.min.apply(null,arrH);
+
+            var minIndex = getMinhIndex(arrH,minH);
+
+            oBoxs[i].style.position = &apos;absolute&apos;;
+            oBoxs[i].style.top= minH + &apos;px&apos;;
+            //oBoxs[i].style.left = minIndex * oBoxW + &apos;px&apos;; 
+            oBoxs[i].style.left = oBoxs[minIndex].offsetLeft+&apos;px&apos;;
+
+            arrH[minIndex] += oBoxs[i].offsetHeight; 
+        }
+    }
+
+
+}
+function getByClass(parent,className){
+
+    var boxArr = new Array();//用来获取所有class为box的元素
+
+    oElement = parent.getElementsByTagName(&apos;*&apos;);
+
+    for (var i = 0; i &lt;oElement.length; i++) {
+
+        if(oElement[i].className == className){
+
+            boxArr.push(oElement[i]);
+
+        }
+    };
+    return boxArr;
+}
+
+
+//获取当前最小值得下标
+function getMinhIndex(array,min){
+
+    for(var i in array){
+
+        if(array[i] == min)
+
+            return i;
+    }
+}
+
+//检测是否具备滚动条加载数据块的条件
+function checkScrollSlide(){
+    var oparent = document.getElementById(&apos;main&apos;);
+    var oBoxs = getByClass(oparent,&apos;box&apos;);
+    var scrollH = document.body.scrollTop || document.documentElement.scrollTop + document.body.clientHeight || document.documentElement.clientHeight;
+    var lastBoxH = oBoxs[oBoxs.length - 1].offsetTop + Math.floor(oBoxs[oBoxs.length - 1].offsetHeight/2);
+
+    return (lastBoxH &lt; scrollH )? true : false;
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/" data-id="cjl60q3lb001v75tfif99w5gg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/案例十三、模仿微信打飞机游戏/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          案例十三、模仿微信打飞机游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/将按钮按照value值排序，并且点击按钮后值1s自减一/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">将按钮按照value值排序，并且点击按钮后值1s自减一</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>理解立即调用函数(function(){ ...})(); | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先来看一个示例： var img = document.getElementsByTagName(&amp;apos;img&amp;apos;);         for(var i = 0; i&amp;lt; img.length; i++){              img[i].onmouseover = function(){             img[i].style.width = 185 +">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解立即调用函数(function(){ ...})();">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/理解立即调用函数-function/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="首先来看一个示例： var img = document.getElementsByTagName(&amp;apos;img&amp;apos;);         for(var i = 0; i&amp;lt; img.length; i++){              img[i].onmouseover = function(){             img[i].style.width = 185 +">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解立即调用函数(function(){ ...})();">
+<meta name="twitter:description" content="首先来看一个示例： var img = document.getElementsByTagName(&amp;apos;img&amp;apos;);         for(var i = 0; i&amp;lt; img.length; i++){              img[i].onmouseover = function(){             img[i].style.width = 185 +">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-理解立即调用函数-function" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/理解立即调用函数-function/" class="article-date">
+  <time datetime="2017-04-08T09:11:58.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      理解立即调用函数(function(){ ...})();
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先来看一个示例：</p>
+<pre><code>var img = document.getElementsByTagName(&apos;img&apos;);
+        for(var i = 0; i&lt; img.length; i++){
+
+            img[i].onmouseover = function(){
+            img[i].style.width = 185 +&apos;px&apos;;
+            img[i].style.height = 215 +&apos;px&apos;;
+        }
+
+            img[i].onmouseout = function(){
+            img[i].style.width = 165 +&apos;px&apos;;
+            img[i].style.height = 200 +&apos;px&apos;;
+        }
+    }
+</code></pre><p>以上函数处理的事件是，当鼠标悬浮到某个图片上，该图片相应的变大一点，当鼠标移出后，恢复原来的大小。首先我们能够想到的就是获取所有的图片标签，然后再进行一个循环，为每一个图片绑定一个悬浮移出的事件。看起来是没有任何问题的，但是当真正执行起来确实漏洞百出。<br>for循环只是将所有的图片遍历一遍，并没有真正的为图片绑定事件。<br>而我们要做的就是为所有的图片进行事件绑定。<br>可以使用立即调用的函数表达式。<br>使用</p>
+<pre><code>    var img = document.getElementsByTagName(&apos;img&apos;);
+
+    for(var i = 0; i&lt; img.length; i++){
+
+        (function(value){
+
+        img[value].onmouseover = function(){
+
+        img[value].style.width = 185 +&apos;px&apos;;
+        img[value].style.height = 215 +&apos;px&apos;;
+    }
+
+        img[value].onmouseout = function(){
+
+        img[value].style.width = 165 +&apos;px&apos;;
+        img[value].style.height = 200 +&apos;px&apos;;
+    }
+    })(i);
+}
+</code></pre><p>将for循环内的代码用立即调用函数包裹起来，就相当于for每次执行就会调用一次该函数，然后将i传递给value,这样可以为每一个图片都可以绑定上相应的事件了。</p>
+<p>在理解了一些函数基本概念后，回头看看( function(){…} )()和( function (){…} () )这两种立即执行函数的写法，最初我以为是一个括号包裹匿名函数，并后面加个括号立即调用函数，当时不知道为什么要加括号，后来明白，<strong>要在函数体后面加括号就能立即调用，则这个函数必须是函数表达式，不能是函数声明。</strong></p>
+<p>所以说上面的函数还可以这样写成函数表达式的形式：</p>
+<pre><code>var a = function(value){
+
+//code
+
+}(i);
+//也就相当于是
+var a = function(value){
+
+//code
+
+}
+//立即调用
+
+a(i);
+//在每一次的for循环中，执行一次事件绑定
+</code></pre><p>这就是立即调用函数，即遍历每一个i时，将i传进去绑定到图片上。如果不这样为每一个图片绑定事件，利用for循环就只是相当于走了一个过程，而且这个过程是一次走完的，没有实际的动作。</p>
+<p>立即调用函数的作用：<br>javascript中没用私有作用域的概念，如果在多人开发的项目上，你在全局或局部作用域中声明了一些变量，可能会被其他人不小心用同名的变量给覆盖掉，根据javascript函数作用域链的特性，可以使用这种技术可以模仿一个私有作用域，用匿名函数作为一个“容器”，“容器”内部可以访问外部的变量，而外部环境不能访问“容器”内部的变量，所以( function(){…} )()内部定义的变量不会和外部的变量发生冲突，俗称“匿名包裹器”或“命名空间”。</p>
+<p>下面来一打实例：</p>
+<p>复制代码：</p>
+<pre><code>1. function(a){
+        console.log(a);   //报错,Uncaught SyntaxError: Unexpected token (
+}(12);
+
+
+2. (function(a){
+    console.log(a);   //firebug输出123,使用（）运算符
+})(123);
+
+3. (function(a){
+    console.log(a);   //firebug输出1234，使用（）运算符
+}(1234));
+
+4. !function(a){
+    console.log(a);   //firebug输出12345,使用！运算符
+}(12345);
+
+5. +function(a){
+    console.log(a);   //firebug输出123456,使用+运算符
+}(123456);
+
+6. -function(a){
+    console.log(a);   //firebug输出1234567,使用-运算符
+}(1234567);
+
+7. var fn=function(a){
+    console.log(a);   //firebug输出12345678，使用=运算符
+}(12345678)           
+//需要注意的是:这么写只是一个赋值语句,即把函数匿名函数function(a){...}()的返回值赋值给了fn,如果函数没有返回值,那么fn为undefined,
+
+
+//下面给出2个例子,用来解答读者的疑惑:
+
+8. var fn=function(a){
+    console.log(a);   //firebug输出12345678，使用=运算符
+}(12345678);
+console.info(fn);//控制台显示为undefined;
+fn(123);//函数未定义报错,fn is undefiend 
+
+9. var fn=function(a){
+    console.log(a);   //firebug输出12345678，使用=运算符
+    return 111;
+}(12345678);
+console.info(fn);//会发现fn就是一个返回值111,而不是一个函数
+fn(123);     //报错,因为fn不是一个函数
+</code></pre><p>可以看到输出结果，在function前面加！、+、 -甚至是逗号等到都可以起到函数定义后立即执行的效果，而（）、！、+、-、=等运算符，都将函数声明转换成函数表达式，消除了javascript引擎识别函数表达式和函数声明的歧义，告诉javascript引擎这是一个函数表达式，不是函数声明，可以在后面加括号，并立即执行函数的代码。</p>
+<p>加括号是最安全的做法，因为！、+、-等运算符还会和函数的返回值进行运算，有时造成不必要的麻烦。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/理解立即调用函数-function/" data-id="cjl60q3kr001g75tf6ucojleo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/JavaScript创建对象-——-原型模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          JavaScript创建对象 —— 原型模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例十一-、使用jQuery动态追加页面数据以及事件委托/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例十一 、使用jQuery动态追加页面数据以及事件委托</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

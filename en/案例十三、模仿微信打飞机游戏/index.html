@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例十三、模仿微信打飞机游戏 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先实现微信打飞机游戏，首先会有自己和敌机，采用canvas绘图来生成自己和敌人。1.生成自己，且可以通过左右键来进行左右移动。 //生成自己，且可以左右移动 //控制飞机向右移动的函数  function moveRight(event){   context.clearRect(aligh,100,47,47);   //防止飞机移除背景外     if(aligh &amp;lt; 260){">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例十三、模仿微信打飞机游戏">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例十三、模仿微信打飞机游戏/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="首先实现微信打飞机游戏，首先会有自己和敌机，采用canvas绘图来生成自己和敌人。1.生成自己，且可以通过左右键来进行左右移动。 //生成自己，且可以左右移动 //控制飞机向右移动的函数  function moveRight(event){   context.clearRect(aligh,100,47,47);   //防止飞机移除背景外     if(aligh &amp;lt; 260){">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170426112239135?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170426112258197?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例十三、模仿微信打飞机游戏">
+<meta name="twitter:description" content="首先实现微信打飞机游戏，首先会有自己和敌机，采用canvas绘图来生成自己和敌人。1.生成自己，且可以通过左右键来进行左右移动。 //生成自己，且可以左右移动 //控制飞机向右移动的函数  function moveRight(event){   context.clearRect(aligh,100,47,47);   //防止飞机移除背景外     if(aligh &amp;lt; 260){">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170426112239135?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例十三、模仿微信打飞机游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十三、模仿微信打飞机游戏/" class="article-date">
+  <time datetime="2017-04-25T12:27:29.000Z" itemprop="datePublished">2017-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例十三、模仿微信打飞机游戏
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先实现微信打飞机游戏，首先会有自己和敌机，采用canvas绘图来生成自己和敌人。<br>1.生成自己，且可以通过左右键来进行左右移动。</p>
+<pre><code>//生成自己，且可以左右移动
+//控制飞机向右移动的函数
+ function moveRight(event){
+
+ context.clearRect(aligh,100,47,47);
+
+ //防止飞机移除背景外
+    if(aligh &lt; 260){
+        var img = new Image();
+        img.src = &quot;../images/self.png&quot;;
+        img.onload = function(){
+            context.drawImage(img, aligh,100);
+            }
+        aligh += 10 ;
+    }
+
+//当飞机即将移出背景外时，让它停在最右端
+ if (aligh == 260){
+         var img = new Image();
+         img.src = &quot;../images/self.png&quot;;
+         img.onload = function(){
+        context.drawImage(img, 260,100);
+             }
+         }
+      }
+
+ //控制飞机向左移动的函数
+ function moveLeft(event){
+     context.clearRect(aligh,100,47,47);
+
+//防止飞机移出最左边的边界
+    if(aligh &gt; 0){
+    var img = new Image();
+    img.src = &quot;../images/self.png&quot;;
+    img.onload = function(){
+        context.drawImage(img, aligh,100);
+         }
+        aligh -= 10 ;
+    }
+
+//使其控制在最左侧
+    if (aligh == 0){
+        var img = new Image();
+        img.src = &quot;../images/self.png&quot;;
+        img.onload = function(){
+        context.drawImage(img, 0,100);
+         }
+     }
+
+}
+//判断按下的是哪个键，然后控制飞机左右移动
+ document.onkeydown = function(event){
+    if(event.keyCode == 37){
+             moveLeft();
+          }
+    if(event.keyCode == 39){
+             moveRight();       
+            }
+ }
+</code></pre><p>2.生成敌机。敌机就是在背景上随机生成图片。每隔一秒使其从上面下落。</p>
+<pre><code>var createId = setInterval(function(){
+    var top = 0+&apos;px&apos;; 
+    var enemy  = document.createElement(&quot;img&quot;);
+    enemy.src = &quot;../images/enemy.png&quot;;
+
+    //生成随机的位置
+    var randomleft = Math.floor(Math.random() * 300) ;
+    //如果生成的位置出现在背景外，则就取260
+left = randomleft &gt; 260 ? 260 + &apos;px&apos;: randomleft + &apos;px&apos;;
+
+    leftArr.push(left); //保存每个敌机的距左边的距离，方便碰撞检测的计算
+    arrPic.push(enemy); //将每个敌机的图片保存在数组中，方便碰撞检测后移除
+
+    main.appendChild(enemy);
+    enemy.style.paddingLeft = left ;
+    enemy.style.paddingTop = top;
+    var spandom = $(&quot;#main&gt;img:last-child&quot;);//这儿利用jquery找到最后一个img
+
+//让最后一个img动起来。则就相当于为每一个img都绑定了动画
+spandom.animate({&quot;paddingTop&quot;:420},6000,function(){
+    //当下落到底部时移除元素
+    this.remove();
+    arrPic.splice(0,1);  //从数组中移除图片
+    leftArr.splice(0,1);  //从数组中移除距离
+    fallCount ++;   //检测下落了多少个飞机，超过十个没被打中，游戏就结束
+    });
+
+    //如果落下的飞机数超过十个没有被打中，则游戏结束
+        if(fallCount &gt; 10){
+            clearInterval(createId);
+            clearInterval(crashId);
+            alert(&quot;当前得分 ：&quot;+count+&quot; , 很遗憾，游戏结束!&quot;)
+         }
+    },1000);
+</code></pre><p>3。现在主要是碰撞检测。每隔2.2秒进行一次检测，因为检测台频繁的话，直接长按向左向右键，都可以直接消除。就没有意义了</p>
+<pre><code>function checkCrash(){
+
+    crashId = setInterval(function(){
+
+    //由于每次自由落下的飞机在上面函数中都被移除了。所以leftArr数组中保存的就是当前页面存在的飞机的左距离数组。
+    for(var i = 0; i &lt; leftArr.length; i++)
+    {
+
+    //首先将两种都转换成int型进行比较
+    var tempL = parseInt(leftArr[i]);
+    var tempA = parseInt(aligh); //表示自己距左侧的位置
+
+   //当自己的中心距离处于敌机的左右两侧范围内，则表示被击中
+    if(tempL &lt;= (tempA + 20)  &amp;&amp; (tempA + 20) &lt;= (tempL + 40)){
+        arrPic[i].remove(); //碰撞检测，移除敌机的图片
+        arrPic.splice(i,1); //从图片数组中移除图片
+        leftArr.splice(i,1); //从记录敌机左侧距离数组中移除该敌机的距离
+        count++;
+    score.innerHTML = &quot;当前得分 &quot;+count;                        
+    break; //检测到之后直接跳出循环，进行下一个2.2秒的碰撞检测
+       }    
+    }       
+        },2200);
+
+    }
+    checkCrash();
+</code></pre><p>这个游戏还不太完整，没有生成子弹。大部分功能都已经实现了。</p>
+<p>4。效果图如下：</p>
+<p><img src="https://img-blog.csdn.net/20170426112239135?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170426112258197?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>最后附上源代码：<br>html&amp;css</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot;/ &gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fightFlight.js&quot;&gt;&lt;/script&gt;
+    &lt;script src = &quot;../jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #main{
+        width: 300px;
+        height: 500px;
+        border:1px solid red;
+        margin: 0 auto;
+    }
+    #my{
+
+        position: absolute;
+        z-index: 2;
+        top:350px;
+    }
+    #background{
+        position: absolute;
+        z-index: 1;
+        width: 300px;
+        height:500px;
+        border: 1px solid green;
+        background-image: url(../images/background.jpg);
+    }
+    img{
+        position: absolute;
+        z-index: 2;
+    }
+    #enmey{
+        width: 50px;
+        height: 50px;
+    }
+
+    #score{
+        position: absolute;
+        margin-left: 50%;
+        left: 150px;
+        top:100px;
+        width: 160px;
+        font-size: 20px;
+        font-family: &quot;微软雅黑&quot;;
+        font-weight: bold;
+        line-height: 70px;
+        text-align: center;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div id = &quot;main&quot;&gt;
+&lt;canvas id = &quot;background&quot;&gt;&lt;/canvas&gt;
+&lt;canvas id = &quot;my&quot;&gt;&lt;/canvas&gt;
+&lt;div id = &quot;score&quot;&gt;当前得分：0&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>JavaScript</p>
+<pre><code>    var main = document.getElementById(&apos;main&apos;);
+    var my = document.getElementById(&apos;my&apos;);
+    var score = document.getElementById(&quot;score&quot;);
+    var context = my.getContext(&apos;2d&apos;);
+    var crashId;
+    var fallCount = 0;  //记录没被打中的飞机数，如果超过10，游戏结束
+    var aligh = 0 ;
+    var count = 0;  //记录打中的飞机数，即当前得分
+    var leftArr = [];
+    var arrPic = [];
+    var left;
+    var img = new Image();
+    img.src = &quot;../images/self.png&quot;;
+    img.onload = function(){
+        context.drawImage(img,aligh,100);
+    }
+
+        //生成自己，且可以左右移动
+         function move(event){
+
+            event = EventUtil.getEvent(event);
+            context.clearRect(aligh,100,47,47);
+
+          if(event.keyCode == 39 &amp;&amp; aligh &lt; 260 ){
+
+                var img = new Image();
+                img.src = &quot;../images/self.png&quot;;
+                img.onload = function(){
+                    context.drawImage(img, aligh,100);
+                 }
+                    aligh += 10 ;
+            }
+
+        if (aligh == 260){
+                 var img = new Image();
+                 img.src = &quot;../images/self.png&quot;;
+                 img.onload = function(){
+                    context.drawImage(img, 260,100);
+                  }
+             }
+
+         }
+        document.onkeypress = move;
+
+
+        //随机生成敌机
+
+        (function(){
+            var createId = setInterval(function(){
+            var top = 0+&apos;px&apos;; 
+            var enemy  = document.createElement(&quot;img&quot;);
+            enemy.src = &quot;../images/enemy.png&quot;;
+            var randomleft = Math.floor(Math.random() * 300) ;
+            left = randomleft &gt; 260 ? 260 + &apos;px&apos;: randomleft + &apos;px&apos;;
+
+            leftArr.push(left); //保存每个敌机的距左边的距离，方便碰撞检测的计算
+            arrPic.push(enemy); //将每个敌机的图片保存在数组中，方便碰撞检测后移除
+
+            main.appendChild(enemy);
+            enemy.style.paddingLeft = left ;
+            enemy.style.paddingTop = top;
+            var spandom = $(&quot;#main&gt;img:last-child&quot;);//找到最后一个span
+            spandom.animate({&quot;paddingTop&quot;:420},6000,function(){
+            //移除元素
+            this.remove();
+            arrPic.splice(0,1);  //移除图片
+            leftArr.splice(0,1);  //从数组中移除距离
+            fallCount ++;
+            });
+
+            //如果落下的飞机数超过十个没有被打中，则游戏结束
+            if(fallCount &gt;= 10){
+                clearInterval(createId);
+                clearInterval(crashId);
+                alert(&quot;当前得分 ：&quot;+count+&quot; , 很遗憾，游戏结束!&quot;)
+              }
+
+         },1000);
+        })();
+
+
+      //碰撞检测
+        function checkCrash(){
+
+        crashId = setInterval(function(){
+
+            for(var i = 0; i &lt; leftArr.length; i++)
+            {
+                var tempL = parseInt(leftArr[i]);
+                var tempA = parseInt(aligh);
+                if(tempL &lt;= (tempA + 20)  &amp;&amp; (tempA + 20) &lt;= (tempL + 40)){
+
+                    arrPic[i].remove(); //碰撞检测，移除敌机的图片
+                    count++;
+                    score.innerHTML = &quot;当前得分 &quot;+count;
+                        continue;
+                }
+
+            }
+            console.log(count);
+
+        },2200);
+
+    }
+        checkCrash();
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十三、模仿微信打飞机游戏/" data-id="cjl60q3lb001w75tfish6e0hw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/CSS3动画实现背景滚动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          CSS3动画实现背景滚动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例十二、JavaScript实现无穷滚动加载数据</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>AngularJS中实现奇偶行不同样式 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在AngularJS中使用ng-repeat时希望生成的记录中奇偶行存在不同的样式，那么就要用到ng-class。 ngClass ngClass指令允许在HTML标签上通过绑定一个代表所有将被添加的类的表达式去动态的设定CSS类名。 该指令操作有三种不同的方式，根据三种类型的表达式计算结果为： 如果表达式计算的结果是个字符串，那么这个字符串就是一个或多个以空格分隔开的类名；如果表达式计算的结果">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS中实现奇偶行不同样式">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/AngularJS中实现奇偶行不同样式/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在AngularJS中使用ng-repeat时希望生成的记录中奇偶行存在不同的样式，那么就要用到ng-class。 ngClass ngClass指令允许在HTML标签上通过绑定一个代表所有将被添加的类的表达式去动态的设定CSS类名。 该指令操作有三种不同的方式，根据三种类型的表达式计算结果为： 如果表达式计算的结果是个字符串，那么这个字符串就是一个或多个以空格分隔开的类名；如果表达式计算的结果">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS中实现奇偶行不同样式">
+<meta name="twitter:description" content="在AngularJS中使用ng-repeat时希望生成的记录中奇偶行存在不同的样式，那么就要用到ng-class。 ngClass ngClass指令允许在HTML标签上通过绑定一个代表所有将被添加的类的表达式去动态的设定CSS类名。 该指令操作有三种不同的方式，根据三种类型的表达式计算结果为： 如果表达式计算的结果是个字符串，那么这个字符串就是一个或多个以空格分隔开的类名；如果表达式计算的结果">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AngularJS中实现奇偶行不同样式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/AngularJS中实现奇偶行不同样式/" class="article-date">
+  <time datetime="2017-06-03T02:54:47.000Z" itemprop="datePublished">2017-06-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS中实现奇偶行不同样式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在AngularJS中使用ng-repeat时希望生成的记录中奇偶行存在不同的样式，那么就要用到ng-class。</p>
+<p><strong>ngClass</strong></p>
+<p>ngClass指令允许在HTML标签上通过绑定一个代表所有将被添加的类的表达式去动态的设定CSS类名。</p>
+<p>该指令操作有三种不同的方式，根据三种类型的表达式计算结果为：</p>
+<p>如果表达式计算的结果是个字符串，那么这个字符串就是一个或多个以空格分隔开的类名；<br>如果表达式计算的结果是个数组，而且这个数组的元素都是字符串，那么这个数组的每个元素就是一个或多个以空格分隔开的类名；<br>如果表达式的计算结果为一个对象，那么对象的每个键值对的相对应的有真实存在的值将会被当作类名。<br>格式：ng-calss=“value” ng-calss=“{true：’class-one’，false：“classs-two”}[value]”</p>
+<p>value：表达式。</p>
+<p>使用代码：</p>
+<p>Hello World !!!<br>Hello World !!!<br>ngClass可以用于一些动态样式的变化，当满足某某某条件需要改变样式的时候（比如：验证不通过时显示红色边框），这种的在项目开发中用到的地方还是较多的。</p>
+<p><strong>ngClassEven/ngClassOdd</strong></p>
+<p>ngClassEven和ngClassOdd 指令和ngClass工作原理一样，除此之外，他们在ng-repeat里分别对偶（奇）数行有对应的影响。</p>
+<p>格式： ng-calss-even=“value” ng-class-odd=“value”</p>
+<p>value：表达式。</p>
+<p>使用代码：</p>
+<ol start="2">
+<li>
+</li>
+</ol>
+<p>上面这串代码返回的结果就是奇数行的是红色字体，偶数行的是蓝色字体，我们在做表格数据的时候或者列表数据的时候用的较多，而且该指令使用也方便。</p>
+<p><strong>ngStyle</strong></p>
+<p>ngStyle指令允许在HTML元素上设置css样式。</p>
+<p>格式：ng-style=“value” class=”ng-style:value”</p>
+<p>value:表达式。</p>
+<p>使用代码：</p>
+<p>Hello World</p>
+<p>Hello World</p>
+<p>复制代码<br>(function () {<br>angular.module(“Demo”, [])<br>.controller(“testCtrl”, testCtrl);<br>function testCtrl() {<br>this.red = { color: “red” };<br>this.blue = { color: “blue” };<br>};<br>}());<br>复制代码<br>动态设置css样式，这个指令需要和ngClass区分下，ngClass是动态设置css类名，ngStyle是动态设置css样式。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/AngularJS中实现奇偶行不同样式/" data-id="cjl60q3j9000075tf48px9q8g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/overflow-hidden不起作用？/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          overflow:hidden不起作用？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/怎样使footer始终处于页面的底部/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">怎样使footer始终处于页面的底部</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

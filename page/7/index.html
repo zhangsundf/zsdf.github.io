@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zsdf&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zsdfBlog">
+<meta property="og:url" content="http://yoursite.com/zsdf/page/7/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="zsdf&apos;s blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsdfBlog">
+<meta name="twitter:description" content="zsdf&apos;s blog">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-理解Canvas的save-和restore-方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/理解Canvas的save-和restore-方法/" class="article-date">
+  <time datetime="2017-03-24T09:02:42.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/理解Canvas的save-和restore-方法/">理解Canvas的save()和restore()方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>❑ save：用来保存Canvas的状态。save之后，可以调用Canvas的平移、放缩、旋转、错切、裁剪等操作。<br>❑ restore：用来恢复Canvas之前保存的状态。防止save后对Canvas执行的操作对后续的绘制有影响。<br>save和restore要配对使用（restore可以比save少，但不能多），如果restore调用次数比save多，会引发Error</p>
+<p>通俗地讲，canvas中的context.save()就是保存之前的画布状态，然后相当于在一块新画布上进行操作，不用担心影响save()之前的画布。<br>在经过restore()方法之后，就相当于还原了画布，如果之前经历过一次save，那么这时候restore()就相当于把两个画布合并了。前两个画布的内容就相当于处在同一个环境上了。再进行save()的话，就相当于把前两次的画布内容保存，重新又在一块画布上进行绘画。。。<br>可以通过以下代码来更清楚的理解这两个方法：</p>
+<pre><code> &lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;canvas的save和restore&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+
+    window.onload = function(){
+    var canvas = document.getElementById(&apos;canvas&apos;);
+    var ctx = canvas.getContext(&apos;2d&apos;);
+
+    //创建一个画矩形的方法
+    function drawRect(context,color){
+        context.fillStyle = color;
+        context.fillRect(0,0,100,30);
+    }
+
+    //创建一个旋转的函数
+    function rotatDeg(context,deg){
+        var rad = deg*Math.PI/180;
+        context.rotate(rad);
+    }
+
+    //绘制普通的矩形
+    drawRect(ctx,&quot;red&quot;);
+
+    //指定移动，旋转后绘图
+    ctx.save();             //保存前面绘制的矩形状态
+    ctx.translate(100,30);  //将画布的坐标原点移到(100,30)处
+    rotatDeg(ctx,45);       //进行旋转
+    drawRect(ctx,&quot;blue&quot;);   //绘制矩形
+    ctx.restore();          //恢复状态
+
+    //指定移动，旋转后绘图
+    ctx.save();               // 保存前面的状态
+    ctx.translate(200,50);    //移动基点，将画布的中心移到坐标(200,50)处
+    rotatDeg(ctx,90);         //旋转90度
+    drawRect(ctx,&quot;green&quot;);    //绘制矩形
+    ctx.restore();            //恢复状态
+}
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;canvas id = &quot;canvas&quot; style = &quot;width:300px ;height:300px&quot;&gt;&lt;/canvas&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>效果图如下<br><img src="https://img-blog.csdn.net/20170324163332839?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>canvas的左上角为坐标原点。在画第一个红色的矩形时，由于没有调整基点的位置，所以就在（0，0）也就是canvas画布的左上角位置绘出了一个长为100，宽为30的红色矩形。<br>然后绘制第二个蓝色的矩形时进行了一次save().对上一个红色的画布环境进行了保存。此时通过ctx.translate(100,30); 将画布的坐标原点移到了(100,30)处，即(100,30)在当前环境中就相当于（0，0）点。然后调用画矩形的函数drawRect(ctx,”blue”)，因为在函数drawRect中，绘制矩形是以（0，0）为原点，绘制的旋转45度的矩形，然后restore()恢复最初的画布环境。<br>第三个矩形时，对前面的环境又进行了save。然后通过将画布的坐标原点移到（200，50）处，旋转90度，再绘制绿色的矩形。完成后恢复最初的画布环境。<br>如果不用save和restore会是什么样的效果图？</p>
+<p>//绘制第一个矩形<br>drawRect(ctx,”red”);</p>
+<pre><code>//指定移动，旋转后绘图        
+ctx.translate(100,30);  //将画布的坐标原点移到(100,30)处
+rotatDeg(ctx,45);       //进行旋转
+drawRect(ctx,&quot;blue&quot;);   //绘制矩形
+
+//指定移动，旋转后绘图
+ctx.translate(200,50);  
+//移动画布的原点，原点不是移动到了（200，50）处，而是相对于点 （100，30）（因为此时这个点才是画布的原点），向右移动了200像素，向下移动了50像素，就相当于移出了画布外
+rotatDeg(ctx,90);         //旋转90度
+drawRect(ctx,&quot;green&quot;);    //绘制矩形
+</code></pre><p>}<br><img src="https://img-blog.csdn.net/20170324164916167?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>效果图是这样。为什么绿色的矩形不见了？<br>因为在画第二个图形时，没有保存第一个画布的环境，而直接将画布的原点移动到了（100，30）处。再绘制第三个图形时，将坐标原点不是移动到了（200，50）处，而是相对于点（100，30）（因为此时这个点才是画布的原点），向右移动了200像素，向下移动了50像素，就相当于移出了画布外，所以看不到。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/理解Canvas的save-和restore-方法/" data-id="cjl60q3ko001b75tf9l3a5qdy" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-表单的知识点总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/表单的知识点总结/" class="article-date">
+  <time datetime="2017-03-22T15:32:24.000Z" itemprop="datePublished">2017-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/表单的知识点总结/">表单的知识点总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>JavaScript最初的一个应用，就是分担服务器处理表单的责任，打破处处依赖服务器的局面。<br>在HTML中，表单是由<code>&lt;from&gt;</code>元素表示的，而在JavaScript中，表单对应的则是HTMLFormElement类型。HTMLFormElement继承了HTMLElement，因而与其他HTML有相同的默认属性，bugHTMLFormElement也有自己独有的属性和方法：<br>例如：acceptCharset、action、element、enctype、length、method、name、reset、submit、target等。<br><strong>一、取得form元素的引用方法有2种：</strong><br>1. 通过ID获得<br>var form = document.getElementById(‘form1’);<br>2. document.forms 可以取得页面中所有的表单，在这个集合中，可以通过索引值取得特定的表单<br>var form = document.forms[0];//通过索引取得<br>var form = document.forms[“form1”];//通过表单名称获得，不推荐<br><strong>二、提交表单</strong><br>3种方式：<br>1. 通用按钮提交</p>
+<pre><code>&lt;input type = &quot;submit&quot; value = &quot;Submit From&quot; /&gt;
+</code></pre><ol>
+<li><p>自定义按钮提交</p>
+ <button type="submit">Submit Value </button>
+</li>
+<li><p>图像按钮</p>
+<input type="image" src="smile.jpg">
+
+</li>
+</ol>
+<p>组织表单提交可以使用preventDefault()方法，在前几篇详细讲解过该方法的使用<br>通过js来提交表单</p>
+<p>var form = document.getElementById(‘form1’);<br>form.submit();</p>
+<p><strong>三、重置表单</strong><br>重置表单按钮的type的2种方式<br>1. 通用按钮提交</p>
+<pre><code>&lt;input type = &quot;reset&quot; value = &quot;reset From&quot; /&gt;
+</code></pre><ol>
+<li><p>自定义按钮提交</p>
+ <button type="reset">reset Form</button>
+
+</li>
+</ol>
+<p>通过js来重置表单</p>
+<p>var form = document.getElementById(‘form1’);<br>form.reset();<br><strong>四、表单字段</strong><br>每个表单元素都有一个elements属性，该属性表示表单中所有表单元素（字段）的集合。<br>上面讲了获取到表单，现在讲获取表单内的内容<br>var form = document.getElementById(‘form1’);<br>//取得表单中的第一个字段(元素)<br>var filed1 = form.elements[0];</p>
+<p>//取得名为textbox1的字段<br>var filed1 = form.elements[“textbox1”];</p>
+<p>//获得表单中包含字段的数量</p>
+<p>var filed1 = form.elements.length;</p>
+<p>如果表单的多个控件都使用相同的 name，则返回一个NodeList。<br><strong>4.1共有的表单字段属性</strong><br>除了<code>&lt;fieldset&gt;</code>元素外，所以表单字段都有相同的一组属性。<br>例如以下属性<br>disabled \ form\ name \ readOnly \ tabIndex \ type \ value<br>除了form属性外。可以通过js来动态修改其他任何属性<br>var form = document.getElementById(‘form1’);<br>var field1 = form.elements[0];</p>
+<p>//修改value属性<br>field1 .value = “new Value”;</p>
+<p>//检查form属性的值<br>alert(field1 .form == form); //true;</p>
+<p>//把焦点设到当前字段<br>field1.focus();</p>
+<p>//禁用当前字段<br>field1.disabled = true;</p>
+<p>为了避免多次提交表单，可以在提交按钮一次后就禁用提交按钮。</p>
+<p><strong>4.2共有的表单字段方法</strong><br>每个表单字段都有两个方法：focus() 聚焦 和blur()失焦<br>如果表单字段是一个input元素，但其type为hidden，那么就不能使用focus()方法。<br><strong>autofocus</strong>属性，只要元素设置了该属性，就不用使用js中的focus方法了。  </p>
+<p>blur()方法和focus()使用方法一样</p>
+<p><strong>4.3共有的表单字段事件</strong><br>在介绍了共有的表单事件属性，方法后，现在是事件<br>除了支持鼠标、键盘、更改和HTML事件之外，所有的表单字段都支持以下三个事件<br>focus\blur\change<br>当元素失去（获得）焦点时，就会触发blur（focus）事件<br>change:对于input和textarea元素，它们是在失去焦点并且value值改变才会触发该事件；select元素，在其选项改变时触发</p>
+<p><strong>五、文本框脚本</strong><br>在HTML中两种方式表现文本框<code>&lt;input&gt;</code>元素的单行文本框和<code>&lt;textarea&gt;</code>元素多行文本框<br>使用分别如下</p>
+<pre><code>input
+&lt;input type = &quot;text&quot; size = &quot;25&quot;  maxLength = &quot;50&quot; value = &quot;initial value&quot;&gt;
+
+size : 显示25个字符；maxLength 最多输入50个字符
+
+
+textarea
+&lt;textarea rows = &quot;25&quot; cols = &quot;5&quot; &gt;initial value&lt;/textarea&gt;
+</code></pre><p>rows为行数，cols为字符列数（与input中的size类似）不能为在 HTML中为textarea设置最大字符数</p>
+<p><strong>5.1选择文本</strong><br>上述的两个文本框都支持select()方法，用于选择文本框中所有的文本，大多数浏览器在使用select()方法时，都会将焦点设置到文本框中（除oprea）这个方法不接受参数。</p>
+<p>在文本框获得焦点时选择其所有文本是一种常见的做法，特别是在文本框包含默认值的时候，就不必一个个删除文本了。</p>
+<pre><code>EventUtil.addHandler(textbox,&quot;focus&quot;, function(event){
+    event = EventUtil.getEvent(event);
+    var target = EventUtil.getTarget(event);
+    target.select();
+});
+</code></pre><p>取得选择的文本</p>
+<p>通过selectionStart和selectionEnd这两个属性可以取得选择的文本</p>
+<pre><code>function getSelectedText(textbox){
+    return textbox.value.substring(textbox.selectionStart textbox.selectionEnd);
+}
+</code></pre><p>选择部分文本</p>
+<p>1。setSelectionRange(),所有文本框都具有的方法，接受两个参数，类似于substring方法的两个参数。</p>
+<p>//选择所有文本<br>textbox.setSelectionRange(0, textbox.value.length);</p>
+<p>//选择三个字符<br>textbox.setSelectionRange(4, 7);</p>
+<p>2。在IE8及更早的版本中取得部分文本</p>
+<p>var range = textbox.createTextRange();</p>
+<p>//选择所有文本<br>range.collapse(true);<br>range.moveStart(“character”, 0);<br>range.moveEnd(“character”, textbox.value.length);<br>range.select();</p>
+<p>//选择第4到第6个字符<br>range.collapse(true);<br>range.moveStart(“character”, 4);<br>range.moveEnd(“character”,3);<br>range.select();</p>
+<p>3。selectText()接受三个参数</p>
+<p>textbox.value = “Hello World”;</p>
+<p>//选择所有文本<br>selecteText(textbox, 0, textbox.value.length );</p>
+<p>//选择第4到第6个字符<br>selecteText(textbox, 4, 7 );</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/表单的知识点总结/" data-id="cjl60q3kt001k75tfxv8c86nx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-几种常用的排序算法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/几种常用的排序算法总结/" class="article-date">
+  <time datetime="2017-03-21T14:24:13.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/几种常用的排序算法总结/">几种常用的排序算法总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>几种常用的算法的时间空间复杂度<br><img src="https://img-blog.csdn.net/20170321210225591?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>1、冒泡排序<br>思想：比较相邻的元素，如果第一个元素比第二个大，就交换位置，对每一对相邻的元素进行同样的操作。这样最后的元素应该是最大的数。排除最后一个数，针对前面的所有元素进行上述步骤，持续每次在越来越少的元素中找到最大。<br>算法 Java代码：</p>
+<pre><code>    static void popSort(int[] a){
+        for(int i = 0; i &lt; a.length-1; i++){
+            for(int j = i+1; j &lt; a.length; j++){
+                if(a[i]&gt;a[j]){
+                    var temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                }
+            }
+        }
+    }
+最后循环打印输出数组。
+</code></pre><p>注意if中的代码，是经常用到的交换两个元素的位置的常用方法。</p>
+<p>2、快速排序<br>思想：采用分治的策略，从数组选出一个数作为基准。分区过程，将比这个数大的数放在它的右边，比它小的数放在它的左边。再对左右空间重复上述，知道各区间只有一个元素。<br>快排是一种不稳定的排序。<br>算法 代码：</p>
+<pre><code>  static void quickSort(int[] a, int l, int r){
+    if(l &lt; r){
+        int i = l, j = r, x = a[l];
+        while(i &lt; j){
+            while(i &lt; j &amp;&amp; a[j] &gt; x)     j--;
+            if(i &lt; j)     a[i++] = a[j];
+            while(i &lt; j &amp;&amp; a[i] &lt; x)     i++;
+            if(i &lt; j)     a[j--] = a[i];
+        }
+        a[i] = x;
+        quickSort(a,l,i-1);
+        quickSort(a,i+1,r);
+    }
+}
+</code></pre><p>3、选择排序<br>思想：从数据中选择一个最小的与第一个值交换，再从剩下的部分找出最小的与第二个交换，以此类推。。。<br>算法代码 ：</p>
+<pre><code>static void selectSort(int [] a){
+    int minIndex = 0, temp = 0;
+    //minIndex保存最小下标。temp是用于连个元素进行交换的临时变量
+    for(int i = 0; i&lt; a.length-1; i++){
+        minIndex = i;
+
+        for(int j = i+1; j &lt; a.length; j++){
+            if(a[j] &lt; a[minIndex])
+                minIndex = j;
+        }
+        if(minIndex != i){
+            temp = a[minIndex];
+            a[minIndex] = a[i];
+            a[i] = temp;
+        }
+    }
+}　
+</code></pre><p>4、直接插入排序<br>思想：<br><strong>1</strong>. 插入排序， 从第二个数开始，先将第二个数做一个副本放在一旁（变量中）。<br><strong>2</strong> .第二个数同前一个数比较，小于则用前一个数覆盖第二个数， 然后将副本放在前一个数前面<br><strong>3</strong>. 再将第三个数做一个副本取出，第三个数同前一个数比较，小于则用前一个数覆盖第三个数（此时第二个数位置空闲）， 然后用副本同前一个数的前一个数比较，如果小于，则用前一个数的前一个数覆盖在原本的第二个位置上（此时第一个位置空闲）， 将副本放入即可。<br><strong>4</strong>. 将数组中接下来的数依次做与3类似步骤，以3类推将副本往前作比较。直到副本不小于比较的数则该轮插入结束<br><strong>5</strong>. 重复4步骤，直到最后一个数</p>
+<pre><code>public static void insert_Sort(int[] a){
+    int temp;//设置一个临时变量，存放即将要插入的数。
+    for(int i = 1; i &lt; a.length; i ++){
+
+        for(int j = i; j &gt; 0; j --){
+
+            if(a[j]&lt; a[j-1]){
+
+                temp = a[j];
+                a[j] = a[j-1];
+                a[j-1] = temp;
+    //这几行代码是常用的将两个元素进行位置交换的方法
+            }
+        }
+    }
+</code></pre><p><strong>5、归并排序</strong><br>思路:<br>将数组分成二组A，B，如果这二组组内的数据都是有序的，那么就可以很方便的将这二组数据进行排序。如何让这二组组内数据有序了？</p>
+<p>可以将A，B组各自再分成二组。依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后再合并相邻的二个小组就可以了。这样通过先递归的分解数列，再合并数列就完成了归并排序。</p>
+<p>设两个有序的子序列(相当于输入序列)放在同一序列中相邻的位置上：array[low..m]，array[m + 1..high]，先将它们合并到一个局部的暂存序列 temp (相当于输出序列)中，待合并完成后将 temp 复制回 array[low..high]中，从而完成排序。</p>
+<pre><code>//二路归并排序就是先将一个数组一半一半的分成若干个有序的数组，再进行组合
+    static void mergearray(int a[], int first, int mid, int last, int temp[])  
+    {  
+        int i = first, j = mid + 1;  
+        int m = mid,   n = last;  
+        int k = 0; 
+        while (i &lt;= m &amp;&amp; j &lt;= n)  
+        {  
+            if (a[i] &lt;= a[j])  
+                temp[k++] = a[i++];  
+            else  
+                temp[k++] = a[j++];  
+        } 
+        while (i &lt;= m)  
+            temp[k++] = a[i++];  
+       while (j &lt;= n)  
+            temp[k++] = a[j++];  
+      //将临时数组temp中的值复制到原来的数组中
+        for (i = 0; i &lt; k; i++)  
+            a[first + i] = temp[i];  
+    }  
+    //将数组进行多次划分，再进行合并排序
+    static void mergesort(int a[], int first, int last, int temp[])  
+    {  
+        if (first &lt; last)  
+        {  
+            int mid = (first + last) / 2;  
+            mergesort(a, first, mid, temp);    //左边有序  
+            mergesort(a, mid + 1, last, temp); //右边有序  
+            mergearray(a, first, mid, last, temp); //再将二个有序数列合并  
+        }  
+    }  
+    static Boolean MergeSort(int a[], int n)  
+    {  
+        int [] temp= new int[n];  
+        if (temp == null)  
+            return false;  
+        mergesort(a, 0, n - 1, temp);   
+        return true;  
+    }
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/几种常用的排序算法总结/" data-id="cjl60q3ka000t75tfypr2b2vj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-事件委托" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件委托/" class="article-date">
+  <time datetime="2017-03-20T12:08:58.000Z" itemprop="datePublished">2017-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/事件委托/">事件委托</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>为什么要进行事件委托？事件委托是什么？<br>由于事件处理程序可以为现代的web应用程序提供交互能力，因此在添加页面上的事件处理程序的数量没有一个严格的限制，将会直接关系到页面的整体运行性能。导致这个问题是多方面的。首先，每个函数都是对象，都会占用内存；内存中的对象越多，性能就越差。其次，必须事先指定所有事件处理程序而导致的DOM访问次数，会延迟整个页面的交互就绪时间。<br>所以对于“事件处理程序过多”的解决方案就是<strong>事件委托也称为事件代理</strong>。事件委托利用了事件冒泡，指定一个事件处理程序，就可以管理某一类型的所有事件。以下面的代码为例：</p>
+<pre><code>   &lt;ul id = &quot;myLinks&quot;&gt;
+            &lt;li id = &quot;mylink1&quot;&gt;Link1&lt;/li&gt;
+            &lt;li id = &quot;mylink2&quot;&gt;Link2&lt;/li&gt;
+            &lt;li id = &quot;mylink3&quot;&gt;Link3&lt;/li&gt;
+    &lt;/ul&gt;
+
+以上的三个li元素都添加了点击后执行相同的个操作，一般的做法就是获得它们所有的id，再逐个添加事件，如下：
+
+window.onload = function(){
+var list= document.getElementById(&quot;myLinks&quot;);
+var Li = list.getElementsByTagName(&apos;li&apos;);
+for(var i=0;i&lt;Li.length;i++){
+    Li[i].onclick = function(){
+       //do something
+    }
+}
+</code></pre><p>}<br>大多数人都会这样实现。我们看看有多少次的dom操作，首先要找到ul，然后遍历li，然后点击li的时候，又要找一次目标的li的位置，才能执行最后的操作，每次点击都要找一次li；</p>
+<p>那么我们用事件委托的方式做又会怎么样呢？</p>
+<p>window.onload = function(){<br>var list = document.getElementById(“myLinks”);<br>list.onclick = function(){<br>//do something<br>}<br>}<br>在这里找到了<code>&lt;li&gt;</code>的父元素<code>&lt;ul&gt;</code>对父元素添加事件，由于冒泡原理，每次点击<code>&lt;li&gt;</code>的时候就会向父级冒泡，最终触发父级的事件。<br>那么这里是相同的操作，当子元素点击都会触发不同的操作，怎么处理？同样是最上面的例子，很多人可能会这样做：</p>
+<pre><code>var item1 = document.getElementById(&quot;mylink1&quot;);
+var item2 = document.getElementById(&quot;mylink2&quot;);
+var item3 = document.getElementById(&quot;mylink3&quot;);
+
+item1.onclick = function(){
+    alert(&quot;Link1&quot;);
+}
+    item2.onclick = function(){
+    alert(&quot;Link2&quot;);
+}
+    item3.onclick = function(){
+    alert(&quot;Link3&quot;);
+}
+</code></pre><p>如果在一个复杂的web应用程序中，对所有可单击元素都采用这种方式，结果就会有数不清的代码用于添加事件处理程序。<br>所以解决办法就是利用事件委托技术，将同一类型的事件处理程序进行统一管理。<br>利用事件委托，只需在DOM树中尽量高的层次上添加一个事件处理程序。将上面的例子改造为：</p>
+<pre><code>var list = document.getElementById(&quot;myLinks&quot;);
+list.onclick = function(event){
+ var event = event || window.event; 
+ var target = event.target || event.srcElement;
+
+        switch(target.id){
+            case  &quot;mylink1&quot;:
+                  //do something;
+                    break;
+            case  &quot;mylink2&quot;:
+                    //do something;
+                    break;
+
+            case  &quot;mylink3&quot;:
+                    //do something
+                    break;
+    }
+</code></pre><p>Event对象提供了一个属性叫target，可以返回事件的目标节点，我们称为为事件源，也就是说，target就可以表示为当前的事件操作的dom，但是不是真正操作dom，当然，这个是有兼容性的，标准浏览器用ev.target，IE浏览器用event.srcElement。</p>
+<p>我们采用事件委托只为 <code>&lt;ul&gt;</code> 元素添加了一个onclick事件处理程序。所有列表项都是这个元素的子节点，而它们的事件会冒泡，所以单击事件最终会被这个函数处理。用事件委托就可以只用一次dom操作就能完成所有的效果，比上面的性能肯定是要好一些的 。</p>
+<p>当用事件委托的时候，根本就不需要去遍历元素的子节点，只需要给父级元素添加事件就好了，其他的都是在js里面的执行，这样可以大大的减少dom操作，这才是事件委托的精髓所在。<br>最适合事件委托技术的事件包括：click、mousedown、mouseup、keydown、keyup、keypress等。虽然mouseover和mouseout事件也冒泡，但是要适当处理它们并不容易，而且经常需要计算元素的位置。<br>如果可行的话，为document对象添加一个事件处理程序，用以处理页面上发生的某种特定类型的事件，这样做将会有以下优点：<br>1.document对象很快就可以访问，而且可以在页面生命周期的任何时间点上为它添加事件处理程序（无需等待load或者DOMContentLoaded事件），简单地说，只要单击的元素呈现在页面上，就可以立即具备适当的功能。<br>2.页面中设置事件处理程序所需的时间更少。只添加一个事件处理程序 所需的DOM引用更少，所花的时间也更少。<br>3.整个页面占用的内存空间更少，能够提升整体性能。</p>
+<h2 id="移除事件处理程序"><a href="#移除事件处理程序" class="headerlink" title="移除事件处理程序"></a><strong>移除事件处理程序</strong></h2><p>每当将事件处理程序指定给元素时，运行中的浏览器代码与支持页面交互的js代码之间就会建立一个链接，这种连接越多，页面执行起来就越慢。所以就可以采用事件委托技术，限制建立连接的数量，另外在不需要的时候移除事件处理程序。<br>内存中留有那些过时不用的“空事件处理程序”也是造成web应用程序内存性能问题的原因。主要有两个方面：<br>1. 从文档中移除带有事件处理的元素时，可能是 纯粹的DOM操作。例如使用removeChild(),replaceChild()方法，更多的发生在innerHTML替换页面的某一部分的时候，如果带有事件处理的元素被innerHTML替换了，那么原来元素中的事件处理程序可能无法被当做垃圾回收，针对这一事件在，在替换前应手工删除。（手工删除：哪种方法添加的事件就用哪种方法删除，前篇已经讲到了三种事件的添加及移除）<br>2. 卸载页面时也容易导致“空事件处理程序”，如果在页面卸载之前没有清理干净事件处理程序，它们就会滞留在内存中，每次加载完页面再卸载，就会导致内存中滞留的对象数目增加。所以解决办法就是在页面卸载之前通过onunload事件处理程序移除所有事件处理程序。如果要unload的事件进行了委托，那么就再次表现了事件委托的优势——需要跟踪的事件处理程序少，移除越容易。移除时，只要通过onload添加，就通过onunload移除。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件委托/" data-id="cjl60q3k5000n75tfxsox4dhe" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-事件对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件对象/" class="article-date">
+  <time datetime="2017-03-18T03:32:07.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/事件对象/">事件对象</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>事件主要有四种：HTML5、DOM0、DOM2 和 IE方法，在上篇已经叙 述到。而对于事件对象来说主要分为两部分来分析，即DOM级事件对象和IE的事件对象。<br>在说事件对象时首先要了解什么是事件对象。<br>在触发DOM上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件类型以及与其他特定事件相关的信息。例如，鼠标操作导致的事件中，会包含鼠标的位置信息，而键盘操作导致的事件对象中，会包含与按下键有关的信息。所有浏览器都支持event对象，但支持方式不同，所以就要分两部分来讨论。<br><strong>1、DOM中的事件对象：</strong><br>兼容DOM的浏览器会将一个event对象传入到事件处理程序中。无论指定事件用什么方法（DOM0级或者DOM2级），都会传入event对象。</p>
+<pre><code>var btn = doucument.getElementById(&quot;myBtn&quot;);
+        btn.onclick = function(**event**){
+        alert(event.type);       //&quot;click&quot;
+}
+
+btn.addEventListener(&quot;click&quot;,  function(event)){
+        alert(event.type);    //&quot;click&quot;
+},false);
+
+  以上分别是DOM0级和DOM2级事件处理程序，当点击按钮时，都会弹出一个警告框显示由event.type显示的事件类型，在这里为click。
+</code></pre><p>通过HTML5特性定义的事件处理程序，变量event中也保存着event对象。</p>
+<pre><code>&lt;input type = &quot;button&quot; value = &quot;Click me &quot; onclick = alert(event.type)&quot; /&gt;
+</code></pre><p>event对象包含创建它特定事件有关的属性和方法。触发的事件类型不一样，可用的属性和方法也不一样。</p>
+<pre><code>属性/方法               类型               说明
+bubbles             Boolean       表明事件是否冒泡
+cancelable          Boolean       表明是否可以取消事件的默认行为
+currenTarget        Element       其当前事件处理程序正在处理事件的哪个                           元素
+
+defaultPrevented    Boolean       true表示已经调用了preventDefault()
+detail              Integer       与事件相关的细节信息
+eventPhase          Integer       调用事件处理程序的阶段 1表示捕获阶段2表示目标阶段3表示冒泡阶段
+
+preventDefault()    Function      取消事件的默认行为。如果cancelable是true，则可以使用该方法
+
+stopImmediatePropagation()        取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用
+
+stopPropagation()   Function      取消事件的进一步捕获或冒泡，如果bubbles()为true，可使用
+
+target               Element      事件的目标
+trusted              Boolean      为true表示事件是浏览器生成的，false表示事件通过JS创建的
+type                 String       被触发事件的类型
+
+view                AbstractView  与事件关联的抽象视图，等同于发生事件的window对象。   
+</code></pre><p>以上的方法都是可读的。<br>在事件处理程序内部，对象this始终等于currentTarget的值，而target则只包含事件的实际目标，如果直接将事件处理程序指定给了目标元素，则this、currentTarget和target包含相同的值。<br>在需要一个函数处理多个事件时需要type属性。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    var handler = function(event) {
+    switch(event.type){
+    case  &quot;click&quot; :
+         // do something
+         break;
+
+      case  &quot;mouseover&quot; :
+        // do something
+        break;
+
+     case  &quot;mouseout&quot; :
+        // do something
+        break;
+    }
+};
+btn.onclick = handler;
+btn.ommouseover = handler;
+btn.onmouseout = handler;
+</code></pre><p>要阻止特定事件的默认行为，可以使用preventDefault()方法。例如链接的默认行为就是在被单击时导航到特性指定的URL，要取消这一默认行为，那么通过连接的onclick事件处理程序取消。</p>
+<pre><code>var link = document.getElementById(&quot;myLink&quot;);
+link.onclick = function(event){
+    event.preventDefault();
+};
+</code></pre><p><strong>注意只有cancelable为true时才可以使用该方法取消事件的默认行为；</strong><br>另外stopPropagation()方法用于停止事件在DOM层次中的传播，即取消事件的进一步捕获或者冒泡。例如，直接添加到一个按钮的事件处理程序可以调用stopPropagation()，从而避免触发注册在document.body上面的事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    btn.onclick = function(event){
+        alert(&quot;Clicked&quot;);
+    event.stopPropagation();
+};
+
+document.body.onclick = function(event){
+    alert(&quot;body Clicked&quot;);
+}
+</code></pre><p>在上面的程序中，如果不使用event.stopPropagation();方法，那么在点击了按钮之后事件会冒泡到document.body上，就相当于点击了按钮会出现两个弹出框。但如果使用了event.stopPropagation();在执行了btn上的事件后，就阻止了沿着DOM层冒泡，所以就不会触发注册在body上的事件。<br>只有在事件处理程序执行期间，event对象才会存在，一旦事件处理程序完成，event对象就会被销毁。<br><strong>2、IE中的事件对象</strong><br>IE的对象也会包含与创建它的事件相关的属性和方法</p>
+<p><strong>cancelBubble()</strong><br>默认值为false，但将其设置为true就可以取消事件的冒泡 （与DOM中的event.stopPropagation();方法的作用相同）但这个是可以写的</p>
+<p><strong>returnValue</strong><br>默认为true，但将其设置为false就可以取消事件的默认行为。（与DOm中的preventDefault()方法的用法相同）但这个是可以写的</p>
+<p><strong>srcElement</strong><br>事件的目标，与DOM中的target属性相同。</p>
+<p><strong>type</strong><br>被触发事件的类型<br>因为事件处理作用域是根据指定它的方式来确定，不能认为this会始终等于事件目标，最好使用event.srcElement比较保险。<br>returnValue属性与DOM中的preventDefault()方法相同；将returnValue值设置为false就可以阻止事件的默认行为</p>
+<pre><code>var link = document.getElementById(&quot;myLink&quot;);
+link.onclick = function(event){
+    event.returnValue = false;
+};
+</code></pre><p>cancelBubble属性与DOM中的stopPropagation（）方法的作用相同，都是用来停止事件冒泡的(可以说停止事件向上一级传播)，由于IE不支持事件捕获，所以只能阻止事件冒泡，但stopPropagation可以同时取消事件捕获和事件冒泡</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    btn.onclick = function(event){
+        alert(&quot;Clicked&quot;);
+    window.event.cancelBubble = true;
+};
+
+document.body.onclick = function(event){
+    alert(&quot;body Clicked&quot;);
+};
+</code></pre><p>在通过onclick事件处理程序中将cancelBubble设置为true就可以阻止事件冒泡而触发的body中注册的事件处理程序。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件对象/" data-id="cjl60q3k8000q75tfhyrqbk5e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-事件处理程序和跨浏览器的事件处理程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件处理程序和跨浏览器的事件处理程序/" class="article-date">
+  <time datetime="2017-03-17T10:04:36.000Z" itemprop="datePublished">2017-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/事件处理程序和跨浏览器的事件处理程序/">事件处理程序和跨浏览器的事件处理程序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>事件分为：HTML5、DOM0级、DOM2级、IE方法；<br><strong>1、HTML5事件处理程序:</strong></p>
+<p><code>&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;alert(&quot;clicked&quot;)&quot;&gt;</code><br>调用在页面其它地方</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+function showMessage(){
+alert(&quot;Hello World&quot;);
+}
+&lt;/scri&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;showMessage()&quot; /&gt;
+</code></pre><p>HTML5义的事件处理程序中有两个缺点：<br>1、存在一个时差问题。因为用户可能在HTML元素一出现在页面上时就触发相应的事件，但当时的事件处理程序有可能尚不具备执行条件。以上一个例子为例。假设showMessage函数在按钮下方、页面的最底部定义的。如果用户在页面解析前就单击了按钮，就会引发错误。因此很多HTML事件处理程序都封装在一个try-catch语句中。</p>
+<pre><code>&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;try{
+showMessage();}catch(ex){}&quot; /&gt;
+
+2、HTML与JavaScript的耦合性太高，如果要更换事件处理程序就要更改两处的代码。HTML与JavaScript。而这也是许多开发人员摒弃HTML事件处理程序，转而使用JavaScript指定时间程序的原因所在。
+</code></pre><p><strong>2、DOM0级事件处理程序：</strong>至今仍为所有现代浏览器支持，一是简单，二是有跨浏览器的优势。<br>要使用JavaScript指定事件处理程序，首先要取得一个操作对象的引用：</p>
+<pre><code>var btn = document.getElementById(&quot;Mydiv&quot;);
+                btn.onclick = function(){
+                    alert(“hello world”);
+                }
+
+var btn = document.getElementById(&quot;Mydiv&quot;);
+                btn.onclick = function(){
+                    alert(thid.id); //Mydiv
+                }
+</code></pre><p>也可以删除通过DOM0级方法指定的事件处理程序，即将事件处理的属性值设为null。<br>btn.onclick = null;<br>将事件处理程序设置为null之后，单击按钮不会有任何反应。</p>
+<p><strong>3、DOM2级事件处理程序</strong>：<br>用于指定和删除事件处理程序 的操作addEventListener()、removeEventListener().它们都接受三个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。布尔值如果为true，则在捕获阶段调用事件处理程序，反之在冒泡阶段调用事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(this.id);
+},false);
+</code></pre><p>上面代码为一个按钮添加了onclick事件，且在冒泡阶段被触发（最后一个参数是false）与DOM0级方法一样，这里添加的事件处理程序也在其依附的元素的作用域中运行。DOM2级方法添加事件的处理程序的好处是可以添加多个事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(this.id);
+},false);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(&quot;Hello world&quot;);
+},false);
+</code></pre><p>首先会显示元素的id，其次会显示helloworld消息。<br>用.addEventListener()添加的事件只能用removeEventListener().移除，并且通过addEventListener()添加的匿名函数无法移除。如上面的函数就是匿名函数，通过removeEventListener()无法移除，此时需要将函数赋给变量，再执行以下函数：</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+        //excute code
+} 
+btn.addEventListener(&quot;click&quot;,handler,false);
+btn.removeEventListener(&quot;click&quot;,handler,false);
+注：addEventListener()、removeEventListener().必须使用相同的参数
+</code></pre><p><strong>4、IE事件处理程序</strong>用于指定和删除事件处理程序 的操作attachEvent()、detachEvent()<strong>接受两个参数：</strong>事件处理程序名称和事件处理函数。添加的事件处理程序都会被添加到冒泡阶段。<br>与DOM2级事件处理程序一样，可以为同一个元素添加多个事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.attachEvent (&quot;onclick&quot;, function(){
+            alert(this.id);
+});
+btn.attachEvent(&quot;onclick&quot;, function(){
+            alert(&quot;Hello world&quot;);
+});
+</code></pre><p><strong>注意第一个参数是onclick而不是DOM2中的click</strong><br>这两个事件是以相反的顺序被执行。即先输出Hello World 后输出元素的ID；<br>detachEvent()移除事件处理程序与DOM2中是一样的。都不能用来移除匿名函数</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+        //excute code
+} 
+btn.attachEvent(&quot;onclick&quot;,handler);
+btn.detachEvent(&quot;onclick&quot;,handler);
+</code></pre><p>在了解了以上四种事件处理程序，由于浏览器对事件处理程序的支持度不一样，所以写一个跨浏览器的事件处理程序是有必要的。<br>首先是添加事件处理程序的方法我们在这儿创建一个名为addHandler(),它的职责是视情况使用DOM0或者DOM2或者IE方法来添加事件（在这里不讨论HTML5事件处理程序）。这个方法属于一个名叫EventUtil(名字可以自己定义)的对象，addHandler()方法接受三个参数：要操作的元素、事件名称、和事件处理函数。<br>另一个函数是removeHandler(),它也接受相同的参数。职责是移除之前添加的事件处理程序（无论该事件处理程序采用什么方式添加到元素中的，如果其他方法无效，默认采用DOM0级方法）</p>
+<p>此时可以写一个跨浏览器的事件处理程序的添加和删除函数了。</p>
+<pre><code>var EventUtil = {
+        addHandler: function(element, type, handler){
+            //浏览器是否支持DOM2
+                if(elelment.addEventListener){
+                element.addEventListener(type, handler, false);
+        } 
+        //浏览器是否支持IE
+    else if(element.attachEvent){
+                element.attachEvent(&quot;on&quot;+type, handler);
+        }
+        //如果以上都不支持，采用DOM0级事件处理程序
+        else{
+                element[&quot;on&quot;+type] = handler;
+        }
+    },
+    、
+    removeHandler : function(element, type, handler){
+            if(element.removeEventListener){
+                element.removeEventListener(type, handler, false);
+            } else if(element.detachEvent){
+                element.detachEvent(&quot;on&quot;+type, handler);
+            }else{
+                    element[&quot;on&quot; + type] = null;
+        }
+    }
+};
+</code></pre><p>可以像下面这样使用EventUtil对象</p>
+<pre><code>var btn  = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+//excute code
+} ;
+//创建一个事件处理程序
+EventUtil.addHandler(btn, &quot;click&quot;, handler);
+//省略一些代码
+//删除一个事件处理程序
+EventUtil.removeHandler(btn, &quot;click&quot;, handler);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件处理程序和跨浏览器的事件处理程序/" data-id="cjl60q3k7000p75tf8xjq9ndc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js闭包和作用域" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/js闭包和作用域/" class="article-date">
+  <time datetime="2017-03-16T13:07:13.000Z" itemprop="datePublished">2017-03-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/js闭包和作用域/">js闭包和作用域</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>闭包就是有权访问另一个函数作用域中的变量的函数，这个函数就叫做闭包。<br>在了解什么是js的闭包时，我们需要引入另外几个概念：作用域链,垃圾(内存)回收机制,函数嵌套,等等.。</p>
+<p>作用域链：就是函数在定义的时候创建的,而不是在执行的时候确定。用于寻找使用到的变量的值的一个索引,而他内部的规则是,把函数自身的本地变量放在最前面,把自身的父级函数中的变量放在其次,把再高一级函数中的变量放在更后面,以此类推直至全局对象为止.当函数中需要查询一个变量的值的时候,js解释器会去作用域链去查找,从最前面的本地变量中先找,如果没有找到对应的变量,则到下一级的链上找,一旦找到了变量,则不再继续.如果找到最后也没找到需要的变量,则解释器返回undefined.</p>
+<p>Javascript的垃圾回收机制<br>在Javascript中，如果一个对象不再被引用，那么这个对象就会被GC回收。如果两个对象互相引用，而不再被第3者所引用，那么这两个互相引用的对象也会被回收。<br>function a() {<br>var i = 0;<br>function b() { alert(++i); }<br>return b;<br>}<br>var c = a();<br>c();<br>因为函数a被b引用，b又被a外的c引用，这就是为什么函数a执行后不会被回收的原因。<br>所以js解释器在遇到函数定义的时候,会自动把函数和他可能使用的变量(包括本地变量和父级和祖先级函数的变量(自由变量))一起保存起来.也就是构建一个闭包,这些变量将不会被内存回收器所回收,只有当内部的函数不可能被调用以后(例如被删除了,或者没有了指针),才会销毁这个闭包,而没有任何一个闭包引用的变量才会被下一次内存回收启动时所回收.</p>
+<p>Javascript语言的特殊之处，就在于函数内部可以直接读取全局变量。</p>
+<p>Js代码</p>
+<p>var world=”Hello World”;<br>function f1(){<br>　　　alert(world);　<br>　　}<br>f1();//Hello World<br>但是在函数外部自然无法读取函数内的局部变量。<br>Js代码<br>function f1(){<br>　　　　var world=”Hello World”;<br>　　}<br>　　alert(world); // error<br>这里有一个地方需要注意，函数内部声明变量的时候，一定要使用var命令。如果不用的话，你实际上声明了一个全局变量！</p>
+<p>在上面函数f1中的局部变量在外部是访问不到的。这是因为函数在定义的时候创建的作用域仅仅存在于f1的内部。我们想在函数的外部还能访问到函数内部的局部变量，这时候就需要在函数的内部再定义一个函数。</p>
+<p>　function f1(){<br>　　　　var word = “Hello World”;<br>　　　　function f2(){<br>　　　　　　alert(word); 　//Hello World　　　<br>　　}<br>　　}<br>　在上面的代码中，函数f2就被包括在函数f1内部，这时f1内部的所有局部变量，对f2都是可以访问得到的。<br>子对象会一级一级地向上寻找所有父对象的变量。所以，父对象的所有变量，对子对象都是可见的，反之则不成立。</p>
+<p>既然f2可以读取f1中的局部变量，那么只要把f2作为返回值，我们不就可以在f1外部读取它的内部变量了吗！<br>var world = “nihao”;<br>　function f1(){<br>　　　　var word = “Hello World”;<br>　　　　function f2(){<br>　　　　　　alert(word); 　　　　<br>　　}<br>　　return f2;<br>　　}<br>　　var result = f1();<br>　　result();//Hello World<br>　我们可以理解为闭包其实就是定义在一个函数内部的函数，即可以访问其他函数内部变量的函数。闭包就是将函数内部和函数外部连接起来的一座桥梁。如上个例子中的f2函数就是一个闭包。<br>　我们知道，js的每个函数都是一个个小黑屋，它可以获取外界信息，但是外界却无法直接看到里面的内容。将变量 word 放进小黑屋里，除了 f2 函数之外，没有其他办法能接触到变量 word，而且在函数 f1 外定义同名的变量 word 也是互不影响的，这就是所谓的增强“封装性”。<br>而之所以要用 return 返回函数标识f2，是因为在 f1 函数外部无法直接调用 f2 函数，所以 return f2 与外部联系起来。</p>
+<p>所谓“闭包”，就是在构造函数体内定义另外的函数作为目标对象的方法函数，而这个对象的方法函数反过来引用外层函数体中的临时变量。这使得只要目标 对象在生存期内始终能保持其方法，就能间接保持原构造函数体当时用到的临时变量值。</p>
+<p>使用闭包的注意点<br>1）由于闭包会使得函数中的变量都被保存在内存中，内存消耗很大，所以不能滥用闭包，否则会造成网页的性能问题，在IE中可能导致内存泄露。解决方法是，在退出函数之前，将不使用的局部变量全部删除。<br>2）闭包会在父函数外部，改变父函数内部变量的值。所以，如果你把父函数当作对象（object）使用，把闭包当作它的公用方法（Public Method），把内部变量当作它的私有属性（private value），这时一定要小心，不要随便改变父函数内部变量的值。</p>
+<p>闭包的应用场景<br>1、保护函数内的变量安全。以最开始的例子为例，函数a中i只有函数b才能访问，而无法通过其他途径访问到，因此保护了i的安全性。<br>2、在内存中维持一个变量。（因为产生闭包，内存不会轻易被收回）<br>3、通过保护变量的安全实现JS私有属性和私有方法（不能被外部访问）</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/js闭包和作用域/" data-id="cjl60q3k0000j75tfw81ssext" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例四、2-用Canvas画一片星空" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例四、2-用Canvas画一片星空/" class="article-date">
+  <time datetime="2017-03-15T13:15:30.000Z" itemprop="datePublished">2017-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例四、2-用Canvas画一片星空/">案例四、2.用Canvas画一片星空</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在知道用Canvas元素画一个五角星时，那么画一片星空只需要将画五角星的函数加入到一个星星数目的循环中就可以了。  </p>
+<p>画一片星空  </p>
+<p>window.onload = function(){<br>var canvas,context;<br>canvas = document.getElementById(‘canvas’);<br>context = canvas.getContext(“2d”);//获取画布的上下文环境<br>canvas.width = 400;<br>canvas.height = 400;<br>context.fillStyle = “black”;<br>context.fillRect(0,0,canvas.width,canvas.height); //填充矩形<br>for(var i = 0; i&lt; 200; i++){ //画200个星星<br>var r = Math.random() <em> 5 + 10;<br>//使用Math.random()，控制星星外部圆的大小，最小为0+10， 最大接近5+10；<br>var x = Math.random() </em> canvas.width; //设置星星的中心横坐标位置<br>var y = Math.random() <em> canvas.height; // 星星中心纵坐标位置<br>var a = Math.random() </em> 180; //旋转角度<br>drawStar(context, r, r/2, x, y, a); //画星星<br>}<br>//画星星的函数<br>function drawStar(ctx, R, r, x, y,a){<br>ctx.beginPath();<br>ctx.fillStyle = “yellow”;<br>//星星的填充颜色<br>for(var i = 0; i &lt; 5; i ++){<br>ctx.lineTo( Math.cos((18+i*72-a)/180*Math.PI)<em>R+x,<br>-Math.sin((18+i\</em>72-a)/180*Math.PI)<em>R+y<br>);<br>ctx.lineTo(Math.cos((54+i\</em>72-a)/180*Math.PI)<em>r+x,<br>-Math.sin((54+i\</em>72-a)/180*Math.PI)*r+y<br>);<br>}<br>ctx.closePath();<br>ctx.fill();//进行填充<br>}<br>}  </p>
+<p><img src="https://img-blog.csdn.net/20170317135350130?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>Canva中context.strokeStyle = “color” ;表示给相应的元素描边。<br>context.fillStyle = “color” ; 填充元素。<br>前面两个只是声明填充和描边的样式，真正执行还在context.fill（）和context.stroke（）这两个方法上。<br>给元素填充颜色，一般都是先填充后描边，否则填充颜色会覆盖描边的颜色。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例四、2-用Canvas画一片星空/" data-id="cjl60q3km001875tfbygonu1w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例四、1-使用Canvas画一个五角星" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例四、1-使用Canvas画一个五角星/" class="article-date">
+  <time datetime="2017-03-15T13:01:00.000Z" itemprop="datePublished">2017-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例四、1-使用Canvas画一个五角星/">案例四、1.使用Canvas画一个五角星</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在使用Cnavas元素画一个五角星时，最难的应该是五角星角的坐标。<img src="https://img-blog.csdn.net/20170315204048485?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这就是一个五角星的坐标定位"><br>首先在Canvas元素中，y轴是向下为正。<br>由于五角星有五个角，圆为360度，所以角与角之间的距离应该为72度。<br>此时的五角星的十个点的坐标当成是在内外两个圆上排列。读过高中的同学都应该明白图中标示出来的四个点的坐标是怎样算出来的。由于Canvas元素中y轴向下为正，所以sin的值为负。<br>然后开始画五角星的顶点，用一个循环就可以：</p>
+<p>function drawStar(cxt, R, r, x, y){<br>//ctx为传入的上下文环境，R为外面大圆的半径，r为内部小圆的半径，x为五角星中心的横坐标，y为五角星中心的纵坐标。<br>for(var i = 0; i &lt; 5; i ++){<br>ctx.beginPath();<br>ctx.fillStyle = “yellow”;<br>ctx.lineTo( Math.cos((18+i*72)/180*Math.PI)<em>R+x,<br>-Math.sin((18+i\</em>72)/180*Math.PI)<em>R+y<br>);<br>ctx.lineTo(Math.cos((54+i\</em>72)/180*Math.PI)<em>r+x,<br>-Math.sin((54+i\</em>72)/180*Math.PI)<em>r+y<br>);<br>}<br>ctx.closePath();<br>ctx.fill();<br>}<br>由于Math.cos(),接受的是弧度值，所以我们需要将角度转换为弧度。即：<br>弧度值 = 角度/180</em>π；</p>
+<p>切记：当我们要画一个封闭的图形时，beginPath()与closePath(),是必须要有的。<br>当我们想要让所画的五角星旋转一定的角度时，可以传进一个参数在上面的函数中。</p>
+<p>function drawStar(cxt, R, r, x, y, a){<br>//ctx为传入的上下文环境，R为外面大圆的半径，r为内部小圆的半径，x为五角星中心的横坐标，y为五角星中心的纵坐标。a为旋转的角度<br>for(var i = 0; i &lt; 5; i ++){<br>ctx.beginPath();<br>ctx.fillStyle = “yellow”;<br>ctx.lineTo( Math.cos((18+i*72-a)/180*Math.PI)<em>R+x,<br>-Math.sin((18+i\</em>72-a)/180*Math.PI)<em>R+y<br>);<br>ctx.lineTo(Math.cos((54+i\</em>72-a)/180*Math.PI)<em>r+x,<br>-Math.sin((54+i\</em>72-a)/180*Math.PI)*r+y<br>);<br>}<br>ctx.closePath();<br>ctx.fill();<br>}<br>这样可以让所画的五角星有一个旋转角度，不再那么死板了。那么接下来考虑如果要画很多个大小不一的星星怎样画。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例四、1-使用Canvas画一个五角星/" data-id="cjl60q3km001975tfotzcmdgf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ajax-异步的javascript和xml" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/ajax-异步的javascript和xml/" class="article-date">
+  <time datetime="2017-03-14T12:17:07.000Z" itemprop="datePublished">2017-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/ajax-异步的javascript和xml/">ajax 异步的javascript和xml</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>是一种用于创建快速动态网页的技术。<br>它不是一种编程语言，而是一种规范。<br>Ajax的主要功能是：通过在后台与服务器进行少量数据交换。</p>
+<p>也就是说，使用AJAX 可以使网页实现异步更新。举一个最常见的例子：</p>
+<p>当您在谷歌的搜索框输入关键字时，JavaScript 会把这些字符发送到服务器，然后服务器会返回一个搜索建议的列表。</p>
+<p>这意味着可以在不重新加载整个网页的情况下，对网页的某部分进行更新。</p>
+<p>XMLHttpRequest和web服务器进行数据的一步交换。运用javascri操作DOM（文档对象模型）来实现动态局部刷新页面。</p>
+<p>var request ;<br>if(window.XMLHttpRequest)<br>{<br>request = new XMLHttpRequest();<br>}else{<br>request = new ActiveXObject(“Mircrosoft.XMLHttp”); //IE5,IE6<br>}</p>
+<p>Ajax-Http请求<br>Http是计算机通过网络进行通信的规则，无状态协议(不建立持久链接)。<br>一个完整的Http请求过程分为七个步骤:<br>1. 建立TCP链接；<br>2.web浏览器向web服务器端发送请求命令；<br>3. web浏览器发送请求头信息；<br>4..web服务器应答；<br>5.web服务器发送应答头信息；<br>6. web服务器向浏览器发送数据；<br>7. web服务器关闭TCP链接；<br>一个HTTP一般由四部分组成：<br>1、请求的方法或动作<br>2、正在请求的URL（请求的地址）<br>3、请求头，包含一些客户端环境信息，身份验证信息等<br>4、请求体，请求正文，客户提交的查询字符串信息，表单信息等<br>get和post的区别：<br>get：一般用于信息获取，使用URL传递参数，不安全，对发送信息的数量有限制。<br>post：一般用于修改服务器上的资源，对发送信息的数量无限制。<br>一个HTTP相应一般有三部分组成<br>1、一个数字或者文字组成的状态 码，用来显示请求成功还是失败<br>2、响应头，响应头也和请求头一样包含许多有用的信息，例如服务器类型、日期时间、内容类型、和长度等；<br>3、响应体，也就是响应正文</p>
+<p>XMLHttpRequest发送HTTP请求(向服务器发送请求)<br>open（method,url,async）;最后一个参数拜师同步还是异步发送，ture为异步，false为同步；<br>用get发送数据，直接在地址栏做修改即可。</p>
+<p>request.open(“GET”,”demo_get2.as？name=王二狗&amp; sex=男”,true);<br>xmlhttp.send();</p>
+<p>用post发送数据<br>request.open(“get”,”get.php”,true);<br><strong>request.setRequestHeader(“Content-type”, “application/x-www-form-urlencoded”);</strong><br>request.send(“name = &amp;sex= 男”);</p>
+<p><strong>setRequestHeader(header,value)：向请求添加 HTTP 头，其中header: 规定头的名称，value: 规定头的值。</strong></p>
+<p>如需获得来自服务器的响应，XMLHttpRequest 的以下方法可以取得服务器的响应<br>responseText：获得字符串形式的响应数据<br>responseXML：获得XML形式的响应数据<br>status和statusText：以数字和文本形式返回HTTP状态码；<br>getAllResponseHeader(): 获取所有的响应报头<br>getResponseHeader(): 查询响应中的某个字段的值</p>
+<p>readyState：的值<br>0、open还没有调用<br>1、open已调用<br>2、已接收头<br>3、请求处理中<br>4、请求完成</p>
+<p>if(request.ReadyState == 4 &amp;&amp; request.status == 200)<br>{<br>//做一些事情<br>request.responseText;<br>}</p>
+<p>下面常见的http(request.status)状态码：<br>100：这个状态码是告诉客户端应该继续发送请求，这个临时响应是用来通知客户端的，部分的请求服务器已经接受，但是客户端应继续发送求请求的剩余部分，如果请求已经完成，就忽略这个响应，而且服务器会在请求完成后向客户发送一个最终的结果</p>
+<p>200：这个是最常见的http状态码，表示服务器已经成功接受请求，并将返回客户端所请求的最终结果</p>
+<p>202：表示服务器已经接受了请求，但是还没有处理，而且这个请求最终会不会处理还不确定</p>
+<p>204：服务器成功处理了请求，但没有返回任何实体内容 ，可能会返回新的头部元信息</p>
+<p>301：客户端请求的网页已经永久移动到新的位置，当链接发生变化时，返回301代码告诉客户端链接的变化，客户端保存新的链接，并向新的链接发出请求，已返回请求结果</p>
+<p>404：请求失败，客户端请求的资源没有找到或者是不存在</p>
+<p>500：服务器遇到未知的错误，导致无法完成客户端当前的请求。</p>
+<p>503：服务器由于临时的服务器过载或者是维护，无法解决当前的请求，以上http状态码是服务器经常返回的状态代码，用户只能通过浏览器的状态了解服务器是否正常运行，一般除了错误的状态码，都不会看到服务器的状态码的，</p>
+<p><strong>使用 Callback 函数</strong><br>callback 函数是一种以参数形式传递给另一个函数的函数。<br>如果您的网站上存在多个 AJAX 任务，那么您应该为创建 XMLHttpRequest 对象编写一个标准的函数，并为每个 AJAX 任务调用该函数。</p>
+<p>该函数调用应该包含 URL 以及发生 onreadystatechange 事件时执行的任务（每次调用可能不尽相同）：<br>function myFunction()<br>{<br>loadXMLDoc(“ajax_info.txt”,function()<br>{<br>if (xmlhttp.readyState==4 &amp;&amp; xmlhttp.status==200)<br>{<br>document.getElementById(“myDiv”).innerHTML=xmlhttp.responseText;<br>}<br>});<br>}</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/ajax-异步的javascript和xml/" data-id="cjl60q3jm000775tfr4772hu6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/zsdf/page/6/">&laquo; Prev</a><a class="page-number" href="/zsdf/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zsdf/page/5/">5</a><a class="page-number" href="/zsdf/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/zsdf/page/8/">8</a><a class="extend next" rel="next" href="/zsdf/page/8/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

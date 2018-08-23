@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例四、2.用Canvas画一片星空 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在知道用Canvas元素画一个五角星时，那么画一片星空只需要将画五角星的函数加入到一个星星数目的循环中就可以了。   画一片星空   window.onload = function(){var canvas,context;canvas = document.getElementById(‘canvas’);context = canvas.getContext(“2d”);//获取画布的上下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例四、2.用Canvas画一片星空">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例四、2-用Canvas画一片星空/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在知道用Canvas元素画一个五角星时，那么画一片星空只需要将画五角星的函数加入到一个星星数目的循环中就可以了。   画一片星空   window.onload = function(){var canvas,context;canvas = document.getElementById(‘canvas’);context = canvas.getContext(“2d”);//获取画布的上下">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170317135350130?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例四、2.用Canvas画一片星空">
+<meta name="twitter:description" content="在知道用Canvas元素画一个五角星时，那么画一片星空只需要将画五角星的函数加入到一个星星数目的循环中就可以了。   画一片星空   window.onload = function(){var canvas,context;canvas = document.getElementById(‘canvas’);context = canvas.getContext(“2d”);//获取画布的上下">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170317135350130?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例四、2-用Canvas画一片星空" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例四、2-用Canvas画一片星空/" class="article-date">
+  <time datetime="2017-03-15T13:15:30.000Z" itemprop="datePublished">2017-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例四、2.用Canvas画一片星空
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在知道用Canvas元素画一个五角星时，那么画一片星空只需要将画五角星的函数加入到一个星星数目的循环中就可以了。  </p>
+<p>画一片星空  </p>
+<p>window.onload = function(){<br>var canvas,context;<br>canvas = document.getElementById(‘canvas’);<br>context = canvas.getContext(“2d”);//获取画布的上下文环境<br>canvas.width = 400;<br>canvas.height = 400;<br>context.fillStyle = “black”;<br>context.fillRect(0,0,canvas.width,canvas.height); //填充矩形<br>for(var i = 0; i&lt; 200; i++){ //画200个星星<br>var r = Math.random() <em> 5 + 10;<br>//使用Math.random()，控制星星外部圆的大小，最小为0+10， 最大接近5+10；<br>var x = Math.random() </em> canvas.width; //设置星星的中心横坐标位置<br>var y = Math.random() <em> canvas.height; // 星星中心纵坐标位置<br>var a = Math.random() </em> 180; //旋转角度<br>drawStar(context, r, r/2, x, y, a); //画星星<br>}<br>//画星星的函数<br>function drawStar(ctx, R, r, x, y,a){<br>ctx.beginPath();<br>ctx.fillStyle = “yellow”;<br>//星星的填充颜色<br>for(var i = 0; i &lt; 5; i ++){<br>ctx.lineTo( Math.cos((18+i*72-a)/180*Math.PI)<em>R+x,<br>-Math.sin((18+i\</em>72-a)/180*Math.PI)<em>R+y<br>);<br>ctx.lineTo(Math.cos((54+i\</em>72-a)/180*Math.PI)<em>r+x,<br>-Math.sin((54+i\</em>72-a)/180*Math.PI)*r+y<br>);<br>}<br>ctx.closePath();<br>ctx.fill();//进行填充<br>}<br>}  </p>
+<p><img src="https://img-blog.csdn.net/20170317135350130?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>Canva中context.strokeStyle = “color” ;表示给相应的元素描边。<br>context.fillStyle = “color” ; 填充元素。<br>前面两个只是声明填充和描边的样式，真正执行还在context.fill（）和context.stroke（）这两个方法上。<br>给元素填充颜色，一般都是先填充后描边，否则填充颜色会覆盖描边的颜色。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例四、2-用Canvas画一片星空/" data-id="cjl60q3km001875tfbygonu1w" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/js闭包和作用域/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          js闭包和作用域
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例四、1-使用Canvas画一个五角星/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例四、1.使用Canvas画一个五角星</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

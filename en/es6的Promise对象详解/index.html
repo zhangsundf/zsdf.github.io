@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>es6的Promise对象详解 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="秋招已经进入了尾声，这两个月以来一直忙着找工作，没有时间看新东西，这几天得空将es6的Promise对象又细细的理解了一下，所以下来整理一下我对Promise对象以及用法的理解。 什么是Promise？为什么要使用Promise？当我们使用js的异步调用时通常习惯使用回调函数，这样的代码简单便于理解，但是当回调嵌套的时候就会造成代码混乱，不好梳理，比如： function fun1(arg1,f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="es6的Promise对象详解">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/es6的Promise对象详解/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="秋招已经进入了尾声，这两个月以来一直忙着找工作，没有时间看新东西，这几天得空将es6的Promise对象又细细的理解了一下，所以下来整理一下我对Promise对象以及用法的理解。 什么是Promise？为什么要使用Promise？当我们使用js的异步调用时通常习惯使用回调函数，这样的代码简单便于理解，但是当回调嵌套的时候就会造成代码混乱，不好梳理，比如： function fun1(arg1,f">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20171027095753343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="es6的Promise对象详解">
+<meta name="twitter:description" content="秋招已经进入了尾声，这两个月以来一直忙着找工作，没有时间看新东西，这几天得空将es6的Promise对象又细细的理解了一下，所以下来整理一下我对Promise对象以及用法的理解。 什么是Promise？为什么要使用Promise？当我们使用js的异步调用时通常习惯使用回调函数，这样的代码简单便于理解，但是当回调嵌套的时候就会造成代码混乱，不好梳理，比如： function fun1(arg1,f">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20171027095753343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-es6的Promise对象详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/es6的Promise对象详解/" class="article-date">
+  <time datetime="2017-10-27T04:06:45.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      es6的Promise对象详解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>秋招已经进入了尾声，这两个月以来一直忙着找工作，没有时间看新东西，这几天得空将es6的Promise对象又细细的理解了一下，所以下来整理一下我对Promise对象以及用法的理解。</p>
+<p>什么是Promise？为什么要使用Promise？<br>当我们使用js的异步调用时通常习惯使用回调函数，这样的代码简单便于理解，但是当回调嵌套的时候就会造成代码混乱，不好梳理，比如：</p>
+<pre><code>function fun1(arg1,function(){
+// dosomething 
+})
+</code></pre><p>这样简单的嵌套自然是没问题，还便于理解。但是当有多层嵌套的时候：<br>我们只知道Promise是最大的好处是为了避免“回调地狱”，就是多层的回调</p>
+<pre><code>function fun1(arg1,function(data1){
+    function fun1(arg2, function(data2){
+        function fun1(arg3, function(data3){
+            //.....
+        })
+    })
+})
+</code></pre><p>像上面这样，三层嵌套就已经很麻烦了，更何况更多层的嵌套，所以为了让回调更明显，代码更容易理解，使用Promise可以很优雅的解决这个问题：<br>var p = new Promise(function(resolve，reject){</p>
+<p>}).then(function(data){</p>
+<p>}).then(function(data){</p>
+<p>}).then……</p>
+<p>上面就是Promise的基本用法，Promise接受一个回调函数，回调函数接收两个参数，<strong>resolve（将Promise的状态从pending变为fulfilled，在异步操作成功时调用，并将异步操作的结果传递出去）</strong>、<strong>reject（将Promise的状态从pending变为rejected，在异步操作失败时调用，将异步操作的错误作为参数传递出去）</strong>这两个都是函数，表示成功和失败的处理函数。then中接受的是上一次回调返回的结果，所以这样的链式调用就可以完全清晰的实现多层调用。</p>
+<p>Promise对象有两个特点：<br>①，对象的状态不受外界的影响，Promise有三种状态：Pending（进行中）、fulfilled（已成功）、rejected（失败），只用异步操作的结果可以决定当前是哪一种状态，其他任何操作都无法改变这个操作。<br>②<strong>.一旦状态改变之后就不会再改变。任何时候都可以得到这个结果。</strong>状态变化只有两种可能：从pending到fulfilled和从pending到rejected。只要改变就已经定型了。</p>
+<p>Promise的缺点：<br>① 一旦创建就无法取消，一旦新建就会立即执行<br>② 如果不设置回调函数，它的内部错误就不会反映到外部。<br>③ 当处于pending状态时，无法判断进展到哪一阶段（刚开始还是快完成）。</p>
+<p>接下来讲一下Promise的基本语法，先看一下Promise打印出来的结果<br><img src="https://img-blog.csdn.net/20171027095753343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>从上图可以看到Promise.prototype上有catch、then、constructor方法。所以这几个方法可以被实例继承。</p>
+<p>Promise自身会有Promise.all()、Promise.race()、Promise.resolve()、Promise.reject()一些常用的方法。</p>
+<p><strong>1.Promise.prototype.then()</strong></p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        console.log(&quot;promise&quot;);
+        resolve();
+});
+setTimeout(function(){
+    console.log(&quot;setTimeout&quot;);
+},0)
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+})
+console.log(&quot;hi&quot;);
+
+// promise   hi   resolved  setTimeout
+</code></pre><p>上面的代码很好的验证了，promise是创建之后立即执行，then方法指定的脚本在当前的所有同步任务完成之后再执行,<strong>setTimeout是在下一轮“时间循环”开始时执行，then在本轮事件循环结束时执行。</strong></p>
+<p><strong>2.Promise.prototype.catch()</strong><br>当Promise对象执行成功时使用的是resolve回调函数，进而在then方法中进一步处理，当promise对象失败时在那儿进行处理？<br>有两种方法：①在then方法接受第二个函数参数，用来处理错误。（不推荐）<br>② 在catch中进行处理。（推荐）<br>先看第一种：</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        reject();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+},function(){
+    console.log(&quot;rejected&quot;)
+})
+
+输出 rejected
+</code></pre><p>使用catch</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        reject();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+}).catch(function(){
+    console.log(&quot;catch the reject&quot;)
+})
+
+输出 catch the reject
+</code></pre><p>reject的作用就相当于抛出错误，catch或者then的第二个函数参数进行捕获，再resolve之后再抛出错误是没有用的，因为状态一旦发生就无法改变。</p>
+<p>Promise对象的错误具有冒泡的性质，即所有的错误一直可以向后传递，知道遇到cantch被捕获。<br>注意：一般尽量不要使用then的第二个函数参数进行错误处理，尽量使用catch进行错误的统一处理。</p>
+<p>Promise对象若没有指定错误处理，内部错误不会退出进程或终止脚本执行，也就是说promise对象的内部错误不会影响外部代码的执行。</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        resolve();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+        y+2;
+})
+
+setTimeout(function() {
+            console.log(&quot;我出现在y+2之后&quot;)
+},3000)
+上面的代码，浏览器遇到y+2未声明抛出错误，但是setTimeout中的字符串在3秒后依然可以打印出来。
+</code></pre><p>看一下Promise对象的一些方法：<br><strong>1. Promise.resolve()</strong><br>我觉得介绍Promise的方法时应该先介绍这个方法，因为后面要用到。<br><strong>不要觉得它生成的Promise对象的状态直接是resolved。（视情况而定）</strong><br>该方法的作用是将现有对象转化为一个Promise对象。<br>将一个对象转化为Promise对象分为四种情况：<br>① 参数是Promise的实例，不做任何改变。<br>② 参数是一个对象，且含有then方法（简称thenable对象）；</p>
+<pre><code>var thenable = {
+        then：function（resolve，rejected）{
+                resolve（42）；
+    }
+}
+
+let p1 = Promise.resolve(thenable);
+p1.then(function(data){
+    console.log(data);//42
+})
+</code></pre><p>thanable的then方法执行后，对象p1的状态就变为resolved，立即执行then。<br><strong>当然Promise.resolve()也可以生成状态为rejected的promise对象，上面只需要将resolve改为reject，再在p1.then后面加上.catch用于捕获错误就可以啦！</strong><br>③ 参数不具有then方法，或者说根本就不是对象的时候。<br>var p = Promise.resolve(“Hello”);<br>p.then(function(s){<br>console.log(s);//Hello<br>})<br>返回的promise的实例的状态直接就是resolved，所以会执行then方法。并且Promise.resolve()的参数会传递给回调函数。</p>
+<p>④ 不带有任何参数，用于快速的生成一个Promise对象。<br>var p = Promise.resolve();</p>
+<p><strong>2. Promise.all()</strong><br>该方法接受多个Promise实例作为参数，返回一个新的Promise实例。<br>当所有的Promise实例都返回resolve的时候，新的Promise实例的状态是fulfilled，此时p1,p2,p3的返回值组成一个数组传递给新实例的回调函数。当有一个返回的是rejecte的时候，新实例的状态就是rejected。此时第一个返回reject的实例的返回值就会传递给p的回调函数。</p>
+<p>promise接受的参数都是promise的实例，那么怎样将所有的参数都转化为promise的实例呢？使用上面的Promise.resolve()方法。<br>为了更好的掌握Promise.all()方法，来做一个例题。</p>
+<p>怎样使用Promise的相关知识输出 Welcome To XIAN</p>
+<pre><code>var p1 = Promise.resolve(&quot;Welcome&quot;);
+var p2 = &quot;To&quot;;
+var p3 = new Promise(function(resolve,reject){
+    setTimeout(function(){
+        resolve(&quot;XIAN&quot;);
+    },1000)
+})
+</code></pre><p>其实这个题在我讲的这块出现，大家都知道要使用Promise.all方法，还有问题就是他的参数必须都是Promise的实例，p1已经通过Promise.resolve转化成了Promise对象，p2我们再使用它转换一下，p3本身就是Promise对象的实例。</p>
+<p>使用下面的代码就完美的解决了：</p>
+<pre><code>Promise.all([p1,Promise.resolve(p2),p3])
+       .then(function(data){
+
+        console.log(data instanceof Array)//true
+        console.log(data.join(&quot; &quot;));//转化为字符串输出
+
+}).catch(function(e){
+    console.log(new Error(e));
+})
+</code></pre><p><strong>上面的data是Promise对象resolve函数的参数组成的数组。还有all中的顺序决定了输出的顺序，与其他的因素没有关系。</strong></p>
+<p>如果所有实例中有catch方法用于捕获错误，则使用Promise.all方法的catch是不会捕获到的。但是会执行Promise.all中的then方法，为什么？不是说当所有实例都返回的是resolve状态时才会触发Promise.all的then方法么？</p>
+<p>因为当某一个实例报错时，使用catch进行错误处理，返回的是一个新的Promise实例，该实例完成catch之后状态也会变为resolve，所以导致Promise.all所有实例的都返回resolve，会触发Promise.all的then。<br>解决方法就是在实例中不添加catch，那么实例中reject就会触发Promise.all的catch，从而达到Promise.all存在的真正意义。</p>
+<p><strong>3.Promise.race()</strong><br>与Promise.all一样，接受的是promise实例数组作为参数，新生成一个新的Promise对象。所以该方法的参数可以使用Promise.resolve()方法来解决。</p>
+<p>该方法的Promise的对象由第一个返回reject或者resolve的实例的状态决定。可以使用我们经常看到的是图片加载超时什么提示，那么可以使用该方法实现一下。<br>加载图片的函数也使用Promise对象</p>
+<pre><code>function preloadImage(path){
+    return new Promise(function(resolve,reject){
+        var image = new Image();
+        image.onload = resolve;
+        image.onerror = reject;
+        image.src = path;
+    })
+}
+</code></pre><p>要实现的功能是在五秒之后如果图片加载不出来就提醒图片加载超时。</p>
+<pre><code>Promise.race([preloadImage(&quot;/images/1.png&quot;),
+            new Promise(function(resolve,reject){
+                setTimeout(function() {
+                    reject();
+                },5000);
+    })]).then(function(){
+        alert(&quot;图片加载成功!&quot;)
+    }).catch(function(){
+    alert(&quot;图片加载失败!&quot;)
+    })
+</code></pre><p>在五秒中之内先是图片加载，（当然图片加载也有可能失败）还是在五秒后出发setTimeout函数执行reject。这样可以允许图片在五秒之内完成加载给提示。</p>
+<p><strong>4.Promise.reject()</strong><br>看到这个就会想到Promise.resolve().区别就是：<br>Promise.resolve()生成的Promise对象可以是rejected状态和resolve状态。<br>Promise.reject()只能生成状态为rejected的Promise实例。</p>
+<pre><code>var arg = &quot;Hello&quot;;
+var pro1 = Promise.reject(arg);
+
+pro1.then(function(){
+    console.log(&quot;resolved&quot;);
+}).catch(function(e){
+    console.log(e === arg)//true
+    console.log(e) //Hello
+})
+
+
+var thenable = {
+    then(resolve,reject){
+        reject(&quot;出错了&quot;);
+    }
+}
+var pro1 = Promise.reject(thenable);
+
+pro1.then(function(){
+    console.log(&quot;resolved&quot;);
+}).catch(function(e){
+    console.log(e === thenable) //true
+    conaloe.log(e);
+    //{then: ƒ}
+    //then:ƒ then(resolve,reject)
+    //__proto__:Object
+    console.log(e instanceof Object); //true
+})
+</code></pre><p><strong>可以看出Promise.reject()方法的参数会原封不动的作为reject的理由，编程后续方法的参数。</strong>所以这里输出的e不是“出错了”字符串，而是传入Promise.reject()中的参数。<strong>它不是像Promise.resolve()一样使用resolve或者reject中的参数。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/es6的Promise对象详解/" data-id="cjl60q3l6001n75tfnec8ju1j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/使用MutationObser来监测DOM变动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          使用MutationObser来监测DOM变动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/自适应多列布局/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">自适应多列布局</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

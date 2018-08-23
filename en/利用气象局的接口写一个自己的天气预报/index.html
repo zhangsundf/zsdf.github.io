@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>利用气象局的接口写一个自己的天气预报 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="忽然写自己的一个天气预报，首先不知如何下手，首先想到的是不是讲script链接引入到文件头部就可以了，然而接下来又要怎么做？在经过了半天的网上搜索后，明白了要写的流程，①。找到合适得接口。 在网上搜索说中国气象局提供了三个接口国家气象局提供的天气预报接口 接口地址： http://www.weather.com.cn/data/sk/101010100.html http://www.weath">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用气象局的接口写一个自己的天气预报">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/利用气象局的接口写一个自己的天气预报/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="忽然写自己的一个天气预报，首先不知如何下手，首先想到的是不是讲script链接引入到文件头部就可以了，然而接下来又要怎么做？在经过了半天的网上搜索后，明白了要写的流程，①。找到合适得接口。 在网上搜索说中国气象局提供了三个接口国家气象局提供的天气预报接口 接口地址： http://www.weather.com.cn/data/sk/101010100.html http://www.weath">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用气象局的接口写一个自己的天气预报">
+<meta name="twitter:description" content="忽然写自己的一个天气预报，首先不知如何下手，首先想到的是不是讲script链接引入到文件头部就可以了，然而接下来又要怎么做？在经过了半天的网上搜索后，明白了要写的流程，①。找到合适得接口。 在网上搜索说中国气象局提供了三个接口国家气象局提供的天气预报接口 接口地址： http://www.weather.com.cn/data/sk/101010100.html http://www.weath">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-利用气象局的接口写一个自己的天气预报" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/利用气象局的接口写一个自己的天气预报/" class="article-date">
+  <time datetime="2017-07-02T03:20:44.000Z" itemprop="datePublished">2017-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      利用气象局的接口写一个自己的天气预报
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>忽然写自己的一个天气预报，首先不知如何下手，首先想到的是不是讲script链接引入到文件头部就可以了，然而接下来又要怎么做？<br>在经过了半天的网上搜索后，明白了要写的流程，<br>①。找到合适得接口。</p>
+<p>在网上搜索说中国气象局提供了三个接口<br>国家气象局提供的天气预报接口</p>
+<p>接口地址：</p>
+<p><a href="http://www.weather.com.cn/data/sk/101010100.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/sk/101010100.html</a></p>
+<p><a href="http://www.weather.com.cn/data/cityinfo/101010100.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/cityinfo/101010100.html</a></p>
+<p><a href="http://m.weather.com.cn/data/101010100.html" target="_blank" rel="noopener">http://m.weather.com.cn/data/101010100.html</a></p>
+<p>101010100为城市代码，是固定的，这里表示北京。然而并没有什么用，前两个可以访问，但是返回的数据太少了，最后一个说是最新的接口，数据比较多，但是我访问的却是403.</p>
+<p>最后在网上又找了一个接口<br><a href="http://wthrcdn.etouch.cn/weather_mini?citykey=101071201" target="_blank" rel="noopener">http://wthrcdn.etouch.cn/weather_mini?citykey=101071201</a>;<br>同样后面的数字为地区编号。</p>
+<p>②。使用ajax异步请求来获取数据。<br>在这里我使用了jquery的ajax来请求数据。success的function中的参数为请求到的数据，只需要进行第三步解析即可。</p>
+<pre><code>var url = &quot;http://wthrcdn.etouch.cn/weather_mini?citykey=101071201&quot;;
+        $.ajax({
+          url: url,
+          dataType: &quot;jsonp&quot;,
+          // scriptCharset: &quot;gbk&quot;,
+          method:&apos;GET&apos;,
+          crossDomain: true,
+         success: function (data) {
+
+     //请求无误，但是数据有误，desc为接口返回的数据中的一部分，往下看
+              if(desc != &quot;ok&quot;){
+            alert(&quot;请求地区有误&quot;);
+        }
+        //
+        //这儿写上正常处理的流程
+
+        var description = &quot;&quot;;
+            for(var i in data.data){
+                var property=data.data[i];
+                description+=i+&quot; = &quot;+property+&quot;\n&quot;;
+            }
+            alert(description);
+         }
+         error:function(){
+        console.log(&quot;请求失败&quot;);
+    }
+</code></pre><p>③ 对接口返回的数据进行处理<br>返回的数据格式</p>
+<p>{<br>“desc”: “OK”,<br>“status”: 1000,<br>“data”: {<br>“wendu”: “22”,<br>“ganmao”: “各项气象条件适宜，无明显降温过程，发生感冒机率较低。”,<br>“forecast”:<br>[{<br>“fengxiang”: “南风”,<br>“fengli”: “3-4级”,<br>“high”: “高温 26℃”,<br>“type”: “多云”,<br>“low”: “低温 13℃”,<br>“date”: “28日星期四”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 28℃”,<br>“type”: “多云”,<br>“low”: “低温 15℃”,<br>“date”: “29日星期五”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 31℃”,<br>“type”: “晴”,<br>“low”: “低温 15℃”,<br>“date”: “30日星期六”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 29℃”,<br>“type”: “多云”,<br>“low”: “低温 20℃”,<br>“date”: “1日星期天”<br>},<br>{<br>“fengxiang”: “北风”,<br>“fengli”: “4-5级”,<br>“high”: “高温 26℃”,<br>“type”: “小到中雨”,<br>“low”: “低温 13℃”,<br>“date”: “2日星期一”<br>}],<br>“yesterday”: {<br>“fl”: “微风”,<br>“fx”: “无持续风向”,<br>“high”: “高温 19℃”,<br>“type”: “小雨”,<br>“low”: “低温 12℃”,<br>“date”: “27日星期三”<br>},<br>“aqi”: “118”,<br>“city”: “朝阳县”<br>}<br>}</p>
+<p>这是一个json格式的返回串，在js中只要将你所需要的数据解析出来就好了，<br>JavaScript代码：</p>
+<pre><code>var url = &quot;http://wthrcdn.etouch.cn/weather_mini?citykey=101071201&quot;;
+       $.ajax({
+         url: url,
+         dataType: &quot;jsonp&quot;,
+         // scriptCharset: &quot;gbk&quot;,
+         method:&apos;GET&apos;,
+         crossDomain: true,
+         success: function (data) {
+             if(desc != &quot;ok&quot;){
+           alert(&quot;请求地区有误&quot;);
+       }
+       //
+       //这儿写上正常处理的流程
+        }
+        error:function(){
+       console.log(&quot;请求失败&quot;);
+   }
+</code></pre><p>经过以上三步，一个请求天气预报接口的流程是出来了，页面布局及其里面的数据处理还需要花费更多的时间。</p>
+<p>注：尽量使用火狐浏览器，因为后续ajax的异步加载中需要web容器，火狐浏览器自带web容器。所以不需要你去再打开本地的服务器。</p>
+<p>或许我们发现以上的数据并不满足我们的需要，所以下一节给大家推荐一个数据更详细的接口。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/利用气象局的接口写一个自己的天气预报/" data-id="cjl60q3kb000v75tfuhxduf8b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/更详细的天气预报接口/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          更详细的天气预报接口
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/express中的static中间件/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">express中的static中间件</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

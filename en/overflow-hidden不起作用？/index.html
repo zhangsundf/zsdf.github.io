@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>overflow:hidden不起作用？ | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天在项目中，通过从后台读取数据生成的table中的tr和td时，由于有些td内容太多了，需要对其进行overflow:hidden的设置。但是在经过几番努力和尝试之后始终不可以。在进行了搜索之后才明白了。 我们知道，overflow属性值有这几种：visible：声明内容不会被剪裁。比如内容可能被渲染到容器外面。hidden：声明内容将被剪裁，并且也甭想使用滚动条来查看剪裁掉的内容。scrol">
+<meta property="og:type" content="article">
+<meta property="og:title" content="overflow:hidden不起作用？">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/overflow-hidden不起作用？/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="今天在项目中，通过从后台读取数据生成的table中的tr和td时，由于有些td内容太多了，需要对其进行overflow:hidden的设置。但是在经过几番努力和尝试之后始终不可以。在进行了搜索之后才明白了。 我们知道，overflow属性值有这几种：visible：声明内容不会被剪裁。比如内容可能被渲染到容器外面。hidden：声明内容将被剪裁，并且也甭想使用滚动条来查看剪裁掉的内容。scrol">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170605205156096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170605205216420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170605205233987?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="overflow:hidden不起作用？">
+<meta name="twitter:description" content="今天在项目中，通过从后台读取数据生成的table中的tr和td时，由于有些td内容太多了，需要对其进行overflow:hidden的设置。但是在经过几番努力和尝试之后始终不可以。在进行了搜索之后才明白了。 我们知道，overflow属性值有这几种：visible：声明内容不会被剪裁。比如内容可能被渲染到容器外面。hidden：声明内容将被剪裁，并且也甭想使用滚动条来查看剪裁掉的内容。scrol">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170605205156096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-overflow-hidden不起作用？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/overflow-hidden不起作用？/" class="article-date">
+  <time datetime="2017-06-05T13:06:44.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      overflow:hidden不起作用？
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>今天在项目中，通过从后台读取数据生成的table中的tr和td时，由于有些td内容太多了，需要对其进行overflow:hidden的设置。但是在经过几番努力和尝试之后始终不可以。在进行了搜索之后才明白了。</p>
+<p>我们知道，overflow属性值有这几种：<br>visible：声明内容不会被剪裁。比如内容可能被渲染到容器外面。<br>hidden：声明内容将被剪裁，并且也甭想使用滚动条来查看剪裁掉的内容。<br>scroll：声明内容将被剪裁，但有可能出现滚动条来查看被剪裁掉的内容。滚动条出现的位置在inner border adge和outer padding adge之间。<br>auto：声明决策将依赖于客户端，优先使用scroll。</p>
+<p>W3C标准中指明：<br>通常一个盒子的内容是被限制在盒子边界之内的。但有时也会产生溢出，即部分或全部内容跑到盒子边界之外。溢出将在满足下列条件之一时出现：<br>1. 一个不换行的行元素宽度超出了容器盒子宽度。<br>2. 一个宽度固定的块元素放在了比它窄的容器盒子内。<br>3. 一个元素的高度超出了容器盒子的高度。<br>4. 一个子孙元素，由负边距值引起的部分内容在盒子外部。<br>5. text-indent属性引起的行内元素在盒子的左右边界外。<br>6. 一个绝对定位的子孙元素，部分内容在盒子外。但超出的部分不是总会被剪裁。子孙元素的内容就不会被子孙元素和其包含块之间的祖先元素的overflow的设置所剪裁。</p>
+<p>当溢出发生时，overflow属性约定了容器盒子是否剪裁掉超出其内边界的部分，并且决定是否出现滚动条来访问被剪裁掉的内容。它会影响到元素所 有内容的剪裁，但有个例外情况，即上面第6条所提到的：元素的子孙元素的包含块（Containing blocks）是整个视窗（viewport）或是该元素的祖先元素，内容将不会被剪裁。包含块是什么呢？简单的说，就是可以决定一个元素位置和大小的块。<br><strong>通常一个元素的包含块由离它最近的块级祖先元素的内容边界决定。但当元素被设置成绝对定位时，包含块由最近的position不是static的祖先元素决定。</strong></p>
+<pre><code>    html片段:
+&lt;div class=”ocean”&gt; 
+    &lt;div class=”land”&gt; 
+        &lt;p class=”joke”&gt; 
+                Mrs. Smith couldn’t get her husband to exercise. 
+                She asked Mrs. Jones what she should do. Jones replied, 
+                ”Tape the remote control between his toes.” 
+        &lt;/p&gt; 
+    &lt;/div&gt; 
+&lt;/div&gt;
+style:
+div.ocean{ 
+    position:relative; 
+    background-color:blue; 
+    width:120px; 
+    height:120px; 
+    } 
+div.land{ 
+    width:100px; 
+    height:100px; 
+    background-color:red; 
+    overflow:hidden; 
+    } 
+p.joke{ 
+    width:150px; 
+    height:110px; 
+    margin-top:30px; 
+    margin-left:30px; 
+    background-color:yellow; 
+    }
+</code></pre><p>上面的代码讲述的是这样一个故事：蓝色的海洋里有块红色的大地，红色大地内有个黄色的段子。由于段子样式的设置，它的部分内容超出了红色大地。为避免黄色 段子污染到蓝色海洋，红色大地警惕的为自己设置了overflow:hidden;这样超出大地的黄色部分就被剪掉了，我们看到的将是这样一派和谐景象， 如图1：<br><img src="https://img-blog.csdn.net/20170605205156096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图1：和谐的星球</p>
+<p>如果事物都是这样有理有序，天下可不就太平了。没多久，黄色段子觉得凭自己的显赫身份不该受红色大地的控制，于是绞尽脑汁将自己变改成了绝对定位，一下子就摆脱了大地的束缚，如图2：</p>
+<p>p.joke{<br>position:absolute;<br>width:150px;<br>height:110px;<br>top:30px;<br>left:30px;<br>background-color:yellow;<br>}</p>
+<p><img src="https://img-blog.csdn.net/20170605205216420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图2：猖獗的段子</p>
+<p>为什么会这样呢？这便是创造了上面提到过的第6个条件。当黄色段子变成position:absolute时，它的包含块已由原来的红色大地的内容边界升 级到了离它最近的position不是static的蓝色海洋了。而海洋此刻对此还一无所知呢，自身没有设置overflow:hidden属性，导致黄 色段子本该被裁剪的部分全部可见，不仅污染到海洋，还影响到整个星球，情况万分火急啊。即使这时海洋设置上overflow:hidden，也只能将超出 蓝色海洋的黄色部分剪裁，就像图3，海洋此时是手足无措啊。<br><img src="https://img-blog.csdn.net/20170605205233987?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图3：无辜的海洋</p>
+<p>俗语说的好，魔高一尺道高一丈，解铃还须系铃人。红色大地怎就甘心段子跑出去呢。怎么说大地终归是段子的祖先元素，怎么能甘心由着段子胡作非为呢。于是， 大地历尽千辛，寻得秘籍，在自己的样式中添加position:relative属性，将段子的包含块又改成了大地来决定。这下段子就乖乖的被关起来了。 星球看起来又回到了最初的状态。</p>
+<pre><code>div.ocean{ 
+    position:relative; 
+    background-color:blue; 
+    width:120px; 
+    height:120px; 
+    } 
+div.land{ 
+    position:relative; 
+    width:100px; 
+    height:100px; 
+    background-color:red; 
+    overflow:hidden; 
+    } 
+p.joke{ 
+    position:absolute; 
+    width:150px; 
+    height:110px; 
+    top:30px; 
+    left:30px; 
+    background-color:yellow; 
+    }
+</code></pre><p>所以说，hidden并没有失效，而是有可能我们遇到的情况恰好满足了第6个条件，使得元素的包含块发生了变化。上面的故事中，也提到了在遇到‘hidden’失效的情况时，可以根据需要来改变元素的包含块来达到正义的目的。</p>
+<p>这样的解决思路是没有问题的，但是对于我的来说却还是没有什么效果；①。其实td设置overflow：hidden是没有效果的。</p>
+<p>②。每次的td的position为absolute，就相当于重新定位，我的数据还是动态获取的，所以使用的position会使所有的数据都叠加在第一个数据区域。</p>
+<p>所以如果我的问题按照上述解决思路来的话，就相当于只是将所有数据都重叠在了一起，并没有好到哪去。</p>
+<p>所以在经过反复琢磨之后，td内加一个span元素。使其相对定位，并且overflow：hidden；并设置宽度和高度。</p>
+<pre><code>.table tbody tr .span_1,
+.table tbody tr .span_2,
+.table tbody tr .span_3{
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.table tbody tr .span_1:hover,
+.table tbody tr .span_2:hover,
+.table tbody tr .span_3:hover{
+    overflow: scroll;
+}
+
+::-webkit-scrollbar{width:4px;}
+/*::-webkit-scrollbar-track{background-color:#ccc;}*/
+::-webkit-scrollbar-thumb{background-color:#ccc;}
+::-webkit-scrollbar-thumb:hover {background-color:#ccc}
+::-webkit-scrollbar-thumb:active {background-color:#ccc}
+</code></pre><p>前几行代码是加了span的td的处理，使其超出内容hidden。但当鼠标悬浮时，其显示为出现滚动条，这无疑是一个好办法。最后的css样式设置的是滚动条的样式（只在webkit内核中有效），注释掉的是底部的滚动条，在这里我们只用到了侧滚动条。</p>
+<p>所以css的坑还是很多的，当你按照正常的思路来设置的样式如果不起作用的话，不如多搜搜，就会发现有很多例外，对以后也是有帮助的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/overflow-hidden不起作用？/" data-id="cjl60q3l7001p75tfn2b374pi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/nodejs-express生成的模板引擎jade改为html/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          nodejs+express生成的模板引擎jade改为html
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/AngularJS中实现奇偶行不同样式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">AngularJS中实现奇偶行不同样式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

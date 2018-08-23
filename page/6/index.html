@@ -1,0 +1,1817 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zsdf&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zsdfBlog">
+<meta property="og:url" content="http://yoursite.com/zsdf/page/6/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="zsdf&apos;s blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsdfBlog">
+<meta name="twitter:description" content="zsdf&apos;s blog">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-原生js的JSONP跨域请求" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/原生js的JSONP跨域请求/" class="article-date">
+  <time datetime="2017-04-04T13:29:02.000Z" itemprop="datePublished">2017-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/原生js的JSONP跨域请求/">原生js的JSONP跨域请求</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>但到目前为止最被推崇或者说首选的方案还是用JSON来传数据，靠JSONP来跨域。</p>
+<p>JSONP跨域GET请求是常用的解决方案。<br>在进行一些比较深入的前端操作时，不可避免的要进行跨域操作，但是<br>基于安全的原因，浏览器是存在“同源策略“这个机制，同源策略阻止从一个源加载的文档或脚本获取或设置另一个源加载的文档的属性。即对js能够访问的页面的内容加以限制，只能访问与包含它的文档在同一域中的内容。</p>
+<p>为了能够访问其他域中的内容，所以就出现了jsonp。</p>
+<p>首先我们想一下，Web页面上调用js文件时则不受是否跨域的影响（不仅如此，我们还发现凡是拥有”src”这个属性的标签都拥有跨域的能力，比如<code>&lt;script&gt;、&lt;img&gt;、&lt;iframe&gt;</code>）；在js的<code>&lt;script&gt;</code>标签中似乎不会涉及到跨域的问题，所以我们就利用<code>&lt;script&gt;</code>标签将向不同域提交HTTP请求。这种技术就叫做jsonp。</p>
+<p>既然它叫jsonp，很明显目的还是json，而且是跨域获取。实现策略就是利用javascript构造一个script标签，把json的url赋给script的scr属性，把这个script插入到dom里，让浏览器去获取。实践：</p>
+<p>比如远程的服务器aaa.com的根目录下有一个名叫a.js的文件。<br>内容为：</p>
+<pre><code>alert(&quot;Hello World ！&quot;);
+</code></pre><p>本地服务器localServer.com 下有一个名为index.html的文件。要访问aaa.com的根目录的a.js的文件：</p>
+<p>只需要在index.html文件的head标签中加入</p>
+<pre><code>&lt;script src=&quot;http://aaa.com/a.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>就可以进行跨域访问。</p>
+<p>但接下来，我们在本地的index.html文件中定义一个处理函数，然后在a.js中传入数据进行调用。</p>
+<pre><code>var localHandler = function(data){
+alert(&apos;我是本地函数，可以被跨域的a.js文件调用，远程js带来的数据是：&apos; + data.result);
+};
+&lt;script src=&quot;http://aaa.com/a.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>而在a.js中代码如下：</p>
+<p>localHandler({“result”:”我是远程js带来的数据”});</p>
+<p>这样很开心，我们也能得到理想的结果。</p>
+<p>但是怎么让远程js知道它应该调用的本地函数叫什么名字呢？毕竟是jsonp的服务者都要面对很多服务对象，而这些服务对象各自的本地函数都不相同。</p>
+<p>所以我们只要服务端提供的js脚本是动态生成的就行了呗，这样调用者可以传一个参数过去告诉服务端“我想要一段调用XXX函数的js代码，请你返回给我”，于是服务器就可以按照客户端的需求来生成js脚本并响应了。<br>　　<br>　看index.html页面中script标签的代码：<br>　复制的代码：</p>
+<p>// 得到航班信息查询结果后的回调函数<br>var flightHandler = function(data){<br>alert(‘你查询的航班结果是：票价 ’ + data.price + ’ 元，’ + ‘余票 ’ + data.tickets + ’ 张。’);<br>};</p>
+<p>// 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）</p>
+<p>var url = “<a href="http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler" target="_blank" rel="noopener">http://flightQuery.com/jsonp/flightResult.aspx?code=CA1998&amp;callback=flightHandler</a>“;</p>
+<p>// 创建script标签，设置其属性<br>var script = document.createElement(‘script’);<br>script.setAttribute(‘src’, url);</p>
+<p>// 把script标签加入head，此时调用开始<br>document.getElementsByTagName(‘head’)[0].appendChild(script);</p>
+<p>　　这次的代码变化比较大，不再直接把远程js文件写死，而是编码实现动态查询，而这也正是jsonp客户端实现的核心部分，本例中的重点也就在于如何完成jsonp调用的全过程。<br>　　我们看到调用的url中传递了一个code参数，告诉服务器我要查的是CA1998次航班的信息，而callback参数则告诉服务器，我的本地回调函数叫做flightHandler，所以请把查询结果传入这个函数中进行调用。<br>　　OK，服务器很聪明，这个叫做flightResult.aspx的页面生成了一段这样的代码提供给index.html（服务端的实现这里就不演示了，与你选用的语言无关，说到底就是拼接字符串）：<br>　　<br>flightHandler({<br>“code”: “CA1998”,<br>“price”: 1780,<br>“tickets”: 5<br>});<br>　<br>　　我们看到，传递给flightHandler函数的是一个json，它描述了航班的基本信息。运行一下页面，成功弹出提示窗口，jsonp的执行全过程顺利完成！</p>
+<p>最后再来简单的梳理一下：</p>
+<p>比如远程的服务器aaa.com的根目录下有一个名叫a.js的文件。<br>内容为：<br>{“Name”:”张三”, “Age”:23, “Sex”: “男”}</p>
+<p>本地的服务器localServer.com的index.html的<code>&lt;script&gt;</code>标签中去请求a.js中的内容：</p>
+<p>// 处理函数<br>var localHandler = function(data){<br>alert(‘姓名:’+data.Name);<br>};</p>
+<p>// 提供jsonp服务的url地址</p>
+<p>var url = “<a href="http://aaa.com/a.js?callback=localHandler" target="_blank" rel="noopener">http://aaa.com/a.js?callback=localHandler</a>“;</p>
+<p>// 创建script标签，设置其属性<br>var script = document.createElement(‘script’);<br>script.setAttribute(‘src’, url);</p>
+<p>// 把script标签加入head，此时调用开始<br>document.getElementsByTagName(‘head’)[0].appendChild(script);</p>
+<p>首先，第一个浏览器，<a href="http://aaa.com.a.js" target="_blank" rel="noopener">http://aaa.com.a.js</a>这个Url的确是存在一个json的，而且在本地的网页上用script标签来请求这个Url也是200OK的，但是最下面报js语法错误了。原来用script标签加载完后，会立即 把响应当js去执行，很明显{“Name”:”张三”, “Age”:23, “Sex”: “男”}不是合法的js语句。</p>
+<p>所以如果存在localHandler这个方法，那么localHandler({“Name”:”张三”, “Age”:23, “Sex”: “男”})就是合法的js语句。</p>
+<p>由于服务器不知道客户端的回调是什么，不可能hard code成jsonpcallback，所以就带一个QueryString让客户端告诉服务端，回调方法是什么，当然，QueryString的key要遵从服务端的约定，上面的是”callback“。</p>
+<p>所以一句话就是利用script标签绕过同源策略，获得一个类似这样的数据，localHandler是页面存在的回调方法，参数就是想得到的json。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/原生js的JSONP跨域请求/" data-id="cjl60q3kc000w75tf70azgks5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例九-、jQuery游戏，来抽个奖吧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/" class="article-date">
+  <time datetime="2017-04-01T13:58:24.000Z" itemprop="datePublished">2017-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/">案例九 、jQuery游戏，来抽个奖吧</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>今天要写的是，利用jQuery写一个抽奖的案例，页面包含四个组件，两个按钮分别是开始和停止的按钮。两个box，分别盛放人员和奖品。当点击开始按钮时，人员不停地进行切换。抽奖的box’中显示等待抽奖结果。当按下停止按钮时，两个盒子分别显示人员名，和所中的奖品。</p>
+<p>页面的效果图如下：<br><img src="https://img-blog.csdn.net/20170401214255721?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>可能页面没有那么好看。我们主要实现的是功能</p>
+<p>首先在body中定义组件</p>
+<pre><code>&lt;body&gt;
+&lt;input type = &quot;button&quot; class = &quot;btn&quot; id = &quot;start&quot; value = &quot;开始&quot;&gt;
+&lt;input type = &quot;button&quot; class = &quot;btn&quot; id = &quot;stop&quot; value = &quot;停止&quot;&gt;
+
+&lt;div id = &quot;number&quot; class = &quot;box1&quot;&gt;&lt;/div&gt;
+&lt;div id = &quot;jiangpin&quot; class = &quot;box2&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>再进行样式设置：<br>css代码：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    .btn{
+        width: 90px;
+        height: 40px;
+        background-color: lightgreen;
+        color: white;
+        font-size: 18px;
+        font-family: &quot;微软雅黑&quot;;
+        text-align: center;
+        line-height: 40px;
+
+    }
+    .box1{
+        position: absolute;
+        width: 230px;
+        height: 100px;
+        margin: 10px  50px;
+        top:150px;
+        left: 60%;
+        background-color: gold;
+        color: black;
+        border-radius: 8%;
+        font-size: 30px;
+        text-align: center;
+        line-height: 100px;
+    }
+    .box2{
+        position: absolute;
+        width: 230px;
+        height: 100px;
+        margin: 10px  50px;
+        top: 300px;
+        left: 60%;
+        background-color: gold;
+        color: black;
+        border-radius: 8%;
+        font-size: 30px;
+        text-align: center;
+        line-height: 100px;
+    }
+    &lt;/style&gt;
+</code></pre><p>接下来就是写函数了。在这里我引用的是”<a href="http://libs.baidu.com/jquery/1.9.0/jquery.js" target="_blank" rel="noopener">http://libs.baidu.com/jquery/1.9.0/jquery.js</a>“；的jQuery库。</p>
+<pre><code>&lt;script &gt;
+$(document).ready(function(){
+
+// 1. 首先第一步定义两个数组，存放人员和奖品
+
+var list1 = [ &apos;A君&apos; , &apos; B君  &apos; ,  &apos; C君 &apos; ,  &apos; D君 &apos;,  &apos; E君 &apos; ,  &apos; F君  &apos; ,  &apos; G君 &apos;];
+var list2 = [&apos;YSL&apos;, &apos; iphone7&apos;, &apos; iphone6&apos;, &apos; 手表&apos;, &apos; 小红花&apos;, &apos; 谢谢参与&apos;,&apos; 谢谢参与&apos;,&apos; 谢谢参与&apos;];
+
+
+// 2. 为开始按钮绑定点击事件
+
+$(&quot;#start&quot;).click(function(){
+    //2.1  先将奖品的盒子中的内容初始化
+    $(&quot;#jiangpin&quot;).html(&quot;等待抽奖中...&quot;);
+
+    //2.2 利用setInterval()函数进行人员名字切换
+    // 定义一个变量去接受它每次的状态
+    functionId = setInterval(function(){
+    var n = Math.floor(Math.random() * list1.length);
+        $(&quot;#number&quot;).html(list1[n]);
+    },30);
+
+        });
+
+// 3. 为停止按钮绑定点击事件
+    $(&quot;#stop&quot;).click(function(){
+    // 3.1  清除setInterval()。并停止在最后一次的人员名上
+    clearInterval(functionId);
+    // 3.2 随机产生奖品数组的下标，并将下标对应的元素写入奖品区
+    var jiang = Math.floor(Math.random() * list2.length);
+    $(&quot;#jiangpin&quot;).html(list2[jiang]);
+    });
+})
+&lt;/script&gt;
+</code></pre><p>这个案例比较简单，所以就不赘述了，下面附上最后的效果图：</p>
+<p>这个是点击了开始按钮之后，人员名进行快速的切换中：<br><img src="https://img-blog.csdn.net/20170401215504772?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>下面这个是点击了停止按钮的最终中奖人员和对应的奖品<br><img src="https://img-blog.csdn.net/20170401215709415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170401215755853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/" data-id="cjl60q3ki001575tfgutpbu06" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例八-、jquery点个赞吧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例八-、jquery点个赞吧/" class="article-date">
+  <time datetime="2017-03-31T15:38:18.000Z" itemprop="datePublished">2017-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例八-、jquery点个赞吧/">案例八 、jquery点个赞吧</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>这个要实现的功能比较简单，就是实现点击按钮，有心向上飘，一直飘出屏幕外。</p>
+<p>首先只需要在body中定义一个button。和盛放心的盒子</p>
+<pre><code>&lt;div id = &quot;demo&quot;&gt;&lt;/div&gt;
+&lt;input type = &quot;button&quot; id = &quot;btn1&quot; value = &quot;点个赞吧&quot; /&gt;
+</code></pre><p>由于还要引进心的图片，所以在这里我们在设置css样式的时候还要设置图片img的样式。<br>css代码如下：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+#btn1{
+    position: absolute;
+    bottom:100px;
+    width: 200px;
+    background-color: lightblue;
+    font-size: 18px;
+    left:45%;
+}
+img{
+    bottom:100px;
+    margin-left: -15px;
+    width: 20px;
+    height:20px;
+    position: absolute;
+    left: 50%;
+}
+&lt;/style&gt;
+</code></pre><p>下来就是要写jquery函数。</p>
+<p>(document).ready(function(){<br>// 1.    首先给按钮绑定点击事件。(document).ready(function(){ // 1. 首先给按钮绑定点击事件。 (“#btn1”).click(function(){<br>//2. 生成彩色的心，即随机选择图片。<br>// 2.1 生成随机数<br>var num = Math.floor(Math.random() * 3 +1);<br>//2.2 生成一个img元素，并为其添加src属性<br>var image = $(“”);</p>
+<p>//三个图片的名字分别是 1.png\2.png\3.png,所以img的路径和图片名可以进行线面的字符串拼接<br>image.attr(“src”,”./images/”+num+”.png”);</p>
+<p>//3。将生成的img追加到页面上</p>
+<p>$(“#demo”).append(image);</p>
+<p>//4. 下来就是让心动起来。从点击按钮的地方向上飘。利用jquery的动画函数animate()</p>
+<p>//生成随机的距离左边的距离，这样就可以使心有种向上飘的感觉<br>var left = Math.random() * 800;</p>
+<p>image.animate({<br>‘bottom’:’800px’,<br>‘left’:left,<br>‘opacity’:’0’<br>},3000);<br>});</p>
+<p>})；<br>});</p>
+<p>效果图如下：<br><img src="https://img-blog.csdn.net/20170331233715351?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170331233734711?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例八-、jquery点个赞吧/" data-id="cjl60q3kj001675tfbiv9x7rg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jQuery中DOM操作方法的简单总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/jQuery中DOM操作方法的简单总结/" class="article-date">
+  <time datetime="2017-03-31T12:16:49.000Z" itemprop="datePublished">2017-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/jQuery中DOM操作方法的简单总结/">jQuery中DOM操作方法的简单总结</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>对于jQuery提供的大量的DOM操作方法，应该根据要完成的任务和元素的位置做出不同的选择，这里先列举一些常见的DOM操作方法。</p>
+<p>1。要在HTML中创建新元素，使用$()函数。<br>例如：</p>
+<pre><code>$(&apos;&lt;a href = &quot;#top&quot;&gt; back to top &lt;/a&gt;&apos;);
+$(&apos;&lt;a id = &quot;top&quot;&gt;&lt;/a&gt;&apos;);
+</code></pre><p>第一行创建了一个back to top 的链接，第二行则创建了一个作为目标的锚。<br>2。要在每个匹配的元素中插入新元素，使用：<br>①. .append();<br>②. .appendTo();<br>③. .prepend();<br>④. .prependTo();</p>
+<p><strong>.append() 与 .appendTo()</strong><br>都是在现有元素<strong>内部、之后</strong> 添加内容</p>
+<pre><code>$(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;).appendTo(&quot;#container&quot;);
+$(&quot;#container&quot;).append(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;);
+</code></pre><p><strong>.prepend() 和 .prependTo()</strong><br>都是在现有元素<strong>内部、之前</strong>添加内容</p>
+<pre><code>$(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;).prependTo(&quot;#container&quot;);
+$(&quot;#container&quot;).prepend(&quot;&lt;p&gt;Hello World&lt;/p&gt;&quot;);
+</code></pre><p>如果执行以下代码</p>
+<pre><code>$(document).ready(function(){
+
+   $(&quot;&lt;p&gt;prependTo Hello World1&lt;/p&gt;&quot;)
+   .prependTo(&quot;#container&quot;);
+    $(&quot;#container&quot;).prepend(&quot;&lt;p&gt; prepend Hello  World2&lt;/p&gt;&quot;);
+    $(&quot;&lt;p&gt;Hello World1&lt;/p&gt;&quot;).appendTo(&quot;#container&quot;);
+    $(&quot;#container&quot;).append(&quot;&lt;p&gt;Hello World2&lt;/p&gt;&quot;);
+
+    });
+</code></pre><p>同样都是向container中添加元素，结果如下<br><img src="https://img-blog.csdn.net/20170331193453406?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>上面代码说明了.prepend() 和 .prependTo()添加内容时，向目标元素中倒序插入内容，就相当于每一个插入的元素直接跟在被插入元素的后面。</p>
+<p>3。要在每个匹配元素相邻的位置上插入新元素，使用：<br>①. .after()<br>②. .insertAfter()<br>③. .before()<br>④. .insertBefore()</p>
+<p>.after()与 .insertAfter() 和 <strong>.append() 与 .appendTo()</strong>用法一样，只不过这两个方法添加的内容在container之外。如执行</p>
+<pre><code>$(&quot;&lt;p&gt;prependTo Hello World1&lt;/p&gt;&quot;).insertAfter(&quot;#container&quot;);
+$(&quot;#container&quot;).after(&quot;&lt;p&gt;Hello World2&lt;/p&gt;&quot;);
+</code></pre><p>解释器解释的实际代码为<br><img src="https://img-blog.csdn.net/20170331194724427?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>.before() 和 .insertBefore()<br>都是在现有元素<strong>外部、之前</strong>添加内容</p>
+<pre><code>$(&quot;&lt;p&gt; Hello World 1&lt;/p&gt;&quot;).insertBefore(&quot;#container&quot;);
+$(&quot;#container&quot;).before(&quot;&lt;p&gt;Hello World 2&lt;/p&gt;&quot;);
+</code></pre><p>解释器解释的实际代码为<br><img src="https://img-blog.csdn.net/20170331195125658?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>4。 要在每个匹配元素的外部插入新元素。使用<br>①. .wrap()<br>将匹配元素包裹</p>
+<pre><code>$(&quot;#container&quot;).wrap(&quot;&lt;ol&gt;&lt;/ol&gt;&quot;);
+</code></pre><p>解析为：<br><img src="https://img-blog.csdn.net/20170331195629041?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>②. .wrapAll()</p>
+<pre><code>&lt;div id = &quot;main&quot;&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;container&quot;&gt;&lt;/div&gt; 
+&lt;/div&gt;
+
+$(&quot;#main .container&quot;).wrapAll(&quot;&lt;ol id = &apos;note&apos;&gt;&lt;/ol&gt;&quot;)
+.wrap(&quot;&lt; li &gt;&lt; /li&gt;&quot;);
+</code></pre><p>将会用ol包裹整个class为container的块，然后用li包裹每一个container</p>
+<p>解析为：<br><img src="https://img-blog.csdn.net/20170331201020029?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>③. .wrapInner()</p>
+<p>5。要用新元素或文本替换每个匹配的元素<br>①. .html()<br>②. .text()<br>③. .repalceWith()</p>
+<p>6。要移除每个匹配元素中的元素<br>.empty()</p>
+<p>7。从文档中移除每个匹配元素及其后代，但不实际删除它们<br>①. .remove()<br>②. .detach()</p>
+<p>8。复制元素<br>.clone()</p>
+<pre><code>$( &apos;div.chapter p:eq(1)&apos; ).clone().insertBefore(&apos; div . chapter&apos;);
+</code></pre><p>这样同一个段落就会出现两次。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/jQuery中DOM操作方法的简单总结/" data-id="cjl60q3jr000b75tfh6kt77vo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例七-、jquery模仿微信聊天界面" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例七-、jquery模仿微信聊天界面/" class="article-date">
+  <time datetime="2017-03-30T15:26:19.000Z" itemprop="datePublished">2017-03-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例七-、jquery模仿微信聊天界面/">案例七 、jquery模仿微信聊天界面</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先看一下我们的效果图。<br><img src="https://img-blog.csdn.net/20170330224156259?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>这个颜色可能搭配的有些不合适，但基本功能大都实现了。就是你和你同桌对话，你发的消息在你的左侧，而在他设备的右侧。</p>
+<p>首先先写好整体的框架，在一个大容器中放两个盒子，分别是左侧和右侧的界面。然后每个盒子里面包含了三大部分：头部、内容区、和底部。只要写好一侧，另一侧进行粘贴复制就可以了。</p>
+<p>首先定义一个大的</p>
+<p>来盛放左右两个盒子。</p>
+<pre><code>&lt;div id = &quot;main&quot;&gt;
+
+ //左侧聊天界面
+    &lt;div id = &quot;box&quot;&gt;
+        &lt;div id = &quot;top&quot;&gt;&lt;span&gt;你&lt;/span&gt;&lt;/div&gt;
+        &lt;div id = &quot;content&quot;&gt;
+            &lt;select multiple=&quot;multiple&quot; id=&quot;leftcontent&quot;&gt;
+
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div id = &quot;bottom&quot;&gt;
+            &lt;input type = &quot;text&quot; class = &quot;sendText&quot; id = &quot;leftText&quot; /&gt;
+            &lt;input type = &quot;button&quot; id = &quot;leftdBtn&quot; class=&quot;sendBtn&quot; value = &quot;发送&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+//右侧聊天界面
+ &lt;div id = &quot;box&quot;&gt;
+        &lt;div id = &quot;top&quot;&gt;&lt;span&gt;同桌&lt;/span&gt;&lt;/div&gt;
+        &lt;div id = &quot;content&quot;&gt;
+            &lt;select multiple=&quot;multiple&quot; id=&quot;rightcontent&quot;&gt;
+
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div id = &quot;bottom&quot;&gt;
+            &lt;input type = &quot;text&quot; class = &quot;sendText&quot; id = &quot;rightText&quot; /&gt;
+            &lt;input type = &quot;button&quot; id = &quot;rightBtn&quot; class=&quot;sendBtn&quot; value = &quot;发送&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+</code></pre><p>首先这两个盒子的代码不是复制粘贴就直接可以的。还必须注意以下不同：</p>
+<pre><code>&lt;div id = &quot;content&quot;&gt;
+            &lt;select multiple=&quot;multiple&quot; id=&quot;rightcontent&quot;&gt;
+
+            &lt;/select&gt;
+&lt;/div&gt;
+</code></pre><p>select中的id得不同。我们一般都是  </p>
+<p>option1<br>option2<br>option3  </p>
+<p>这样使用。而在这儿使用select标签是当你和你同桌聊了一屏的天时，它有滚动条来 上下滑动看你们都聊了些什么。再上面的基础上增加一些css样式，这样界面效果就出来了。</p>
+<p>接下来就是要写jquery代码的时候了。首先想一下你在你这边说的话既要出现在你的设备右侧，又要出现在你同桌设备的左侧？</p>
+<p>我们先对你的界面左侧进行发消息控制，在写了文本之后，按发送按钮让它出现在你界面的右侧，同时也出现在你同桌设备的左侧。</p>
+<p>我们要按照以下步骤来实现：<br>1。获得你输入的文本框中的内容。<br>2。生成一个option标签。<br>2.1 生成标签的样式即生成的span标签在你的设备的右侧进行定位并 显示。<br>2.2 对生成的标签进行内容的插入即插入文本框中的内容<br>3。将option标签追加到你的select中。<br>4。将option标签在你同桌设备的左侧进行定位显示。</p>
+<p>5。清除文本框中的内容。</p>
+<pre><code>function sendLeft(){
+
+    //1.获得你输入的文本框中的内容。
+    var text = $(&quot;#leftText&quot;).val();
+
+    //2。生成一个span标签。
+    var option = $(&quot;`&lt;option&gt;&lt;/option&gt;`&quot;);
+    // 2.1  生成标签的样式即生成的span标签在你的设备的右侧进行定位并显示。
+    var len = text.length;
+    option.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+    option.css(&quot;marginLeft&quot;, 350 - len * 15 - 60 + &quot;px&quot;);
+        //2.2 生成标签的内容
+        option.html(text);
+
+        //3. 将内容追加到select中。
+        $(&quot;#leftcontent&quot;).append(option);
+
+        //4.  追加生成的标签(右侧)
+        var option1 = $(&quot;&lt;option&gt;&lt;/option&gt;&quot;);
+        option1.addClass(&quot;optionRight&quot;);
+        option1.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+        option1.css(&quot;marginLeft&quot;, 10 +&quot;px&quot;);
+        option1.html(text);
+        $(&quot;#rightcontent&quot;).append(option1);
+
+        //5. 清除文本框的内容
+        $(&quot;#leftText&quot;).val(&quot;&quot;);
+        }
+}
+</code></pre><p>同样再对你同桌的设备方进行显示的时候，和左侧的大同小异。<br>自己写一下就可以。</p>
+<p>在写了左侧和右侧发送的消息函数之后，此时还不能进行消息发送，因为还没有进行事件绑定。首先发送消息有两种方式：<br>①。按钮发送<br>按钮发送就需要为按钮绑定事件</p>
+<pre><code>$(&quot;#leftdBtn&quot;).bind(&quot;click&quot;, sendLeft);
+$(&quot;#rightBtn&quot;).bind(&quot;click&quot;, sendRight);
+</code></pre><p>②。回车发送</p>
+<pre><code>$(document).keydown(function(event){
+            var txt1 = $(&quot;#leftText&quot;).val();
+            var txt2 = $(&quot;#rightText&quot;).val() 
+            if(event.keyCode == 13){
+                if( txt1.trim() != &quot;&quot;){
+                    sendLeft();
+                }
+                if(txt2.trim() != &quot;&quot;){
+                    sendRight();
+                }
+            }
+        });
+</code></pre><p>最后附上完整的源代码:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot;/&gt;
+    &lt;title&gt;模仿微信聊天&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;http://libs.baidu.com/jquery/1.9.0/jquery.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+
+    #main{
+        width: 90%;
+        margin: 10px auto;
+    }
+    #box{
+        float: left;
+        margin:20px 120px; 
+    }
+
+    #top{
+        width: 310px;
+        padding: 10px 20px;
+        color: white;
+        background-color: lightgreen;
+        font-size: 18px;
+        font-family: &quot;微软雅黑&quot;;
+        font-weight: bold;
+    }
+
+    #content{
+        background-color: white;
+    }
+
+    select{
+        width: 350px;
+        height: 470px;
+        background-color: white;
+        padding: 10px;
+        border:2px solid red;
+
+    }
+
+    #bottom{
+        width: 310px;
+        background-color: red;
+        padding: 10px 20px;
+    }
+
+    .sendText{
+        height: 25px;
+        width: 210px;
+        font-size: 16px;
+    }
+
+    .sendBtn{
+        width: 65px;
+        height: 30px;
+
+        float: right;
+        background-color: gold;
+        color: white;
+        text-align: center;
+        font-size: 18px;
+        }
+
+    span{
+            background-color: lightgreen;
+            color: #000;
+            padding: 10px 30px;
+
+        }
+        option{
+            padding: 5px 10px;
+            margin-top:10px; 
+            border-radius:5px;
+            width: 10px;
+            min-height: 20px;
+        }
+
+        .optionRight{
+            background-color: lightgreen;   
+        }
+
+        .optionLeft{
+            background-color: lightblue;    
+        }
+    &lt;/style&gt;
+
+    &lt;script&gt;
+    $(function(){
+
+        $(&quot;#leftdBtn&quot;).bind(&quot;click&quot;, sendLeft);
+        $(&quot;#rightBtn&quot;).bind(&quot;click&quot;, sendRight);
+
+        function sendLeft(){
+
+        //1. 获取输入框中的内容
+        var text = $(&quot;#leftText&quot;).val();
+        //2. 生成标签
+        var option = $(&quot;&lt;option&gt;&lt;/option&gt;&quot;);
+        option.addClass(&quot;optionLeft&quot;);
+        //2.1 生成标签的样式
+        var len = text.length;
+        //option.css(&quot;width&quot;, len * 15 + &quot;px&quot;,&quot;marginLeft&quot;, 350 - len * 15 - 60 + &quot;px&quot;)
+         option.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+         option.css(&quot;marginLeft&quot;, 350 - len * 15 - 60 + &quot;px&quot;);
+        //2.2 生成标签的内容
+        option.html(text);
+        //3. 将内容追加到select中。
+        $(&quot;#leftcontent&quot;).append(option);
+        //4.  追加生成的标签(右侧)
+        var option1 = $(&quot;&lt;option&gt;&lt;/option&gt;&quot;);
+        option1.addClass(&quot;optionRight&quot;);
+        option1.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+        option1.css(&quot;marginLeft&quot;, 10 +&quot;px&quot;);
+        option1.html(text);
+        $(&quot;#rightcontent&quot;).append(option1);
+
+        //5. 清除文本框的内容
+        $(&quot;#leftText&quot;).val(&quot;&quot;);
+        }       
+
+
+    function sendRight(){
+
+        //1. 获取输入框中的内容
+        var text = $(&quot;#rightText&quot;).val();
+        //2. 生成标签
+        var option = $(&quot;&lt;option&gt;&lt;/option&gt;&quot;);
+        option.addClass(&quot;optionLeft&quot;);
+        //2.1 生成标签的样式
+        var len = text.length;
+        //option.css(&quot;width&quot;, len * 15 + &quot;px&quot;,&quot;marginLeft&quot;, 350 - len * 15 - 60 + &quot;px&quot;)
+         option.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+         option.css(&quot;marginLeft&quot;, 350 - len * 15 - 60 + &quot;px&quot;);
+        //2.2 生成标签的内容
+        option.html(text);
+        //3. 将内容追加到select中。
+        $(&quot;#rightcontent&quot;).append(option);
+        //4.  追加生成的标签(右侧)
+        var option1 = $(&quot;&lt;option&gt;&lt;/option&gt;&quot;);
+        option1.addClass(&quot;optionRight&quot;);
+        option1.css(&quot;width&quot;, len * 15 + &quot;px&quot;);
+        option1.css(&quot;marginLeft&quot;, 10 +&quot;px&quot;);
+        option1.html(text);
+        $(&quot;#leftcontent&quot;).append(option1);
+
+        $(&quot;#rightText&quot;).val(&quot;&quot;);
+        }
+
+
+        $(document).keydown(function(event){
+
+            var txt1 = $(&quot;#leftText&quot;).val();
+            var txt2 = $(&quot;#rightText&quot;).val() 
+            if(event.keyCode == 13){
+                if( txt1.trim() != &quot;&quot;){
+                    sendLeft();
+                }
+                if(txt2.trim() != &quot;&quot;){
+                    sendRight();
+                }
+            }
+        });
+    })
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &quot;main&quot;&gt;
+    &lt;div id = &quot;box&quot;&gt;
+        &lt;div id = &quot;top&quot;&gt;&lt;span&gt;你&lt;/span&gt;&lt;/div&gt;
+        &lt;div id = &quot;content&quot;&gt;
+            &lt;select multiple=&quot;multiple&quot; id=&quot;leftcontent&quot;&gt;
+
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div id = &quot;bottom&quot;&gt;
+            &lt;input type = &quot;text&quot; class = &quot;sendText&quot; id = &quot;leftText&quot; /&gt;
+            &lt;input type = &quot;button&quot; id = &quot;leftdBtn&quot; class=&quot;sendBtn&quot; value = &quot;发送&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;box&quot;&gt;
+        &lt;div id = &quot;top&quot;&gt;&lt;span&gt;同桌&lt;/span&gt;&lt;/div&gt;
+        &lt;div id = &quot;content&quot;&gt;
+            &lt;select multiple=&quot;multiple&quot; id=&quot;rightcontent&quot;&gt;
+
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div id = &quot;bottom&quot;&gt;
+            &lt;input type = &quot;text&quot; class = &quot;sendText&quot; id = &quot;rightText&quot; /&gt;
+            &lt;input type = &quot;button&quot; id = &quot;rightBtn&quot; class=&quot;sendBtn&quot; value = &quot;发送&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例七-、jquery模仿微信聊天界面/" data-id="cjl60q3l9001s75tf6pd58uf8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-理解WebSocket原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/理解WebSocket原理/" class="article-date">
+  <time datetime="2017-03-29T14:03:54.000Z" itemprop="datePublished">2017-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/理解WebSocket原理/">理解WebSocket原理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>为什么会出现WebSocket，这是因为传统的http有以下不足：</p>
+<p>1。HTTP客户端和服务器之间的交互是采用请求/应答模式，在客户端请求时，会建立一个HTTP连接，然后发送请求消息，服务端给出应答消息，然后连接就关闭了。（后来的HTTP1.1支持持久连接）</p>
+<p>2。因为TCP连接的建立过程是有开销的，如果使用了SSL/TLS开销就更大。</p>
+<p>3。在浏览器里，一个网页包含许多资源，包括HTML，CSS，JavaScript，图片等等，这样在加载一个网页时要同时打开连接到同一服务器的多个连接。</p>
+<p>4。HTTP消息头问题，现在的客户端会发送大量的HTTP消息头，由于一个网页可能需要50-100个请求，就会有相当大的消息头的数据量。</p>
+<p>5。HTTP通信方式问题，HTTP的请求/应答方式的会话都是客户端发起的，缺乏服务器通知客户端的机制，在需要通知的场景，如聊天室，游戏，客户端应用需要不断地轮询服务器。</p>
+<p>为了解决这些问题出现了WebSocket。</p>
+<p>WebSocket协议是一种双向通信协议，它建立在TCP之上，同HTTP一样通过TCP来传输数据，但是它和HTTP最大的不同有两点：<br>1.WebSocket是一种双向通信协议，在建立连接后，WebSocket服务器和客户端都能主动的向对方发送或接收数据，<br>2.WebSocket需要通过握手连接，类似于TCP它也需要客户端和服务器端进行握手连接，连接成功后才能相互通信。</p>
+<p>Websocket是基于HTTP协议的，或者说借用了HTTP的协议来完成一部分握手。</p>
+<p>WebSocket提供使用一个TCP连接进行双向通讯的机制，包括网络协议和API，以取代网页和服务器采用HTTP轮询进行双向通讯的机制。<br><strong>本质上来说，WebSocket是不限于HTTP协议的，但是由于现存大量的HTTP基础设施，代理，过滤，身份认证等等，WebSocket借用HTTP和HTTPS的端口。_*_</strong>由于使用HTTP的端口，因此TCP连接建立后的握手消息是基于HTTP的，由服务器判断这是一个HTTP协议，还是WebSocket协议。 WebSocket连接除了建立和关闭时的握手，数据传输和HTTP没丁点关系了。*</p>
+<p>WebSocket 跟其他 API 比较不一样的是，它不仅仅依赖于浏览器支持，同时要求服务器和代理（假若需要经过代理的话）支持。 WebSocket 本质上跟 HTTP 完全不一样，只不过为了兼容性，WebSocket 的握手是以 HTTP 的形式发起的，如果服务器或者代理不支持 WebSocket，它们会把这当做一个不认识的 HTTP 请求从而优雅地拒绝掉。</p>
+<p>WebSocket不是HTTP协议，HTTP只负责建立WebSocket连接。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/理解WebSocket原理/" data-id="cjl60q3kp001d75tfmw0pkjg6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例六-、打地鼠的小游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例六-、打地鼠的小游戏/" class="article-date">
+  <time datetime="2017-03-28T16:03:02.000Z" itemprop="datePublished">2017-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例六-、打地鼠的小游戏/">案例六 、打地鼠的小游戏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在写这个打地鼠的游戏开始首先要清楚每一步该做什么<br>然后再一步一步搭好框架再完善功能。</p>
+<p>1.创建table三行三列，用来存放坑（图片）<br>2.获得所有的图片标签<br>3.老鼠的动作有①.冒出来<br>4.②. 老鼠跑了<br>5.③.老鼠被打死了<br>6.完善功能</p>
+<p><strong>一、首先实现第一步，用table创建一个三行三列的坑</strong></p>
+<pre><code>&lt;div id = &quot;content&quot;&gt;
+&lt;h2&gt;打地鼠&lt;/h2&gt;&lt;br/&gt;
+&lt;table id = &quot;background&quot;&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre><p>接下来就是写js函数。<br><strong>二、首先获得所有的坑的集合</strong><br>var image = document.getElementsByTagName(‘img’);</p>
+<p><strong>三、老鼠的动作有：①.冒出来</strong></p>
+<p>老鼠冒出来的坑得获得一个随机的坑，然后将坑的图片替换成地鼠的图片<br>再将每个老鼠绑定click事件。然后要么打死触发die()函数。要么隔一段时间触发paole()函数</p>
+<pre><code>function chulai(){
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+}
+</code></pre><p><strong>四、老鼠的动作：②.老鼠很幸运的跑了</strong><br>如果执行老鼠跑了的这个函数，那么得做一些改变。首先图片得换成默认的坑的图片。然后移除掉绑定到它身上的click事件。最后再继续调用老鼠出来的函数，chulai();</p>
+<pre><code>function paole(){
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+}
+</code></pre><p><strong>五、老鼠的动作：③.老鼠很不幸的被我们打死了</strong><br>老鼠执行该事件得进行以下改变，同样也得移除它身上的click事件，将它的图片换成受伤的图片。</p>
+<pre><code>function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+    }
+</code></pre><p>在写完了上面这些代码后，貌似有了完整的功能，实际上却不能执行。因为少了一个入口的函数，即老鼠出来的函数应该被调用，当然，这个函数也应该在Math.random()的随机时间中被调用，即整合后的代码如下。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+//1 先获取到所有的坑(图片)
+var image = document.getElementsByTagName(&apos;img&apos;);
+var ranK;
+
+//随机时间调用入口函数
+setTimeout(&quot;chulai()&quot;,Math.random()*400+800);
+//让老鼠随机出现在一个坑里
+function chulai(){
+
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+
+}
+//2 老鼠回去了
+function paole(){
+
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+
+}
+
+//3 老鼠被打死了
+function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+
+}
+&lt;/script&gt;
+</code></pre><p>在通过设置css样式后，就可以完美的执行了。效果图如下。</p>
+<p><img src="https://img-blog.csdn.net/20170329195521898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>上面的主体代码已经完成了。接下来就添加功能。</p>
+<p><strong>添加功能一、记录当前打死的老鼠数</strong></p>
+<p>如果想要添加计数功能，那么在body中定义一个div块，用来显示当前打死多少只老鼠的字符串。在这里我们设置为id为score。再定义一个变量count，记录当前打死的老鼠数。在die()函数中进行count++。<br>部分代码如下：</p>
+<pre><code>function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+        }
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170329200259831?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><strong>添加功能二、保存历史最佳纪录</strong></p>
+<p>要实现保存历史最佳纪录那么要使用本地存储localStorage对象。在这儿我们主要使用该对象的<br>localStorage.setItem(“键名”,”值”)，将值以键值对的形式存储到本地。localStorage.getItem(“键名”)；通过键名获得值。</p>
+<p>在这里我们只需将利用var preScore = localStorage.getItem(“键名”)获得历史的最佳记录，然后与当前的count进行对比，如果preScore大于当前的count，则不更新历史最佳记录。如果preScore小于了当前的count，那么使preScore=count；再本轮游戏结束后进行存储。</p>
+<p><strong>添加功能三、设置倒计时器，控制游戏结束</strong></p>
+<p>那么本轮游戏什么时候可以结束，那么就要设置一个计时器。在这里我写了一个一分钟的倒计时器。当sencond等于0，时游戏结束，然后再对<br>localStorage.setItem(“bestScore”,preScore)，进行更新。<br>添加功能二和三的代码如下：</p>
+<pre><code>function die(){
+    try{
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+
+        if( count &gt; preScore)
+        {
+            score1.innerHTML = count;
+            preScore = count;
+        }
+        localStorage.setItem(&quot;bestScore&quot;,preScore);
+    }catch(ex){
+
+    }
+}
+
+//设置一个定时器
+var seconds = 59;
+var speed = 1000;
+
+function countDown(seconds,speed){
+  var txt = &quot;剩余时间：&quot; + ((seconds &lt; 10) ? &quot;0&quot; + seconds : seconds)  +&quot;秒&quot;;
+  div.innerHTML = txt;
+  var timeId = setTimeout(&quot;countDown(seconds--,speed)&quot;,speed);
+
+  //如果时间到了
+  if(seconds == 0){
+  //对最佳记录进行存储，不管当前有没有打破记录
+     localStorage.setItem(&quot;bestScore&quot;,preScore);
+         clearTimeout(timeId);
+           if(cover.style.display == &quot;none&quot;){
+                cover.style.display = &quot;block&quot;;
+
+                //当没有打到一只老鼠的话显示该信息
+       if(count === undefined)
+                text.innerHTML = &quot;当前成绩为：&quot;+0+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+
+    //超越了历史记录，此时localStorage.getItem(&quot;bestScore&quot;)保存的值时当前的count值。显示该信息
+     else if(count == localStorage.getItem(&quot;bestScore&quot;))
+     {
+       text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;恭喜您打破纪录&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+     }
+      else
+         text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;   
+         }
+      }
+}
+
+countDown(seconds,speed);
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170328235216930?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>最后附上完整的源代码</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;mata charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;打地鼠&lt;/title&gt;
+    &lt;script src = &quot;http://libs.baidu.com/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #background{
+        background: url(./images/beijing.jpg);
+
+    }
+    h2{
+            font-family: &quot;微软雅黑&quot;;
+            font-size: 30px;
+            padding-left: 100px;
+       }
+
+    table td{
+         width: 100px;
+          height: 100px;
+        }
+
+    img{
+            margin-top: 31px;
+        }
+    #content{
+           z-index: 1;
+            margin-left: 40%;
+        }
+
+     #count{
+        width: 320px;
+        height: 40px;
+        background-color:#E8E8E8; 
+        padding-left: 0px;
+        text-align: center;
+        color: red;
+        font-size: 18px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+     }
+
+      #count .score{
+        text-align: center;
+        color: lightgreen;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+      }
+
+      #history #id{
+        text-align: center;
+        color: lightgreen;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+      }
+      #history{
+        position: absolute;
+        top:60px;
+        right:240px;
+        width: 180px;
+        height: 90px;
+        background-color: #E8E8E8;
+        color: lightblue;
+        font-size:20px;
+        line-height: 80px;
+        text-align: center;
+      }
+      .clock{
+        position: absolute;
+        top:0px;
+        right:240px;
+        width: 180px;
+        height: 60px;
+        background-color: lightblue;
+        color: red;
+        font-size: 20px;
+        text-align: center;
+        line-height: 60px;
+      }
+      #cover{
+         margin-top: 0px;
+        position: absolute;
+        z-index: 2;
+        width: 800px;
+        height: 600px;
+        top: 0px;   
+        left: 0px;   
+        right: 0px;   
+        bottom: 0px;   
+        margin: auto; 
+        background :rgba(128,128,128,0.5);
+        color: red;
+        font-size: 30px;
+        text-align: center;
+        vertical-align: middle;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id = &quot;content&quot;&gt;
+&lt;h2&gt;打地鼠&lt;/h2&gt;&lt;br/&gt;
+&lt;table id = &quot;background&quot;&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+&lt;div id = &quot;count&quot;&gt;当前得分 ：&lt;span class = &quot;score&quot;&gt; 0  &lt;/span&gt;分&lt;/div&gt;
+&lt;div id = &quot;history&quot;&gt;最佳记录: &lt;span id = &quot;score1&quot;&gt; 0 &lt;/span&gt;分&lt;/div&gt;
+&lt;div class = &quot;clock&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id = &quot;cover&quot; style=&quot;display:none&quot;&gt; &lt;span id = &quot;text&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+
+//1 先获取到所有的坑(图片)
+var content = document.getElementById(&apos;content&apos;);
+var cover = document.getElementById(&apos;cover&apos;);
+var image = document.getElementsByTagName(&apos;img&apos;);
+var countMouse = document.getElementById(&apos;count&apos;);
+var score = countMouse.querySelector(&quot;.score&quot;);
+var history = document.getElementById(&quot;history&quot;);
+var score1 = document.getElementById(&quot;score1&quot;);
+var div = document.querySelector(&quot;.clock&quot;);
+var text = document.getElementById(&quot;text&quot;);
+var preScore = 0;
+var ranK;
+var count = 0;
+
+// localStorage.removeItem(&quot;bestScore&quot;);
+// localStorage.removeItem(&quot;scoreshow&quot;);
+
+preScore = localStorage.getItem(&quot;bestScore&quot;);
+console.log(preScore);
+score1.innerHTML = preScore;
+
+//让老鼠随机出现在一个坑里
+setTimeout(&quot;chulai()&quot;,Math.random()*400+800);
+
+
+function chulai(){
+    try{
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+    }catch(ex){}
+}
+//2 老鼠回去了
+function paole(){
+    try{
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+    }catch(ex){}
+}
+//3 老鼠被打死了
+
+function die(){
+    try{
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+
+        if( count &gt; preScore)
+        {
+            score1.innerHTML = count;
+            preScore = count;
+        }
+        localStorage.setItem(&quot;bestScore&quot;,preScore);
+    }catch(ex){
+
+    }
+}
+
+//设置一个定时器
+var seconds = 59;
+var speed = 1000;
+
+
+function countDown(seconds,speed){
+                var txt = &quot;剩余时间：&quot; + ((seconds &lt; 10) ? &quot;0&quot; + seconds : seconds)  +&quot;秒&quot;;
+                div.innerHTML = txt;
+                var timeId = setTimeout(&quot;countDown(seconds--,speed)&quot;,speed);
+                if(seconds == 0){
+                    //localStorage.setItem(&quot;scoreshow&quot;,count);
+                    localStorage.setItem(&quot;bestScore&quot;,preScore);
+
+                        clearTimeout(timeId);
+                        if(cover.style.display == &quot;none&quot;){
+                            cover.style.display = &quot;block&quot;;
+                        if(count === undefined)
+                             text.innerHTML = &quot;当前成绩为：&quot;+0+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+
+                        else if(count == localStorage.getItem(&quot;bestScore&quot;)){
+                             text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;恭喜您打破纪录&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+                            }
+                        else
+                                text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+                             }  
+                    }
+
+}
+
+countDown(seconds,speed);
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例六-、打地鼠的小游戏/" data-id="cjl60q3la001u75tfpon2as81" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-JavaScript中变量和函数声明的提升" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/JavaScript中变量和函数声明的提升/" class="article-date">
+  <time datetime="2017-03-27T13:58:18.000Z" itemprop="datePublished">2017-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/JavaScript中变量和函数声明的提升/">JavaScript中变量和函数声明的提升</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>js中变量的提升和函数声明提升也是笔试常常会考到的知识点。<br><strong>1。变量提升</strong><br>那什么是变量的提升？可以理解为就是不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。来看看一个例子。<br>在JS中，就是把定义在后面的（变量或函数）提升到前面中定义。</p>
+<pre><code>var world = &quot;Hello World!&quot;；
+function hello(){
+    alert(world);    //Hello World
+}
+</code></pre><p>显然这个结果是显而易见的。如果是这样的话：</p>
+<pre><code>var world = &quot;Hello World!&quot;；
+function hello(){
+    alert(world);    //undefined
+    var world = &quot;What&apos;s  Your Name? &quot;;
+}
+</code></pre><p>为什么会输出undefined，因为不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。所以其实上面的代码是这样的。</p>
+<p>var world = “Hello World!”；<br>function hello(){<br>var world;<br>alert(world); //undefined<br>world = “What’s Your Name? “;<br>}<br>我们会对world 为什么会弹出出 undefined 有更好的理解了。正如我们所学到的，当局部变量world声明后，它会自动被浏览器提升至函数作用域的顶部，在alert 的时候，变量早已经声明完成，然而，因为变量的初始化不会被提升的，所以变量的值是undefined 。</p>
+<p><strong>2。 函数声明提升</strong><br>定义函数有两种方式：函数声明和函数表达式</p>
+<p>函数声明提升会在编译阶段把声明和函数体整体都提前到执行环境顶部，所以我们可以在函数声明之前调用这个函数</p>
+<p>函数声明方式提升【成功】</p>
+<p>代码如下:</p>
+<pre><code>function myTest(){ 
+foo(); 
+function foo(){ 
+alert(&quot;我来自 foo&quot;); 
+} 
+} 
+myTest(); 
+</code></pre><p>函数表达式，其实就是变量声明的一种，声明操作会被提升到执行环境顶部，并赋值undefined。赋值操作被留在原地等到执行。</p>
+<p>函数表达式方式提升【失败】</p>
+<pre><code> 代码如下:
+
+function myTest(){ 
+foo(); 
+var foo =function foo(){ 
+alert(&quot;我来自 foo&quot;); 
+} 
+} 
+myTest(); 
+</code></pre><p>奇怪的函数声明</p>
+<p>复制代码</p>
+<pre><code>console.log(a); //undefined
+
+if (false) {
+    function a() {
+        console.log(100);
+    }
+}
+a();//TypeError: a is not a function 理论上应该是100
+</code></pre><p>奇怪吧？？函数提升发生在所有代码执行之前，所以尽管a函数的定义过程写在了if分支中，但是理论上，它是不会影响函数声明提升的</p>
+<p>在新版本的浏览器中会出现此问题，旧版本的浏览器中会在控制台中打印出100</p>
+<p>这也提醒了我们尽量不要在控制语句中进行声明，会造成很多无法预知的bug</p>
+<p><strong>3.函数优先</strong></p>
+<p>提升操作会优先进行函数的声明</p>
+<p>函数会首先被提升然后才是变量，重复的变量声明会被忽略，只剩下赋值操作，多个函数声明可以进行覆盖</p>
+<p>声明的顺序是这样的：</p>
+<ol>
+<li><p>找到所有的函数声明，初始化函数体，如有同名的函数则会进行覆盖</p>
+</li>
+<li><p>查找变量声明，初始化为undefined，如果已经存在同名的变量，就什么也不做直接略过.</p>
+</li>
+</ol>
+<pre><code>// 1，进行了函数覆盖
+foo(); //200
+
+function foo() {
+    console.log(100);
+}
+
+function foo() {
+    console.log(200);
+}
+
+// 2，先初始化了函数foo，后又发现同名的foo，就会什么也不做，即变量foo就会被不理睬
+console.log(foo); //function foo(){...}
+
+function foo(){
+    console.log(200);
+}
+var foo = 100;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/JavaScript中变量和函数声明的提升/" data-id="cjl60q3ji000475tf9pst9j0k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-拖放" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/拖放/" class="article-date">
+  <time datetime="2017-03-27T13:01:34.000Z" itemprop="datePublished">2017-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/拖放/">拖放</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>使用拖放主要可实现两种功能：(1).从计算机上将文件拖到网页上。(2).将元素拖到同一页面的其他元素中。<br>将元素拖放到页面上，需要以下几个步骤：<br>1.设置你想拖动的任何HTML元素的draggable属性。<br>2.给任何可拖动的HTML元素的draggable事件添加事件监听器.<br>3.给任何接受拖放元素的dragover 和 drop 添加事件监听器。<br><strong>draggable不是一个布尔值，必须明确的指定为TRUE时，元素才可以拖动。此外div元素需要设置draggable属性。而img元素以及设置了href属性的a元素都是默认可拖动的</strong></p>
+<p>如下:<br>html代码：</p>
+<pre><code>&lt;div id = &quot;srcarea&quot;&gt;
+&lt;img src = &quot;./images/12.1.png&quot; id = &quot;item1&quot; class = &quot;item&quot; /&gt;
+&lt;img src = &quot;./images/12.2.png&quot; id = &quot;item2&quot; class  = &quot;item&quot;/&gt;
+&lt;img src = &quot;./images/12.3.png&quot; id = &quot;item3&quot; class = &quot;item&quot; /&gt;
+&lt;div id = &quot;item4&quot; class = &quot;item&quot; draggable = &quot;true&quot; style=&quot;width: 100px;height: 100px; background-color:red&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id = &quot;droparea&quot;&gt;&lt;/div&gt;
+</code></pre><p>srcarea为原位置，droparea为目标位置。</p>
+<p>将以上代码设置样式：<br>css代码：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #srcarea{
+        width: 440px;
+        height: 100px;
+    }
+    #srcarea.item{
+        float: left;
+    }
+ #item4{
+        display:inline-block;
+    }
+    #droparea{
+        width: 100px;
+        height: 100px;
+        border:1px solid red;
+    }
+    .item{
+        width: 100px;
+        height:  100px;
+    }
+&lt;/style&gt;
+</code></pre><p>接下来就要进行js部分代码的编写。首先得明白在拖动对象元素有哪些事件，在接受方元素有哪些事件。以下列出了相关事件<br><img src="https://img-blog.csdn.net/20170327201716968?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>对照上面的表，可以知道。要实现拖放功能至少需要实现 dragstart、dragenter、dragover、drop四种事件处理。</p>
+<p>移动前的效果图<br><img src="https://img-blog.csdn.net/20170327205654835?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>首先为拖动元素追加事件处理的代码：</p>
+<pre><code>var srcarea = document.getElementById(&quot;srcarea&quot;);
+        var els = document.querySelectorAll(&quot;.item&quot;);
+        for(var i = 0; i &lt; els.length; i++){
+            els[i].addEventListener(&quot;dragstart&quot;, function(event){
+                var elm = event.target;
+                event.dataTransfer.setData(&quot;Text&quot;, elm.id);
+                event.stopPropagation();
+            },false);
+        }
+</code></pre><p>在这里了解一下dataTransfer对象的setData()方法：<br>该方法接受两个参数：①.可拖动元素的存储数据类型，在这儿为‘Text‘<br>②.数据值本身，在这儿是文本类型的id值.</p>
+<p><strong>event.dataTransfer.setData(“Text”, elm.id)</strong>设置拖动元素的id属性，可以在drop事件中判别哪个元素被拖动了。</p>
+<p><strong>event.stopPropagation()</strong>.这个方法是防止事件向父级冒泡。即防止事件传导到父级。如果父级元素也有拖动事件，那么在拖动子元素时，就会触发父元素的事件。会发生意想不到的错误。</p>
+<p>接下来就是给接受方添加事件处理</p>
+<pre><code>var droparea = document.getElementById(&apos;droparea&apos;);
+        droparea.addEventListener(&quot;dragenter&quot;, function(event){
+            event.preventDefault();
+        },false);
+
+        droparea.addEventListener(&quot;dragover&quot;, function(event){
+            event.preventDefault();
+        },false);
+</code></pre><p><strong>event.preventDefault();</strong>抑制浏览器的默认动作</p>
+<p>这两个事件处理中，如果不对浏览器的默认动作进行抑制，将实现不了拖放功能。</p>
+<p>最后一步就是真正实现拖放功能的代码。</p>
+<pre><code>droparea.addEventListener(&quot;drop&quot;, function(event){
+               var elm = event.target;
+                var id =              event.dataTransfer.getData(&quot;Text&quot;); //通过存储数据类型获得相应的ID值
+                var target = document.getElementById(id);
+                if(target){
+                    droparea.appendChild(target);
+                }
+             event.preventDefault();
+        },false);
+</code></pre><p>上面这些代码都是在页面加载完成触发的。</p>
+<p>但是最后的代码存在一个问题，就是如果你只想向接收方拖动一个元素时，上面的代码可以将拖动方的元素依次都可以拖动到接收方(即便接收方容器的大小不够，它也会充满再溢出。)，所以需要对上面的代码进行改造实现接收方只能容纳一个元素。若继续拖动，只会替换掉以前拖入的，将现在的放上去，以前的回到原地方。<br>在这里用到了本地数据保存的对象<strong>localStorage</strong></p>
+<pre><code>droparea.addEventListener(&quot;drop&quot;, function(event){
+            var preId = localStorage.getItem(&quot;oldId&quot;);
+            var preSrc = localStorage.getItem(&quot;oldSrc&quot;);
+
+            if(droparea.querySelectorAll(&quot;.item&quot;).length != 0){
+
+                if(preSrc !== undefined){
+                 var image = document.createElement(&quot;img&quot;);
+                 image.className = &quot;item&quot;;
+                 image.id = preId;
+                 image.src = preSrc;
+                 srcarea.appendChild(image);
+                }
+                if(preSrc === undefined)
+                {   
+                    var div = document.createElement(&quot;div&quot;);
+                    div.className = &quot;item&quot;;
+                    div.id = preId;
+                    srcarea.appendChild(div);
+                }
+                $(&quot;#droparea&quot;).empty();
+            }
+            //如果接收方中无元素就从这儿执行。
+                var elm = event.target;
+                var id = event.dataTransfer.getData(&quot;Text&quot;);
+                var target = document.getElementById(id);
+                var imgSrc = target.src;
+                if(target){
+
+                    droparea.appendChild(target);
+                }
+            localStorage.removeItem(&quot;oldSrc&quot;);
+            localStorage.removeItem(&quot;oldId&quot;);
+            localStorage.setItem(&quot;oldId&quot;,id);
+            localStorage.setItem(&quot;oldSrc&quot;,imgSrc);
+             event.preventDefault();
+        },false);
+</code></pre><p>在上面代码中首先用droparea.querySelectorAll(“.item”)判断了接收方容器中元素的数量是不是0。</p>
+<pre><code>localStorage.removeItem(&quot;oldSrc&quot;);
+localStorage.removeItem(&quot;oldId&quot;);
+localStorage.setItem(&quot;oldId&quot;,id);
+localStorage.setItem(&quot;oldSrc&quot;,imgSrc);
+</code></pre><p>这四行代码，用本地数据保存的对象<strong>localStorage</strong>先将上一个元素的值移除掉，保存刚刚拖动的元素的src和id值。<br>再进行第二次拖放时，首先会判断接收方中元素的个数为不为0。不为0的话，就先判断上一个的src是不是undefined。因为我们拖动的对象中除了图片还有一个div元素。div元素的src为undefined。如果是undefined就创建一个div元素。（因为它即将要被替换掉。）在创建的div中添加各种属性，最后添加到原来的父容器中。<br>如果上一个元素的src不是undefined，说明是图片，我们即创建一个img元素，设置好属性后。append在它原来的父容器中。</p>
+<p>移动的效果图1<br><img src="https://img-blog.csdn.net/20170327205810180?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>用红色的方框替换星星图片。</p>
+<p>移动的效果图2。<br><img src="https://img-blog.csdn.net/20170327205939215?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>这样一次只允许容纳一个元素的拖动方法就完成了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/拖放/" data-id="cjl60q3l8001r75tf0oarv2hp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例五-、利用jQuery写一个弹幕" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例五-、利用jQuery写一个弹幕/" class="article-date">
+  <time datetime="2017-03-24T15:16:55.000Z" itemprop="datePublished">2017-03-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例五-、利用jQuery写一个弹幕/">案例五 、利用jQuery写一个弹幕</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在要写一个弹幕案例的时候，首先要清楚每一步要干什么。<br>首先搭好框架之后在要发送弹幕时应该准备进行如下步骤：</p>
+<ol>
+<li>获取到要发送到弹幕上的内容，即获取到文本框输入的内容。通过jquery的var str = $(“#文本框的id”).val();</li>
+<li>生成一个元素。<br>利用jQuery的 var createSpan =$(““)生成一个span元素，以便发送。</li>
+<li>给刚创建的span赋值，即获取到的文本框中的值<br>createSpan.text(str );</li>
+<li>设置元素的动画效果,是元素动起来。利用jQuery的animate(css样式值，时间， 执行完动画调用的方法)。执行完动画得手动移除刚刚所添加的元素。</li>
+</ol>
+<p>里面还有许多细节，仔细看就会有收获！</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;弹幕案例&lt;/title&gt;
+    &lt;script src = &quot;http://libs.baidu.com/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+    $(function(){
+        var boxDom = $(&quot;#boxDom&quot;);
+        //var domContent = $(&quot;#domContent&quot;);
+
+        var top, right;
+
+        var pageWidth = parseInt($(document).width());
+        var pageHeight =parseInt($(document).height());
+
+        //点击按钮
+        $(&quot;#btn&quot;).bind(&quot;click&quot;,auto);//按钮绑定方法
+        //按下回车
+        document.onkeydown = function(){
+            if(event.keyCode == 13){
+                auto();
+            }
+        }
+        function auto(){
+        //1.获取输入的字符串
+        var str = $(&quot;.text&quot;).val();
+        //2.生成一个元素
+        var createSpan = $(&quot;&lt;span class = &apos;string&apos; &gt;&lt;/span&gt;&quot;);
+
+        //3.给生成的元素赋值
+
+        createSpan.text(str);
+
+        //为了页面友好，清空刚刚输入的值
+        $(&quot;.text&quot;).val(&quot;&quot;);
+
+    //生成元素一个随机的位置，为了使每条弹幕都出现在屏幕上不同的位置
+        top = Math.floor(Math.random()*pageHeight);
+
+
+    createSpan.css({&quot;top&quot;:top, &quot;right&quot;: -400, &quot;color&quot;: getRandomColor()});
+        boxDom.append(createSpan);
+
+        //4.设置元素的动画效果，animate(css样式值，时间， 执行完动画调用的方法)
+
+        //页面上有N个span，只让最后一个动起来
+        var spandom = $(&quot;#boxDom&gt;span:last-child&quot;);//找到最后一个span
+        spandom.animate({&quot;right&quot;:pageWidth+300},10000,function(){
+            //移除元素
+            $(this).remove();
+
+        });
+        }
+        //定义一个可以生成随机颜色的方法,可以使每条弹幕的颜色不同
+        function getRandomColor(){
+            var colorArr = [&apos;1&apos;,&apos;2&apos;,&apos;3&apos;,&apos;4&apos;,&apos;5&apos;,&apos;6&apos;,&apos;7&apos;,&apos;8&apos;,&apos;9&apos;,&apos;A&apos;,&apos;B&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;F&apos;];
+            var color = &quot;&quot;;
+            for(var i = 0; i &lt; 6; i++){
+                color += colorArr[Math.floor(Math.random()*16)]; 
+            }
+            return &quot;#&quot;+color;
+        }
+
+    });
+    &lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    html,body{
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        font-family: &quot;微软雅黑&quot;;
+        background: #ccc;
+    }
+    .boxDom{
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    .idDom{
+        width: 100%;
+        height: 60px;
+        background:#666;
+        position: fixed;
+        bottom: 0px;
+    }
+    .contet{
+        width: 500px;
+        height: 40px;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        bottom: 0px;
+        left: 0px;
+        margin:  auto;
+
+    }
+    .title{
+        display: inline;
+        font-size: 24px;
+        vertical-align: bottom;
+        color: #ffffff;
+        padding-left: 300px;
+    }
+
+    .text{
+        width: 300px;
+        height: 30px;
+        border:none;
+        border-radius:5px;
+        font-size: 20px;
+        margin-left:60px;
+    }
+    .btn{
+        width: 60px;
+        height: 30px;
+        color: #ffffff;
+        background-color: red;
+        border:none;
+        font-size:16px;
+        margin-left:60px;
+        margin-top: 20px;
+    }
+    .string {
+            width: 300px;
+            height: 40px;
+            margin-top: 20px;
+            position: absolute;
+            color: #000;
+            font-size: 20px;
+            font-family: &quot;微软雅黑&quot;;
+
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class = &quot;boxDom&quot; id = &quot;boxDom&quot;&gt;
+    &lt;img src=&quot;../images/bg_2.jpg&quot; style=&quot;width:100%; height:100%&quot;  /&gt;
+    &lt;div id = &quot;idDom&quot; class = &quot;idDom&quot;&gt;
+        &lt;div class = &quot;content&quot;&gt;
+            &lt;p class = &quot;title&quot;&gt; 说点什么:&lt;/p&gt;
+            &lt;input type = &quot;text&quot; class = &quot;text&quot;/&gt;
+            &lt;button type = &quot;button&quot; class = &quot;btn&quot; id = &quot;btn&quot; &gt;发送&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170324231525957?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例五-、利用jQuery写一个弹幕/" data-id="cjl60q3kl001775tfk7ashh6l" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/zsdf/page/5/">&laquo; Prev</a><a class="page-number" href="/zsdf/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zsdf/page/4/">4</a><a class="page-number" href="/zsdf/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/zsdf/page/7/">7</a><a class="page-number" href="/zsdf/page/8/">8</a><a class="extend next" rel="next" href="/zsdf/page/7/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

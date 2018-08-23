@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript创建对象---工厂模式 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在介绍寄生构造函数模式时，先来介绍一下工厂模式1.工厂模式工厂模式是软件工程领域中一种广为认知的设计模式，这种模式抽象了具体创建对象的过程，因为在ECMAScript中无法创建类。开发人员就发明了一种函数，用函数来封装以特定接口创建对象的细节。 function createPerson(name, age, job){     var o = new Object();     o.name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript创建对象---工厂模式">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/JavaScript创建对象-工厂模式/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在介绍寄生构造函数模式时，先来介绍一下工厂模式1.工厂模式工厂模式是软件工程领域中一种广为认知的设计模式，这种模式抽象了具体创建对象的过程，因为在ECMAScript中无法创建类。开发人员就发明了一种函数，用函数来封装以特定接口创建对象的细节。 function createPerson(name, age, job){     var o = new Object();     o.name">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript创建对象---工厂模式">
+<meta name="twitter:description" content="在介绍寄生构造函数模式时，先来介绍一下工厂模式1.工厂模式工厂模式是软件工程领域中一种广为认知的设计模式，这种模式抽象了具体创建对象的过程，因为在ECMAScript中无法创建类。开发人员就发明了一种函数，用函数来封装以特定接口创建对象的细节。 function createPerson(name, age, job){     var o = new Object();     o.name">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript创建对象-工厂模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/JavaScript创建对象-工厂模式/" class="article-date">
+  <time datetime="2017-04-10T06:17:46.000Z" itemprop="datePublished">2017-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript创建对象---工厂模式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在介绍寄生构造函数模式时，先来介绍一下工厂模式<br><strong>1.工厂模式</strong><br>工厂模式是软件工程领域中一种广为认知的设计模式，这种模式抽象了具体创建对象的过程，因为在ECMAScript中无法创建类。开发人员就发明了一种函数，用函数来封装以特定接口创建对象的细节。</p>
+<pre><code>function createPerson(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName= function(){
+          return (this.name)
+     };
+     return o;
+     }
+var person1 = createPerson(&apos;ZhangSan&apos;, 29, &apos;Software Enginner &apos;);
+var person2 = createPerson(&apos;LiSi&apos;, 27, &apos;Doctor &apos;);
+</code></pre><p>使用工厂模式，可以无数次的调用这个函数。而每次它都会返回一个具有三个属性和一个方法的对象。工厂模式虽然解决了创建多个对象的问题，但却没有解决对象识别的问题（怎样知道一个对象的类型）<br>即<br>console.log(person1 instanceof Object); //true<br>console.log(person2 instanceof Object); //true<br>console.log(person1.constructor == Object); //true<br>console.log(person2.constructor == Object); //true<br>知道person1 和person2 都属于对象，却没办法知道对象的类型。所以就出现了构造函数。</p>
+<p>而构造函数上节已经讲过，现在我们要看的就是和工厂模式的定义对象的方法非常相似的寄生构造函数模式。</p>
+<p><strong>2. 寄生构造函数模式</strong></p>
+<p>在我们前几次讲的几种模式都不适用的情况下，可以使用这种。<br>这种模式的基本思想是创建一个函数，该函数的作用仅仅是封装创建对象的代码。然后再返回新创建的函数。</p>
+<pre><code>function Person(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName= function(){
+          return (this.name)
+     };
+     return o;
+     }
+var person1 = new  Person(&apos;ZhangSan&apos;, 29, &apos;Software Enginner &apos;);
+var person2 = new  Person(&apos;LiSi&apos;, 27, &apos;Doctor &apos;);
+</code></pre><p>从表面上看这像是很典型的构造函数。但是除了使用new操作符并把使用的包装函数叫做构造函数之外，这个模式其实跟工厂模式是一模一样的。构造函数在不返回值的情况下，默认返回新对象实例。而在构造函数的尾部添加一个return 语句，意味着可以重写调用构造函数时的返回值。</p>
+<p>这个模式可以在特殊情况下，用来为对象创建构造函数。</p>
+<pre><code>function createPerson(name, age, job){
+        var o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.sayName= function(){
+              return (this.name)
+         };
+         return o;
+     }
+
+    function specialPerson(){
+     var persons = new createPerson(&apos;LiSi&apos;, 27, &apos;Doctor&apos;);
+            persons.alertMsg = function(){
+            alert(&apos;new message!&apos;);
+        }
+        return persons;
+        }
+
+    var person1 = new specialPerson();
+
+    person1.alertMsg(); //new message
+    alert(person1.sayName());  //LiSi
+</code></pre><p>在上面的例子中，我们首先创建了构造函数createPerson(),然后再使用寄生构造函数模式为该函数的内部对象又添加了新的方法。<br>使用var person1 = new specialPerson();创建一个新实例。相当于利用使用构造函数specialPerson创建的实例，也可以访问createPerson中的属性和方法。</p>
+<p><strong>注意：返回的对象与构造函数或者构造函数的原型属性之间没有任何关系。也就是说，通过构造函数返回的对象与在构造函数外部创建的对象没有什么不同。因此不能依赖instanceof操作符来确定对象类型。所以一般不建议使用这种模式。</strong></p>
+<p><strong>3 .稳妥构造函数模式</strong></p>
+<p>所谓稳妥对象，就是没有公共属性，而且其方法也不引用this的对象。稳妥对象最适合在一些安全的环境中(这些环境中会禁止使用this和new)。或者在防止数据被其他应用程序改动时使用。</p>
+<p>稳妥构造函数模式遵循与寄生构造函数类似的模式。但有区别：<br>①.新创建对象的实例方法不使用this；<br>②.不使用new操作符调用构造函数</p>
+<p>则根据稳妥函数的要求，可以将前面的Person改写为：</p>
+<pre><code>function Person(name , age, job){
+    //创建要返回的对象
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        alert(name);
+    }
+//返回对象
+return o;
+}
+ var friend = Person(&quot;Nicholas&quot;, 29, &quot;SoftWare Enginner&quot;);
+ friend.sayName();        //Nicholas
+</code></pre><p>这样变量friend中保存的是一个稳妥对象，除了调用sayName之外，没有其他方法访问其数据成员。即使有其他代码会为这个对象添加新的方法或者数据成员，但也不会有别的方法访问到传入到构造函数中的原始数据。稳妥函数提供的这种安全性，使得它非常适合在某些安全执行环境下使用。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/JavaScript创建对象-工厂模式/" data-id="cjl60q3jj000575tfwla8jbrs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/浅谈对-this-指向的理解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈对 this 指向的理解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/组合使用构造函数模式和原型模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">组合使用构造函数模式和原型模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

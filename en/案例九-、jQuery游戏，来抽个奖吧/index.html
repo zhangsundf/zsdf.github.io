@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例九 、jQuery游戏，来抽个奖吧 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天要写的是，利用jQuery写一个抽奖的案例，页面包含四个组件，两个按钮分别是开始和停止的按钮。两个box，分别盛放人员和奖品。当点击开始按钮时，人员不停地进行切换。抽奖的box’中显示等待抽奖结果。当按下停止按钮时，两个盒子分别显示人员名，和所中的奖品。 页面的效果图如下： 可能页面没有那么好看。我们主要实现的是功能 首先在body中定义组件 &amp;lt;body&amp;gt; &amp;lt;input t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例九 、jQuery游戏，来抽个奖吧">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="今天要写的是，利用jQuery写一个抽奖的案例，页面包含四个组件，两个按钮分别是开始和停止的按钮。两个box，分别盛放人员和奖品。当点击开始按钮时，人员不停地进行切换。抽奖的box’中显示等待抽奖结果。当按下停止按钮时，两个盒子分别显示人员名，和所中的奖品。 页面的效果图如下： 可能页面没有那么好看。我们主要实现的是功能 首先在body中定义组件 &amp;lt;body&amp;gt; &amp;lt;input t">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170401214255721?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170401215504772?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170401215709415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170401215755853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例九 、jQuery游戏，来抽个奖吧">
+<meta name="twitter:description" content="今天要写的是，利用jQuery写一个抽奖的案例，页面包含四个组件，两个按钮分别是开始和停止的按钮。两个box，分别盛放人员和奖品。当点击开始按钮时，人员不停地进行切换。抽奖的box’中显示等待抽奖结果。当按下停止按钮时，两个盒子分别显示人员名，和所中的奖品。 页面的效果图如下： 可能页面没有那么好看。我们主要实现的是功能 首先在body中定义组件 &amp;lt;body&amp;gt; &amp;lt;input t">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170401214255721?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例九-、jQuery游戏，来抽个奖吧" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/" class="article-date">
+  <time datetime="2017-04-01T13:58:24.000Z" itemprop="datePublished">2017-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例九 、jQuery游戏，来抽个奖吧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>今天要写的是，利用jQuery写一个抽奖的案例，页面包含四个组件，两个按钮分别是开始和停止的按钮。两个box，分别盛放人员和奖品。当点击开始按钮时，人员不停地进行切换。抽奖的box’中显示等待抽奖结果。当按下停止按钮时，两个盒子分别显示人员名，和所中的奖品。</p>
+<p>页面的效果图如下：<br><img src="https://img-blog.csdn.net/20170401214255721?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>可能页面没有那么好看。我们主要实现的是功能</p>
+<p>首先在body中定义组件</p>
+<pre><code>&lt;body&gt;
+&lt;input type = &quot;button&quot; class = &quot;btn&quot; id = &quot;start&quot; value = &quot;开始&quot;&gt;
+&lt;input type = &quot;button&quot; class = &quot;btn&quot; id = &quot;stop&quot; value = &quot;停止&quot;&gt;
+
+&lt;div id = &quot;number&quot; class = &quot;box1&quot;&gt;&lt;/div&gt;
+&lt;div id = &quot;jiangpin&quot; class = &quot;box2&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>再进行样式设置：<br>css代码：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    .btn{
+        width: 90px;
+        height: 40px;
+        background-color: lightgreen;
+        color: white;
+        font-size: 18px;
+        font-family: &quot;微软雅黑&quot;;
+        text-align: center;
+        line-height: 40px;
+
+    }
+    .box1{
+        position: absolute;
+        width: 230px;
+        height: 100px;
+        margin: 10px  50px;
+        top:150px;
+        left: 60%;
+        background-color: gold;
+        color: black;
+        border-radius: 8%;
+        font-size: 30px;
+        text-align: center;
+        line-height: 100px;
+    }
+    .box2{
+        position: absolute;
+        width: 230px;
+        height: 100px;
+        margin: 10px  50px;
+        top: 300px;
+        left: 60%;
+        background-color: gold;
+        color: black;
+        border-radius: 8%;
+        font-size: 30px;
+        text-align: center;
+        line-height: 100px;
+    }
+    &lt;/style&gt;
+</code></pre><p>接下来就是写函数了。在这里我引用的是”<a href="http://libs.baidu.com/jquery/1.9.0/jquery.js" target="_blank" rel="noopener">http://libs.baidu.com/jquery/1.9.0/jquery.js</a>“；的jQuery库。</p>
+<pre><code>&lt;script &gt;
+$(document).ready(function(){
+
+// 1. 首先第一步定义两个数组，存放人员和奖品
+
+var list1 = [ &apos;A君&apos; , &apos; B君  &apos; ,  &apos; C君 &apos; ,  &apos; D君 &apos;,  &apos; E君 &apos; ,  &apos; F君  &apos; ,  &apos; G君 &apos;];
+var list2 = [&apos;YSL&apos;, &apos; iphone7&apos;, &apos; iphone6&apos;, &apos; 手表&apos;, &apos; 小红花&apos;, &apos; 谢谢参与&apos;,&apos; 谢谢参与&apos;,&apos; 谢谢参与&apos;];
+
+
+// 2. 为开始按钮绑定点击事件
+
+$(&quot;#start&quot;).click(function(){
+    //2.1  先将奖品的盒子中的内容初始化
+    $(&quot;#jiangpin&quot;).html(&quot;等待抽奖中...&quot;);
+
+    //2.2 利用setInterval()函数进行人员名字切换
+    // 定义一个变量去接受它每次的状态
+    functionId = setInterval(function(){
+    var n = Math.floor(Math.random() * list1.length);
+        $(&quot;#number&quot;).html(list1[n]);
+    },30);
+
+        });
+
+// 3. 为停止按钮绑定点击事件
+    $(&quot;#stop&quot;).click(function(){
+    // 3.1  清除setInterval()。并停止在最后一次的人员名上
+    clearInterval(functionId);
+    // 3.2 随机产生奖品数组的下标，并将下标对应的元素写入奖品区
+    var jiang = Math.floor(Math.random() * list2.length);
+    $(&quot;#jiangpin&quot;).html(list2[jiang]);
+    });
+})
+&lt;/script&gt;
+</code></pre><p>这个案例比较简单，所以就不赘述了，下面附上最后的效果图：</p>
+<p>这个是点击了开始按钮之后，人员名进行快速的切换中：<br><img src="https://img-blog.csdn.net/20170401215504772?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>下面这个是点击了停止按钮的最终中奖人员和对应的奖品<br><img src="https://img-blog.csdn.net/20170401215709415?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170401215755853?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例九-、jQuery游戏，来抽个奖吧/" data-id="cjl60q3ki001575tfgutpbu06" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/原生js的JSONP跨域请求/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          原生js的JSONP跨域请求
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例八-、jquery点个赞吧/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例八 、jquery点个赞吧</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

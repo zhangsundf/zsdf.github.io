@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>表单的知识点总结 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="JavaScript最初的一个应用，就是分担服务器处理表单的责任，打破处处依赖服务器的局面。在HTML中，表单是由&amp;lt;from&amp;gt;元素表示的，而在JavaScript中，表单对应的则是HTMLFormElement类型。HTMLFormElement继承了HTMLElement，因而与其他HTML有相同的默认属性，bugHTMLFormElement也有自己独有的属性和方法：例如：acc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="表单的知识点总结">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/表单的知识点总结/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="JavaScript最初的一个应用，就是分担服务器处理表单的责任，打破处处依赖服务器的局面。在HTML中，表单是由&amp;lt;from&amp;gt;元素表示的，而在JavaScript中，表单对应的则是HTMLFormElement类型。HTMLFormElement继承了HTMLElement，因而与其他HTML有相同的默认属性，bugHTMLFormElement也有自己独有的属性和方法：例如：acc">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="表单的知识点总结">
+<meta name="twitter:description" content="JavaScript最初的一个应用，就是分担服务器处理表单的责任，打破处处依赖服务器的局面。在HTML中，表单是由&amp;lt;from&amp;gt;元素表示的，而在JavaScript中，表单对应的则是HTMLFormElement类型。HTMLFormElement继承了HTMLElement，因而与其他HTML有相同的默认属性，bugHTMLFormElement也有自己独有的属性和方法：例如：acc">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-表单的知识点总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/表单的知识点总结/" class="article-date">
+  <time datetime="2017-03-22T15:32:24.000Z" itemprop="datePublished">2017-03-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      表单的知识点总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>JavaScript最初的一个应用，就是分担服务器处理表单的责任，打破处处依赖服务器的局面。<br>在HTML中，表单是由<code>&lt;from&gt;</code>元素表示的，而在JavaScript中，表单对应的则是HTMLFormElement类型。HTMLFormElement继承了HTMLElement，因而与其他HTML有相同的默认属性，bugHTMLFormElement也有自己独有的属性和方法：<br>例如：acceptCharset、action、element、enctype、length、method、name、reset、submit、target等。<br><strong>一、取得form元素的引用方法有2种：</strong><br>1. 通过ID获得<br>var form = document.getElementById(‘form1’);<br>2. document.forms 可以取得页面中所有的表单，在这个集合中，可以通过索引值取得特定的表单<br>var form = document.forms[0];//通过索引取得<br>var form = document.forms[“form1”];//通过表单名称获得，不推荐<br><strong>二、提交表单</strong><br>3种方式：<br>1. 通用按钮提交</p>
+<pre><code>&lt;input type = &quot;submit&quot; value = &quot;Submit From&quot; /&gt;
+</code></pre><ol>
+<li><p>自定义按钮提交</p>
+ <button type="submit">Submit Value </button>
+</li>
+<li><p>图像按钮</p>
+<input type="image" src="smile.jpg">
+
+</li>
+</ol>
+<p>组织表单提交可以使用preventDefault()方法，在前几篇详细讲解过该方法的使用<br>通过js来提交表单</p>
+<p>var form = document.getElementById(‘form1’);<br>form.submit();</p>
+<p><strong>三、重置表单</strong><br>重置表单按钮的type的2种方式<br>1. 通用按钮提交</p>
+<pre><code>&lt;input type = &quot;reset&quot; value = &quot;reset From&quot; /&gt;
+</code></pre><ol>
+<li><p>自定义按钮提交</p>
+ <button type="reset">reset Form</button>
+
+</li>
+</ol>
+<p>通过js来重置表单</p>
+<p>var form = document.getElementById(‘form1’);<br>form.reset();<br><strong>四、表单字段</strong><br>每个表单元素都有一个elements属性，该属性表示表单中所有表单元素（字段）的集合。<br>上面讲了获取到表单，现在讲获取表单内的内容<br>var form = document.getElementById(‘form1’);<br>//取得表单中的第一个字段(元素)<br>var filed1 = form.elements[0];</p>
+<p>//取得名为textbox1的字段<br>var filed1 = form.elements[“textbox1”];</p>
+<p>//获得表单中包含字段的数量</p>
+<p>var filed1 = form.elements.length;</p>
+<p>如果表单的多个控件都使用相同的 name，则返回一个NodeList。<br><strong>4.1共有的表单字段属性</strong><br>除了<code>&lt;fieldset&gt;</code>元素外，所以表单字段都有相同的一组属性。<br>例如以下属性<br>disabled \ form\ name \ readOnly \ tabIndex \ type \ value<br>除了form属性外。可以通过js来动态修改其他任何属性<br>var form = document.getElementById(‘form1’);<br>var field1 = form.elements[0];</p>
+<p>//修改value属性<br>field1 .value = “new Value”;</p>
+<p>//检查form属性的值<br>alert(field1 .form == form); //true;</p>
+<p>//把焦点设到当前字段<br>field1.focus();</p>
+<p>//禁用当前字段<br>field1.disabled = true;</p>
+<p>为了避免多次提交表单，可以在提交按钮一次后就禁用提交按钮。</p>
+<p><strong>4.2共有的表单字段方法</strong><br>每个表单字段都有两个方法：focus() 聚焦 和blur()失焦<br>如果表单字段是一个input元素，但其type为hidden，那么就不能使用focus()方法。<br><strong>autofocus</strong>属性，只要元素设置了该属性，就不用使用js中的focus方法了。  </p>
+<p>blur()方法和focus()使用方法一样</p>
+<p><strong>4.3共有的表单字段事件</strong><br>在介绍了共有的表单事件属性，方法后，现在是事件<br>除了支持鼠标、键盘、更改和HTML事件之外，所有的表单字段都支持以下三个事件<br>focus\blur\change<br>当元素失去（获得）焦点时，就会触发blur（focus）事件<br>change:对于input和textarea元素，它们是在失去焦点并且value值改变才会触发该事件；select元素，在其选项改变时触发</p>
+<p><strong>五、文本框脚本</strong><br>在HTML中两种方式表现文本框<code>&lt;input&gt;</code>元素的单行文本框和<code>&lt;textarea&gt;</code>元素多行文本框<br>使用分别如下</p>
+<pre><code>input
+&lt;input type = &quot;text&quot; size = &quot;25&quot;  maxLength = &quot;50&quot; value = &quot;initial value&quot;&gt;
+
+size : 显示25个字符；maxLength 最多输入50个字符
+
+
+textarea
+&lt;textarea rows = &quot;25&quot; cols = &quot;5&quot; &gt;initial value&lt;/textarea&gt;
+</code></pre><p>rows为行数，cols为字符列数（与input中的size类似）不能为在 HTML中为textarea设置最大字符数</p>
+<p><strong>5.1选择文本</strong><br>上述的两个文本框都支持select()方法，用于选择文本框中所有的文本，大多数浏览器在使用select()方法时，都会将焦点设置到文本框中（除oprea）这个方法不接受参数。</p>
+<p>在文本框获得焦点时选择其所有文本是一种常见的做法，特别是在文本框包含默认值的时候，就不必一个个删除文本了。</p>
+<pre><code>EventUtil.addHandler(textbox,&quot;focus&quot;, function(event){
+    event = EventUtil.getEvent(event);
+    var target = EventUtil.getTarget(event);
+    target.select();
+});
+</code></pre><p>取得选择的文本</p>
+<p>通过selectionStart和selectionEnd这两个属性可以取得选择的文本</p>
+<pre><code>function getSelectedText(textbox){
+    return textbox.value.substring(textbox.selectionStart textbox.selectionEnd);
+}
+</code></pre><p>选择部分文本</p>
+<p>1。setSelectionRange(),所有文本框都具有的方法，接受两个参数，类似于substring方法的两个参数。</p>
+<p>//选择所有文本<br>textbox.setSelectionRange(0, textbox.value.length);</p>
+<p>//选择三个字符<br>textbox.setSelectionRange(4, 7);</p>
+<p>2。在IE8及更早的版本中取得部分文本</p>
+<p>var range = textbox.createTextRange();</p>
+<p>//选择所有文本<br>range.collapse(true);<br>range.moveStart(“character”, 0);<br>range.moveEnd(“character”, textbox.value.length);<br>range.select();</p>
+<p>//选择第4到第6个字符<br>range.collapse(true);<br>range.moveStart(“character”, 4);<br>range.moveEnd(“character”,3);<br>range.select();</p>
+<p>3。selectText()接受三个参数</p>
+<p>textbox.value = “Hello World”;</p>
+<p>//选择所有文本<br>selecteText(textbox, 0, textbox.value.length );</p>
+<p>//选择第4到第6个字符<br>selecteText(textbox, 4, 7 );</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/表单的知识点总结/" data-id="cjl60q3kt001k75tfxv8c86nx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/理解Canvas的save-和restore-方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          理解Canvas的save()和restore()方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/几种常用的排序算法总结/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">几种常用的排序算法总结</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

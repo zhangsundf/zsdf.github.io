@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript中typeof和instanceof用法笔记 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="typeof一般用来获取一个变量或者表达式的类型。      &amp;gt; typeof undefined     &amp;apos;undefined&amp;apos;     &amp;gt; typeof null // well-known bug     &amp;apos;object&amp;apos;     &amp;gt; typeof true     &amp;apos;boolean&amp;apos;     &amp;gt; type">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中typeof和instanceof用法笔记">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/JavaScript中typeof和instanceof用法笔记/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="typeof一般用来获取一个变量或者表达式的类型。      &amp;gt; typeof undefined     &amp;apos;undefined&amp;apos;     &amp;gt; typeof null // well-known bug     &amp;apos;object&amp;apos;     &amp;gt; typeof true     &amp;apos;boolean&amp;apos;     &amp;gt; type">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript中typeof和instanceof用法笔记">
+<meta name="twitter:description" content="typeof一般用来获取一个变量或者表达式的类型。      &amp;gt; typeof undefined     &amp;apos;undefined&amp;apos;     &amp;gt; typeof null // well-known bug     &amp;apos;object&amp;apos;     &amp;gt; typeof true     &amp;apos;boolean&amp;apos;     &amp;gt; type">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript中typeof和instanceof用法笔记" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/JavaScript中typeof和instanceof用法笔记/" class="article-date">
+  <time datetime="2017-04-12T12:38:26.000Z" itemprop="datePublished">2017-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript中typeof和instanceof用法笔记
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>typeof一般用来获取一个变量或者表达式的类型。</p>
+<pre><code>     &gt; typeof undefined
+    &apos;undefined&apos;
+    &gt; typeof null // well-known bug
+    &apos;object&apos;
+    &gt; typeof true
+    &apos;boolean&apos;
+    &gt; typeof 123
+    &apos;number&apos;
+    &gt; typeof &quot;abc&quot;
+    &apos;string&apos;
+    &gt; typeof function() {}
+    &apos;function&apos;
+    &gt; typeof {}
+    &apos;object&apos;
+    &gt; typeof []
+    &apos;object&apos;
+    &gt; typeof unknownVariable
+    &apos;undefined&apos;
+
+function SuperType(){
+         }
+console.log(typeof(SuperType));  //function
+</code></pre><p>可以看到typeof一般返回值有undefined、Object（包括数组,NULL, 对象）、String、number、Boolean、function.</p>
+<p>我们可以使用typeof来获取一个变量是否存在，如<br>if(typeof a!=”undefined”){}，<br>而不要去使用if(a)因为如果a不存在（未声明）则会出错，</p>
+<p>正因为typeof遇到null,数组,对象时都会返回object类型，所以当我们要判断一个对象是否是数组时</p>
+<p>或者判断某个变量是否是某个对象的实例则要选择使用另一个关键语法instanceof.</p>
+<p>instanceofxao操作符是一个双目运算符。判断一个对象是否是另一个对象的实例。<br>function SuperType(){</p>
+<p>}<br>var instance = new Supertype();</p>
+<p>alert(instance instanceof SuperType); //true;</p>
+<p>alert(instance instanceof Object); //true ； 所有引用类型默认都是Object的实例</p>
+<p>alert(instance instanceof Function); //false;<br>//instance是一个对象，而不是函数</p>
+<p>alert(SuperType instanceof Function); //true ；</p>
+<p>var a=new Array();alert(a instanceof Array); //true;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/JavaScript中typeof和instanceof用法笔记/" data-id="cjl60q3jh000375tf3evhdnx3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/将按钮按照value值排序，并且点击按钮后值1s自减一/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          将按钮按照value值排序，并且点击按钮后值1s自减一
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/确定实例与原型之间的关系/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">确定实例与原型之间的关系</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

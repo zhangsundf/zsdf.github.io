@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>AngularJS中的$http | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="对于ajax应用（使用XMLHttpRequest）来说，向服务器发起请求的传统方式是：获取一个XMLHttpRequest对象的引用、发起请求、读取响应、检查状态码、最后处理服务端的响应，整个过程如下： var xmlhttp = new XMLHttpRequest();  xmlhttp.onreadystatechange = function(){     if(xmlhttp.rea">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AngularJS中的$http">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/AngularJS中的-http/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="对于ajax应用（使用XMLHttpRequest）来说，向服务器发起请求的传统方式是：获取一个XMLHttpRequest对象的引用、发起请求、读取响应、检查状态码、最后处理服务端的响应，整个过程如下： var xmlhttp = new XMLHttpRequest();  xmlhttp.onreadystatechange = function(){     if(xmlhttp.rea">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AngularJS中的$http">
+<meta name="twitter:description" content="对于ajax应用（使用XMLHttpRequest）来说，向服务器发起请求的传统方式是：获取一个XMLHttpRequest对象的引用、发起请求、读取响应、检查状态码、最后处理服务端的响应，整个过程如下： var xmlhttp = new XMLHttpRequest();  xmlhttp.onreadystatechange = function(){     if(xmlhttp.rea">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AngularJS中的-http" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/AngularJS中的-http/" class="article-date">
+  <time datetime="2017-07-19T03:31:28.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      AngularJS中的$http
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>对于ajax应用（使用XMLHttpRequest）来说，向服务器发起请求的传统方式是：获取一个XMLHttpRequest对象的引用、发起请求、读取响应、检查状态码、最后处理服务端的响应，整个过程如下：</p>
+<pre><code>var xmlhttp = new XMLHttpRequest();
+
+xmlhttp.onreadystatechange = function(){
+    if(xmlhttp.readystate == 4 &amp;&amp; xmlhttp.status == 200){
+        var response = xmlhttp.responseText;
+    }else if(xmlhttp.status == 400){ //或者可以是任何以4开头的状态码
+                //优雅的处理错误
+    }
+}；
+//建立连接
+xmlhttp.open(&apos;GET&apos;, &apos;http://myserver/api&apos;, true);
+
+//发起请求
+xmlhttp.send();
+</code></pre><p>对于简单，而且经常重复的任务来说，这是一种很繁琐的工作。如果想复用以上过程，最好进行封装或者使用代码库。</p>
+<p>对于AngularJS来说要想从服务端获取一个用户的信息，假设请求后台的接口位于/api/user路径上，此接口可接受一个id属性 作为URL参数，那么使用AngularJS的核心$http服务发起XHR请求的方法示例如下：</p>
+<pre><code>$http.get(&apos;api/user&apos;, {params: {id: &apos;5&apos;}
+}).success(function(data, status, headers, config) {
+    //加载成功之后做一些事情
+
+}).error(function(data, status, headers, config) {
+    //处理错误
+});
+</code></pre><p>以上是AngularJS的get方法，如果你想使用post请求向同一个URL发送请求，且带上一些post数据，则：</p>
+<pre><code>var postData = {text: &apos;long blob of text&apos;};
+
+//下面这一行会被当成参数附加到URL后面，
+//所以POST请求最终会变成/api/user?id=5
+
+var config = {params: {id: &apos;5&apos;}};
+$http.post(&apos;api/user&apos;, postData， config)
+ .success(function(data, status, headers, config) {
+    //加载成功之后做一些事情
+
+}).error(function(data, status, headers, config) {
+    //处理错误
+});
+</code></pre><p>大多数常用的请求包括:<br>GET<br>HEAD<br>POST<br>DELETE<br>PUT<br>JSONP</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/AngularJS中的-http/" data-id="cjl60q3jd000175tfjoj5vcu7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/java统计字符串中每个字符出现的次数/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          java统计字符串中每个字符出现的次数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/angularJs中的CSS类和样式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">angularJs中的CSS类和样式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

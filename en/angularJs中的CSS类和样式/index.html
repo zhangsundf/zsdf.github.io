@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>angularJs中的CSS类和样式 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="假设有以下的css代码： .menu-disabled-true{     color:gray; } 使用angular你就可以这样写： &amp;lt;div ng-controller = &amp;quot;myController&amp;quot;&amp;gt;     &amp;lt;ul&amp;gt;         &amp;lt;li class = &amp;quot;menu-disabled-{{isdisabled}}&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="angularJs中的CSS类和样式">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/angularJs中的CSS类和样式/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="假设有以下的css代码： .menu-disabled-true{     color:gray; } 使用angular你就可以这样写： &amp;lt;div ng-controller = &amp;quot;myController&amp;quot;&amp;gt;     &amp;lt;ul&amp;gt;         &amp;lt;li class = &amp;quot;menu-disabled-{{isdisabled}}&amp;quo">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="angularJs中的CSS类和样式">
+<meta name="twitter:description" content="假设有以下的css代码： .menu-disabled-true{     color:gray; } 使用angular你就可以这样写： &amp;lt;div ng-controller = &amp;quot;myController&amp;quot;&amp;gt;     &amp;lt;ul&amp;gt;         &amp;lt;li class = &amp;quot;menu-disabled-{{isdisabled}}&amp;quo">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-angularJs中的CSS类和样式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/angularJs中的CSS类和样式/" class="article-date">
+  <time datetime="2017-07-13T10:19:39.000Z" itemprop="datePublished">2017-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      angularJs中的CSS类和样式
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>假设有以下的css代码：</p>
+<pre><code>.menu-disabled-true{
+    color:gray;
+}
+</code></pre><p>使用angular你就可以这样写：</p>
+<pre><code>&lt;div ng-controller = &quot;myController&quot;&gt;
+    &lt;ul&gt;
+        &lt;li class = &quot;menu-disabled-{{isdisabled}}&quot; ng-click = &quot;stun()&quot;&gt;Stun&lt;/li&gt;
+        .
+        .
+        .
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre><p>根据需要通过控制器来设置isdisabled属性了、、</p>
+<pre><code>function myController($scope){
+    $scope.isdisabled = false;
+$scope.stun = function(){
+    $scope.isdisabled  = !$scope.isdisabled ;
+    }
+}
+</code></pre><p>使用ng-class和ng-style这两个指令都可以接受一个表达式，表达式的结果可能是如下取值之一：<br>①. 表示css类名的字符串<br>②. css类名数组<br>③. css类名到布尔值的映射</p>
+<p>假设你现在希望在应用头部的固定位置向用户显示错误的警告信息，使用ng-class指令：</p>
+<pre><code>.error{
+    background-color: red;
+}
+
+.warning{
+    background-color: yellow;
+}
+
+&lt;div ng-controller = &quot;HeaderController&quot;&gt;
+    &lt;div ng-class = &quot;{error: isError, warning: isWarning}&quot;&gt;{{messageText}}&lt;/div&gt;
+    &lt;button ng-click = &quot;showError()&quot;&gt;Simulate Error&lt;/button&gt;
+    &lt;button ng-click = &quot;showWarning()&quot;&gt;Simulate Warning&lt;/button&gt;
+&lt;/div&gt;
+
+function HeaderController($scope){
+    $scope.isError = false;
+    $scope.isWarning = false;
+
+    $scope.showError = function(){
+    $scope.messageText = &quot;This is an error!&quot;;
+    $scope.isError = true;
+    $scope.isWarning = false;
+    };
+  $scope.showWarning = function(){
+    $scope.messageText = &quot;Just a warning, please carry on!&quot;;
+    $scope.isError = false;
+    $scope.isWarning = true;
+    };
+}
+</code></pre><p>还可以将选中的行高亮显示,比方说构建一个餐馆名录，想把用户点击的那一行高亮显示：</p>
+<pre><code>.selected{
+    background-color:lightgreen;
+}
+&lt;table ng-controller = &quot;RestaurantTableController&quot;&gt;
+    &lt;tr ng-repeat = &quot;restaurant in directory&quot; ng-click = &quot;selectedRestaurant($index)&quot; ng-class = &quot;{selected: $index == selectedRow}&quot;&gt;
+    &lt;td&gt;{{restaurant.name}}&lt;/td&gt;
+    &lt;td&gt;{{restaurant.cuisine}}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+function RestaurantTableController($scope){
+    $scope.directory = [
+    {name: &quot;restaurantA&quot;, cuisine: &quot;BBQ&quot;},
+    {name: &quot;restaurantB&quot;, cuisine: &quot;salads&quot;},
+    {name: &quot;restaurantC&quot;, cuisine: &quot;seafood&quot;}
+    ];
+
+    $scope.selectedRestaurant = function(index){
+        $scope.selectedRow = index;
+    };
+}
+</code></pre><p>把ng-class设置为{selected : index = selectedRow}.这样做的效果就是，当模型属性selectedRow的值等于ng-repeat中的index = selectedRow}.这样做的效果就是，当模型属性selectedRow的值等于ng-repeat中的index时，selected样式就会被设置到那一行上。还会设置一个ng-click指令，用来告诉控制器用户点击了哪一行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/angularJs中的CSS类和样式/" data-id="cjl60q3jn000875tfa1rzmlub" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/AngularJS中的-http/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          AngularJS中的$http
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/jquery获取span标签下的第一个span子标签内容/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">jquery获取span标签下的第一个span子标签内容</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例六 、打地鼠的小游戏 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在写这个打地鼠的游戏开始首先要清楚每一步该做什么然后再一步一步搭好框架再完善功能。 1.创建table三行三列，用来存放坑（图片）2.获得所有的图片标签3.老鼠的动作有①.冒出来4.②. 老鼠跑了5.③.老鼠被打死了6.完善功能 一、首先实现第一步，用table创建一个三行三列的坑 &amp;lt;div id = &amp;quot;content&amp;quot;&amp;gt; &amp;lt;h2&amp;gt;打地鼠&amp;lt;/h2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例六 、打地鼠的小游戏">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例六-、打地鼠的小游戏/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在写这个打地鼠的游戏开始首先要清楚每一步该做什么然后再一步一步搭好框架再完善功能。 1.创建table三行三列，用来存放坑（图片）2.获得所有的图片标签3.老鼠的动作有①.冒出来4.②. 老鼠跑了5.③.老鼠被打死了6.完善功能 一、首先实现第一步，用table创建一个三行三列的坑 &amp;lt;div id = &amp;quot;content&amp;quot;&amp;gt; &amp;lt;h2&amp;gt;打地鼠&amp;lt;/h2">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170329195521898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170329200259831?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170328235216930?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例六 、打地鼠的小游戏">
+<meta name="twitter:description" content="在写这个打地鼠的游戏开始首先要清楚每一步该做什么然后再一步一步搭好框架再完善功能。 1.创建table三行三列，用来存放坑（图片）2.获得所有的图片标签3.老鼠的动作有①.冒出来4.②. 老鼠跑了5.③.老鼠被打死了6.完善功能 一、首先实现第一步，用table创建一个三行三列的坑 &amp;lt;div id = &amp;quot;content&amp;quot;&amp;gt; &amp;lt;h2&amp;gt;打地鼠&amp;lt;/h2">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170329195521898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例六-、打地鼠的小游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例六-、打地鼠的小游戏/" class="article-date">
+  <time datetime="2017-03-28T16:03:02.000Z" itemprop="datePublished">2017-03-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例六 、打地鼠的小游戏
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在写这个打地鼠的游戏开始首先要清楚每一步该做什么<br>然后再一步一步搭好框架再完善功能。</p>
+<p>1.创建table三行三列，用来存放坑（图片）<br>2.获得所有的图片标签<br>3.老鼠的动作有①.冒出来<br>4.②. 老鼠跑了<br>5.③.老鼠被打死了<br>6.完善功能</p>
+<p><strong>一、首先实现第一步，用table创建一个三行三列的坑</strong></p>
+<pre><code>&lt;div id = &quot;content&quot;&gt;
+&lt;h2&gt;打地鼠&lt;/h2&gt;&lt;br/&gt;
+&lt;table id = &quot;background&quot;&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;tr&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</code></pre><p>接下来就是写js函数。<br><strong>二、首先获得所有的坑的集合</strong><br>var image = document.getElementsByTagName(‘img’);</p>
+<p><strong>三、老鼠的动作有：①.冒出来</strong></p>
+<p>老鼠冒出来的坑得获得一个随机的坑，然后将坑的图片替换成地鼠的图片<br>再将每个老鼠绑定click事件。然后要么打死触发die()函数。要么隔一段时间触发paole()函数</p>
+<pre><code>function chulai(){
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+}
+</code></pre><p><strong>四、老鼠的动作：②.老鼠很幸运的跑了</strong><br>如果执行老鼠跑了的这个函数，那么得做一些改变。首先图片得换成默认的坑的图片。然后移除掉绑定到它身上的click事件。最后再继续调用老鼠出来的函数，chulai();</p>
+<pre><code>function paole(){
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+}
+</code></pre><p><strong>五、老鼠的动作：③.老鼠很不幸的被我们打死了</strong><br>老鼠执行该事件得进行以下改变，同样也得移除它身上的click事件，将它的图片换成受伤的图片。</p>
+<pre><code>function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+    }
+</code></pre><p>在写完了上面这些代码后，貌似有了完整的功能，实际上却不能执行。因为少了一个入口的函数，即老鼠出来的函数应该被调用，当然，这个函数也应该在Math.random()的随机时间中被调用，即整合后的代码如下。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+
+//1 先获取到所有的坑(图片)
+var image = document.getElementsByTagName(&apos;img&apos;);
+var ranK;
+
+//随机时间调用入口函数
+setTimeout(&quot;chulai()&quot;,Math.random()*400+800);
+//让老鼠随机出现在一个坑里
+function chulai(){
+
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+
+}
+//2 老鼠回去了
+function paole(){
+
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+
+}
+
+//3 老鼠被打死了
+function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+
+}
+&lt;/script&gt;
+</code></pre><p>在通过设置css样式后，就可以完美的执行了。效果图如下。</p>
+<p><img src="https://img-blog.csdn.net/20170329195521898?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>上面的主体代码已经完成了。接下来就添加功能。</p>
+<p><strong>添加功能一、记录当前打死的老鼠数</strong></p>
+<p>如果想要添加计数功能，那么在body中定义一个div块，用来显示当前打死多少只老鼠的字符串。在这里我们设置为id为score。再定义一个变量count，记录当前打死的老鼠数。在die()函数中进行count++。<br>部分代码如下：</p>
+<pre><code>function die(){
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+        }
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170329200259831?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><strong>添加功能二、保存历史最佳纪录</strong></p>
+<p>要实现保存历史最佳纪录那么要使用本地存储localStorage对象。在这儿我们主要使用该对象的<br>localStorage.setItem(“键名”,”值”)，将值以键值对的形式存储到本地。localStorage.getItem(“键名”)；通过键名获得值。</p>
+<p>在这里我们只需将利用var preScore = localStorage.getItem(“键名”)获得历史的最佳记录，然后与当前的count进行对比，如果preScore大于当前的count，则不更新历史最佳记录。如果preScore小于了当前的count，那么使preScore=count；再本轮游戏结束后进行存储。</p>
+<p><strong>添加功能三、设置倒计时器，控制游戏结束</strong></p>
+<p>那么本轮游戏什么时候可以结束，那么就要设置一个计时器。在这里我写了一个一分钟的倒计时器。当sencond等于0，时游戏结束，然后再对<br>localStorage.setItem(“bestScore”,preScore)，进行更新。<br>添加功能二和三的代码如下：</p>
+<pre><code>function die(){
+    try{
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+
+        if( count &gt; preScore)
+        {
+            score1.innerHTML = count;
+            preScore = count;
+        }
+        localStorage.setItem(&quot;bestScore&quot;,preScore);
+    }catch(ex){
+
+    }
+}
+
+//设置一个定时器
+var seconds = 59;
+var speed = 1000;
+
+function countDown(seconds,speed){
+  var txt = &quot;剩余时间：&quot; + ((seconds &lt; 10) ? &quot;0&quot; + seconds : seconds)  +&quot;秒&quot;;
+  div.innerHTML = txt;
+  var timeId = setTimeout(&quot;countDown(seconds--,speed)&quot;,speed);
+
+  //如果时间到了
+  if(seconds == 0){
+  //对最佳记录进行存储，不管当前有没有打破记录
+     localStorage.setItem(&quot;bestScore&quot;,preScore);
+         clearTimeout(timeId);
+           if(cover.style.display == &quot;none&quot;){
+                cover.style.display = &quot;block&quot;;
+
+                //当没有打到一只老鼠的话显示该信息
+       if(count === undefined)
+                text.innerHTML = &quot;当前成绩为：&quot;+0+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+
+    //超越了历史记录，此时localStorage.getItem(&quot;bestScore&quot;)保存的值时当前的count值。显示该信息
+     else if(count == localStorage.getItem(&quot;bestScore&quot;))
+     {
+       text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;恭喜您打破纪录&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+     }
+      else
+         text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;   
+         }
+      }
+}
+
+countDown(seconds,speed);
+</code></pre><p>效果图如下：<br><img src="https://img-blog.csdn.net/20170328235216930?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>最后附上完整的源代码</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;mata charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;打地鼠&lt;/title&gt;
+    &lt;script src = &quot;http://libs.baidu.com/jquery/1.10.2/jquery.min.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #background{
+        background: url(./images/beijing.jpg);
+
+    }
+    h2{
+            font-family: &quot;微软雅黑&quot;;
+            font-size: 30px;
+            padding-left: 100px;
+       }
+
+    table td{
+         width: 100px;
+          height: 100px;
+        }
+
+    img{
+            margin-top: 31px;
+        }
+    #content{
+           z-index: 1;
+            margin-left: 40%;
+        }
+
+     #count{
+        width: 320px;
+        height: 40px;
+        background-color:#E8E8E8; 
+        padding-left: 0px;
+        text-align: center;
+        color: red;
+        font-size: 18px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+     }
+
+      #count .score{
+        text-align: center;
+        color: lightgreen;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+      }
+
+      #history #id{
+        text-align: center;
+        color: lightgreen;
+        font-size: 20px;
+        line-height: 30px;
+        font-family: &quot;微软雅黑&quot;;
+      }
+      #history{
+        position: absolute;
+        top:60px;
+        right:240px;
+        width: 180px;
+        height: 90px;
+        background-color: #E8E8E8;
+        color: lightblue;
+        font-size:20px;
+        line-height: 80px;
+        text-align: center;
+      }
+      .clock{
+        position: absolute;
+        top:0px;
+        right:240px;
+        width: 180px;
+        height: 60px;
+        background-color: lightblue;
+        color: red;
+        font-size: 20px;
+        text-align: center;
+        line-height: 60px;
+      }
+      #cover{
+         margin-top: 0px;
+        position: absolute;
+        z-index: 2;
+        width: 800px;
+        height: 600px;
+        top: 0px;   
+        left: 0px;   
+        right: 0px;   
+        bottom: 0px;   
+        margin: auto; 
+        background :rgba(128,128,128,0.5);
+        color: red;
+        font-size: 30px;
+        text-align: center;
+        vertical-align: middle;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id = &quot;content&quot;&gt;
+&lt;h2&gt;打地鼠&lt;/h2&gt;&lt;br/&gt;
+&lt;table id = &quot;background&quot;&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+
+    &lt;tr&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+        &lt;td&gt;&lt;img src=&quot;./images/keng.gif&quot; &gt;&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+&lt;div id = &quot;count&quot;&gt;当前得分 ：&lt;span class = &quot;score&quot;&gt; 0  &lt;/span&gt;分&lt;/div&gt;
+&lt;div id = &quot;history&quot;&gt;最佳记录: &lt;span id = &quot;score1&quot;&gt; 0 &lt;/span&gt;分&lt;/div&gt;
+&lt;div class = &quot;clock&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id = &quot;cover&quot; style=&quot;display:none&quot;&gt; &lt;span id = &quot;text&quot;&gt;&lt;/span&gt;&lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+
+//1 先获取到所有的坑(图片)
+var content = document.getElementById(&apos;content&apos;);
+var cover = document.getElementById(&apos;cover&apos;);
+var image = document.getElementsByTagName(&apos;img&apos;);
+var countMouse = document.getElementById(&apos;count&apos;);
+var score = countMouse.querySelector(&quot;.score&quot;);
+var history = document.getElementById(&quot;history&quot;);
+var score1 = document.getElementById(&quot;score1&quot;);
+var div = document.querySelector(&quot;.clock&quot;);
+var text = document.getElementById(&quot;text&quot;);
+var preScore = 0;
+var ranK;
+var count = 0;
+
+// localStorage.removeItem(&quot;bestScore&quot;);
+// localStorage.removeItem(&quot;scoreshow&quot;);
+
+preScore = localStorage.getItem(&quot;bestScore&quot;);
+console.log(preScore);
+score1.innerHTML = preScore;
+
+//让老鼠随机出现在一个坑里
+setTimeout(&quot;chulai()&quot;,Math.random()*400+800);
+
+
+function chulai(){
+    try{
+    ranK = Math.floor(Math.random() * 9);
+    image[ranK].src = &quot;./images/dishu.gif&quot;;
+    image[ranK].style.marginTop = &quot;0px&quot;;
+    image[ranK].setAttribute(&quot;onclick&quot;,&quot;die()&quot;);
+    setTimeout(&quot;paole()&quot;, Math.random()*400+800);
+    }catch(ex){}
+}
+//2 老鼠回去了
+function paole(){
+    try{
+    image[ranK].src = &quot;./images/keng.gif&quot;;
+    image[ranK].style.marginTop = &quot;31px&quot;;
+    image[ranK].removeAttribute(&quot;onclick&quot;);
+    setTimeout(&quot;chulai()&quot;, Math.random()*400+800);
+    }catch(ex){}
+}
+//3 老鼠被打死了
+
+function die(){
+    try{
+        image[ranK].src = &quot;./images/shang.gif&quot;;
+        image[ranK].removeAttribute(&quot;onclick&quot;);
+        image[ranK].style.marginTop = &quot;3px&quot;;
+        count++;
+        score.innerHTML =count;
+
+        if( count &gt; preScore)
+        {
+            score1.innerHTML = count;
+            preScore = count;
+        }
+        localStorage.setItem(&quot;bestScore&quot;,preScore);
+    }catch(ex){
+
+    }
+}
+
+//设置一个定时器
+var seconds = 59;
+var speed = 1000;
+
+
+function countDown(seconds,speed){
+                var txt = &quot;剩余时间：&quot; + ((seconds &lt; 10) ? &quot;0&quot; + seconds : seconds)  +&quot;秒&quot;;
+                div.innerHTML = txt;
+                var timeId = setTimeout(&quot;countDown(seconds--,speed)&quot;,speed);
+                if(seconds == 0){
+                    //localStorage.setItem(&quot;scoreshow&quot;,count);
+                    localStorage.setItem(&quot;bestScore&quot;,preScore);
+
+                        clearTimeout(timeId);
+                        if(cover.style.display == &quot;none&quot;){
+                            cover.style.display = &quot;block&quot;;
+                        if(count === undefined)
+                             text.innerHTML = &quot;当前成绩为：&quot;+0+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+
+                        else if(count == localStorage.getItem(&quot;bestScore&quot;)){
+                             text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;恭喜您打破纪录&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+                            }
+                        else
+                                text.innerHTML = &quot;当前成绩为：&quot;+count+&quot;分&quot;+&quot;&lt;br/&gt;&quot;+&quot;游戏结束！&quot;;
+                             }  
+                    }
+
+}
+
+countDown(seconds,speed);
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例六-、打地鼠的小游戏/" data-id="cjl60q3la001u75tfpon2as81" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/理解WebSocket原理/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          理解WebSocket原理
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/JavaScript中变量和函数声明的提升/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript中变量和函数声明的提升</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

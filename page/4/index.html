@@ -1,0 +1,2479 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zsdf&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zsdfBlog">
+<meta property="og:url" content="http://yoursite.com/zsdf/page/4/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="zsdf&apos;s blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsdfBlog">
+<meta name="twitter:description" content="zsdf&apos;s blog">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-overflow-hidden不起作用？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/overflow-hidden不起作用？/" class="article-date">
+  <time datetime="2017-06-05T13:06:44.000Z" itemprop="datePublished">2017-06-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/overflow-hidden不起作用？/">overflow:hidden不起作用？</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>今天在项目中，通过从后台读取数据生成的table中的tr和td时，由于有些td内容太多了，需要对其进行overflow:hidden的设置。但是在经过几番努力和尝试之后始终不可以。在进行了搜索之后才明白了。</p>
+<p>我们知道，overflow属性值有这几种：<br>visible：声明内容不会被剪裁。比如内容可能被渲染到容器外面。<br>hidden：声明内容将被剪裁，并且也甭想使用滚动条来查看剪裁掉的内容。<br>scroll：声明内容将被剪裁，但有可能出现滚动条来查看被剪裁掉的内容。滚动条出现的位置在inner border adge和outer padding adge之间。<br>auto：声明决策将依赖于客户端，优先使用scroll。</p>
+<p>W3C标准中指明：<br>通常一个盒子的内容是被限制在盒子边界之内的。但有时也会产生溢出，即部分或全部内容跑到盒子边界之外。溢出将在满足下列条件之一时出现：<br>1. 一个不换行的行元素宽度超出了容器盒子宽度。<br>2. 一个宽度固定的块元素放在了比它窄的容器盒子内。<br>3. 一个元素的高度超出了容器盒子的高度。<br>4. 一个子孙元素，由负边距值引起的部分内容在盒子外部。<br>5. text-indent属性引起的行内元素在盒子的左右边界外。<br>6. 一个绝对定位的子孙元素，部分内容在盒子外。但超出的部分不是总会被剪裁。子孙元素的内容就不会被子孙元素和其包含块之间的祖先元素的overflow的设置所剪裁。</p>
+<p>当溢出发生时，overflow属性约定了容器盒子是否剪裁掉超出其内边界的部分，并且决定是否出现滚动条来访问被剪裁掉的内容。它会影响到元素所 有内容的剪裁，但有个例外情况，即上面第6条所提到的：元素的子孙元素的包含块（Containing blocks）是整个视窗（viewport）或是该元素的祖先元素，内容将不会被剪裁。包含块是什么呢？简单的说，就是可以决定一个元素位置和大小的块。<br><strong>通常一个元素的包含块由离它最近的块级祖先元素的内容边界决定。但当元素被设置成绝对定位时，包含块由最近的position不是static的祖先元素决定。</strong></p>
+<pre><code>    html片段:
+&lt;div class=”ocean”&gt; 
+    &lt;div class=”land”&gt; 
+        &lt;p class=”joke”&gt; 
+                Mrs. Smith couldn’t get her husband to exercise. 
+                She asked Mrs. Jones what she should do. Jones replied, 
+                ”Tape the remote control between his toes.” 
+        &lt;/p&gt; 
+    &lt;/div&gt; 
+&lt;/div&gt;
+style:
+div.ocean{ 
+    position:relative; 
+    background-color:blue; 
+    width:120px; 
+    height:120px; 
+    } 
+div.land{ 
+    width:100px; 
+    height:100px; 
+    background-color:red; 
+    overflow:hidden; 
+    } 
+p.joke{ 
+    width:150px; 
+    height:110px; 
+    margin-top:30px; 
+    margin-left:30px; 
+    background-color:yellow; 
+    }
+</code></pre><p>上面的代码讲述的是这样一个故事：蓝色的海洋里有块红色的大地，红色大地内有个黄色的段子。由于段子样式的设置，它的部分内容超出了红色大地。为避免黄色 段子污染到蓝色海洋，红色大地警惕的为自己设置了overflow:hidden;这样超出大地的黄色部分就被剪掉了，我们看到的将是这样一派和谐景象， 如图1：<br><img src="https://img-blog.csdn.net/20170605205156096?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图1：和谐的星球</p>
+<p>如果事物都是这样有理有序，天下可不就太平了。没多久，黄色段子觉得凭自己的显赫身份不该受红色大地的控制，于是绞尽脑汁将自己变改成了绝对定位，一下子就摆脱了大地的束缚，如图2：</p>
+<p>p.joke{<br>position:absolute;<br>width:150px;<br>height:110px;<br>top:30px;<br>left:30px;<br>background-color:yellow;<br>}</p>
+<p><img src="https://img-blog.csdn.net/20170605205216420?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图2：猖獗的段子</p>
+<p>为什么会这样呢？这便是创造了上面提到过的第6个条件。当黄色段子变成position:absolute时，它的包含块已由原来的红色大地的内容边界升 级到了离它最近的position不是static的蓝色海洋了。而海洋此刻对此还一无所知呢，自身没有设置overflow:hidden属性，导致黄 色段子本该被裁剪的部分全部可见，不仅污染到海洋，还影响到整个星球，情况万分火急啊。即使这时海洋设置上overflow:hidden，也只能将超出 蓝色海洋的黄色部分剪裁，就像图3，海洋此时是手足无措啊。<br><img src="https://img-blog.csdn.net/20170605205233987?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>图3：无辜的海洋</p>
+<p>俗语说的好，魔高一尺道高一丈，解铃还须系铃人。红色大地怎就甘心段子跑出去呢。怎么说大地终归是段子的祖先元素，怎么能甘心由着段子胡作非为呢。于是， 大地历尽千辛，寻得秘籍，在自己的样式中添加position:relative属性，将段子的包含块又改成了大地来决定。这下段子就乖乖的被关起来了。 星球看起来又回到了最初的状态。</p>
+<pre><code>div.ocean{ 
+    position:relative; 
+    background-color:blue; 
+    width:120px; 
+    height:120px; 
+    } 
+div.land{ 
+    position:relative; 
+    width:100px; 
+    height:100px; 
+    background-color:red; 
+    overflow:hidden; 
+    } 
+p.joke{ 
+    position:absolute; 
+    width:150px; 
+    height:110px; 
+    top:30px; 
+    left:30px; 
+    background-color:yellow; 
+    }
+</code></pre><p>所以说，hidden并没有失效，而是有可能我们遇到的情况恰好满足了第6个条件，使得元素的包含块发生了变化。上面的故事中，也提到了在遇到‘hidden’失效的情况时，可以根据需要来改变元素的包含块来达到正义的目的。</p>
+<p>这样的解决思路是没有问题的，但是对于我的来说却还是没有什么效果；①。其实td设置overflow：hidden是没有效果的。</p>
+<p>②。每次的td的position为absolute，就相当于重新定位，我的数据还是动态获取的，所以使用的position会使所有的数据都叠加在第一个数据区域。</p>
+<p>所以如果我的问题按照上述解决思路来的话，就相当于只是将所有数据都重叠在了一起，并没有好到哪去。</p>
+<p>所以在经过反复琢磨之后，td内加一个span元素。使其相对定位，并且overflow：hidden；并设置宽度和高度。</p>
+<pre><code>.table tbody tr .span_1,
+.table tbody tr .span_2,
+.table tbody tr .span_3{
+    position: relative;
+    height: 150px;
+    overflow: hidden;
+    margin-top: 10px;
+}
+
+.table tbody tr .span_1:hover,
+.table tbody tr .span_2:hover,
+.table tbody tr .span_3:hover{
+    overflow: scroll;
+}
+
+::-webkit-scrollbar{width:4px;}
+/*::-webkit-scrollbar-track{background-color:#ccc;}*/
+::-webkit-scrollbar-thumb{background-color:#ccc;}
+::-webkit-scrollbar-thumb:hover {background-color:#ccc}
+::-webkit-scrollbar-thumb:active {background-color:#ccc}
+</code></pre><p>前几行代码是加了span的td的处理，使其超出内容hidden。但当鼠标悬浮时，其显示为出现滚动条，这无疑是一个好办法。最后的css样式设置的是滚动条的样式（只在webkit内核中有效），注释掉的是底部的滚动条，在这里我们只用到了侧滚动条。</p>
+<p>所以css的坑还是很多的，当你按照正常的思路来设置的样式如果不起作用的话，不如多搜搜，就会发现有很多例外，对以后也是有帮助的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/overflow-hidden不起作用？/" data-id="cjl60q3l7001p75tfn2b374pi" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-AngularJS中实现奇偶行不同样式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/AngularJS中实现奇偶行不同样式/" class="article-date">
+  <time datetime="2017-06-03T02:54:47.000Z" itemprop="datePublished">2017-06-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/AngularJS中实现奇偶行不同样式/">AngularJS中实现奇偶行不同样式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在AngularJS中使用ng-repeat时希望生成的记录中奇偶行存在不同的样式，那么就要用到ng-class。</p>
+<p><strong>ngClass</strong></p>
+<p>ngClass指令允许在HTML标签上通过绑定一个代表所有将被添加的类的表达式去动态的设定CSS类名。</p>
+<p>该指令操作有三种不同的方式，根据三种类型的表达式计算结果为：</p>
+<p>如果表达式计算的结果是个字符串，那么这个字符串就是一个或多个以空格分隔开的类名；<br>如果表达式计算的结果是个数组，而且这个数组的元素都是字符串，那么这个数组的每个元素就是一个或多个以空格分隔开的类名；<br>如果表达式的计算结果为一个对象，那么对象的每个键值对的相对应的有真实存在的值将会被当作类名。<br>格式：ng-calss=“value” ng-calss=“{true：’class-one’，false：“classs-two”}[value]”</p>
+<p>value：表达式。</p>
+<p>使用代码：</p>
+<p>Hello World !!!<br>Hello World !!!<br>ngClass可以用于一些动态样式的变化，当满足某某某条件需要改变样式的时候（比如：验证不通过时显示红色边框），这种的在项目开发中用到的地方还是较多的。</p>
+<p><strong>ngClassEven/ngClassOdd</strong></p>
+<p>ngClassEven和ngClassOdd 指令和ngClass工作原理一样，除此之外，他们在ng-repeat里分别对偶（奇）数行有对应的影响。</p>
+<p>格式： ng-calss-even=“value” ng-class-odd=“value”</p>
+<p>value：表达式。</p>
+<p>使用代码：</p>
+<ol start="2">
+<li>
+</li>
+</ol>
+<p>上面这串代码返回的结果就是奇数行的是红色字体，偶数行的是蓝色字体，我们在做表格数据的时候或者列表数据的时候用的较多，而且该指令使用也方便。</p>
+<p><strong>ngStyle</strong></p>
+<p>ngStyle指令允许在HTML元素上设置css样式。</p>
+<p>格式：ng-style=“value” class=”ng-style:value”</p>
+<p>value:表达式。</p>
+<p>使用代码：</p>
+<p>Hello World</p>
+<p>Hello World</p>
+<p>复制代码<br>(function () {<br>angular.module(“Demo”, [])<br>.controller(“testCtrl”, testCtrl);<br>function testCtrl() {<br>this.red = { color: “red” };<br>this.blue = { color: “blue” };<br>};<br>}());<br>复制代码<br>动态设置css样式，这个指令需要和ngClass区分下，ngClass是动态设置css类名，ngStyle是动态设置css样式。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/AngularJS中实现奇偶行不同样式/" data-id="cjl60q3j9000075tf48px9q8g" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-怎样使footer始终处于页面的底部" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/怎样使footer始终处于页面的底部/" class="article-date">
+  <time datetime="2017-06-01T04:09:50.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/怎样使footer始终处于页面的底部/">怎样使footer始终处于页面的底部</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>想要页脚一直处于页面的底部，当内容少时，处于屏幕的底部，当页面内容很多时，在所有内容页脚在页面的最底部出现。好多人可能想到让foot的position:fixed;bottom:0px，就可以实现页脚一直处于<strong>屏幕底部</strong>。但是这样做有几个缺点：<br>①.页脚所处的位置好像与页面分离了不美观。<br>②.页脚可能会遮挡一部分页面内容。</p>
+<p>所以为了使页脚一直处于页面内容的底部，而不是始终固定在屏幕的底部。<br>如果这是一个完整的页面时</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;固定footer处于内容底部&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class = &quot;container&quot;&gt;
+    &lt;div class = &quot;content&quot;&gt;
+        这是主体内容
+    &lt;/div&gt;
+
+    &lt;div class = &quot;footer&quot;&gt;
+    &lt;span&gt;这是页脚© 2017 CSDN&lt;/span&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>你可以设置</p>
+<pre><code>html, body {
+    margin: 0;/*清除默认样式*/
+    padding: 0;
+    height: 100%;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto;
+    height: auto !important;
+    height: 100%; 
+    min-height: 100%;
+}
+
+.content {
+    padding: 1em 1em 5em;
+    font-size: 30px;
+}
+
+.footer {
+    position: absolute; /*相对于父元素contanier定位*/
+    width: 100%;
+    bottom: 0;/*始终距离它的父元素的底部为0px.则是处于父元素的最底*/
+}
+
+.footer{
+    position:relative;
+    width:100%;
+    background-color: #333;
+    color:#eee;
+    text-align: center;
+    font-size: 16px;
+    height: 50px; 
+}
+
+.footer span{
+    line-height: 50px;
+    }
+</code></pre><p><strong>在这里必须要设置html和body的高度，不然直接设置内层的元素的height的百分比是不起作用的，因为body和html是所有元素的父元素。只有设置了body和html的百分比或者固定大小的时候，设置高度百分比就会根据这两个的大小来确定。</strong><br>这里还采用了display: flex;实现弹性布局，即页面最小高度为92%（其他的8%是页脚的区域，当内容不够时将页脚展示在屏幕底部）。当内容大于92%时，就会采用display: flex;布局，将页脚自动添加到最底部。</p>
+<p>第二种情况，就是当你的页面是一个片段时，怎样来进行布局，因为此时没有了body和html，没有办法进行百分比的设置。</p>
+<pre><code>    &lt;div class=&quot;header_top&quot;&gt;
+        这是页面头部
+    &lt;/div&gt;
+    &lt;div class=&quot;movie-content&quot;&gt;
+            页面的主题内容
+    &lt;/div&gt;
+
+&lt;div class=&quot;foot&quot;&gt;
+        &lt;span&gt;这是页脚 © 2017 csdn&lt;/span&gt;
+&lt;/div&gt;
+</code></pre><p>这样直接设置movie-content的最小高度就可以实现将页脚始终处于屏幕的底部。（最小高度一定得填满屏幕（除去foot））；</p>
+<p>css样式设置如下</p>
+<pre><code>.movie-content
+{
+    min-height: 600px;
+}
+.foot{
+    position:relative;
+    width:100%;
+    background-color: #333;
+    color:#eee;
+    text-align: center;
+    font-size: 16px;
+    height: 50px; 
+}
+
+.foot span{
+    line-height: 50px;
+}
+</code></pre><p>这样不管内容多少，页脚始终会出现在屏幕合适的位置</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/怎样使footer始终处于页面的底部/" data-id="cjl60q3kf001175tfi50qrrse" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-transition不支持display属性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/transition不支持display属性/" class="article-date">
+  <time datetime="2017-05-31T10:12:22.000Z" itemprop="datePublished">2017-05-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/transition不支持display属性/">transition不支持display属性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>想让display从none变为block，或者从block变为none时，实现这样的动画效果大多数人都会采用transition。然而可惜的是transition并不支持display。那么能想到的办法就是使用visibility属性实现从 visible到hidden的转换。</p>
+<p>但是visibility属性与display的区别<br>display隐藏的元素是脱离文档流的，它不在页面中占用空间。而visibility: hidden的元素会在页面上留白。所以还是display的用法好一点，那么怎样来填这个坑，可以通过设置max-height(max-width等等)，使这些属性 进行过渡(transition).<br>例如:</p>
+<pre><code> .table_list{  
+            width:100%;   
+            top:10px;  
+            max-height: 0px;
+            margin-bottom: 10px;
+            position:relative;     
+            opacity: 0;
+            font-size: 12px; 
+            -webkit-transition: max-height 2s linear;      
+
+            }  
+
+.cenima_name:hover .table_list
+    {   
+            opacity: 1; 
+            max-height: 300px;
+    }
+</code></pre><p>上面这段代码实现的功能就是，鼠标悬浮在一个div上，显示另一个div。<br>但是这样做的前提是另一个div必须是包含它的div的子元素。</p>
+<p>然而问题是当你要显示的元素小于300px时，就会留白，也不美观。所以在.cenima_name:hover .table_list中加入overflow:hidden。这样的话就可以比较完美的解决了transition不支持display属性这个问题。</p>
+<pre><code>.cenima_name:hover .table_list
+    {   
+
+        opacity: 1; 
+        max-height: 300px;
+        overflow: hidden;
+
+    }
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/transition不支持display属性/" data-id="cjl60q3k2000l75tfvog00ckz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例十四、css3和fullpage实现全屏滚动" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十四、css3和fullpage实现全屏滚动/" class="article-date">
+  <time datetime="2017-05-05T02:58:24.000Z" itemprop="datePublished">2017-05-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例十四、css3和fullpage实现全屏滚动/">案例十四、css3和fullpage实现全屏滚动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先说一下fullpage，它是一个jquery的插件，用来实现鼠标向上向下滑动，就会自动切换到上一屏或者下一屏，对于要做一些高大上的效果确实是一个很好的插件。首先先展示一下基本的效果图。<br>总共有四屏的内容<br><img src="https://img-blog.csdn.net/20170505095841242?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095858066?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095916754?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095938539?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>当鼠标每次上下滑动时就会一整屏的切换。</p>
+<p>第一屏是用一个图片，其他的三屏都是由左侧的三个图片和右侧的两个图片组成的。</p>
+<p>这三屏左侧的图片展开方式不同，所以就更有炫酷的效果。<br>第二屏的三个图片是当页面显示时从下到上依次出来到正确的位置。<br>第三屏的三个图片是当页面显示时从左到右依次展开到正确的位置。<br>第四屏的三个图片是当页面显示时从中间到两边展开到正确的位置。</p>
+<p>第一步：下载好jquery和fullpage插件，fullpage中包含css和js并引入。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src = &quot;./jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./fullpage/jquery.fullPage.css&quot;&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fullpage/jquery.fullPage.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>第二步：用html建立好元素：</p>
+<pre><code>&lt;div class = &quot;main&quot;&gt;
+
+    &lt;div class=&quot;section page1&quot;&gt;
+        &lt;img src=&quot;./images/page1.png&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;section page2&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page2_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page2_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page2_5.png&quot;&gt;
+
+    &lt;/div&gt;
+     &lt;div class=&quot;section page3&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page3_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_3.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;img class = &quot;text&quot; src = &quot;./images/page3_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page3_5.png&quot;&gt;
+    &lt;/div&gt;
+
+       &lt;div class=&quot;section page4&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page4_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page4_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page4_5.png&quot;&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+ &lt;div id = &quot;audioBox&quot;&gt;
+        &lt;audio id = &quot;audio&quot; autoplay loop  src= &quot;./music/music.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;/div&gt;
+</code></pre><p>包含了四屏的内容和一个audio元素，用于播放音乐。</p>
+<p>第三步：利用fullpage的js实现每一屏的背景颜色 ，并使用js实现音乐的暂停播放</p>
+<pre><code>//1.fullpage，由于有四屏，其颜色也一样
+        $(&quot;.main&quot;).fullpage({
+sectionsColor: [&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;]
+        });
+
+        //2.控制音频的播放
+        var audioBox = document.getElementById(&apos;audioBox&apos;);
+        var audio = document.getElementById(&quot;audio&quot;);
+
+        audioBox.onclick = function(){
+
+        if(audio.paused){
+            audio.play();
+        }
+        else
+        {
+            audio.pause();
+        }
+    }
+</code></pre><p>第四步：利用css进行布局：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0;
+        padding:0;
+    }
+
+  //设置背景音乐的图标
+    #audioBox{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        background: url(./images/music_on.png) no-repeat center;
+        border-radius: 22px;
+        top: 5%;
+        right: 3%;
+        cursor: pointer;
+    }
+
+    //让每屏超出的都自动隐藏
+    .section{
+        overflow: hidden;
+    }
+
+    /*设置第一屏的图片，因为第一屏也只有一个图片*/
+    .page1 img{
+        width: 50%;
+        margin-left: 30%;
+    }
+
+ /*从第二屏开始都包含一个class=list的元素块，设置其距离左侧的距离*/
+    [class *= &quot;page&quot;] .list{
+        margin-left: 5%;
+    }
+
+ /*让左边的图片的宽度都为240px*/
+    [class *= &quot;page&quot;] .list img{
+        width: 240px;
+
+    }
+
+    /*利用属性选择器，选出所有页的背景图片*/
+    [class *= &quot;page&quot;] .bg{
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        width: 30%;
+    }
+
+    /*利用属性选择器，选择出所有页的文字图片*/
+    [class *= &quot;page&quot;] .text{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+</code></pre><p>通过第四步之后基本效果就已经完成了，但最后一点就是还没有给四屏的图片实现动画效果。</p>
+<p>第五步、实现动画效果。<br><strong>1.怎样判断当前滚动到了哪一屏？</strong><br>因为fullpage会给当前页加一个active的class，所以利用class就可以判断处于当前页的时候触发动画。<br><strong>2.实现第一屏的动画</strong><br>第一屏主要是图片的淡入效果。<br>思路:通过改变opacity属性，结合transition来改变透明度，实现淡入的效果；</p>
+<pre><code>.page1 img{
+        opacity: 0;   /*初始状态为全透明*/
+        /*加上供应商前缀，持续时间为1.5s*/
+        -moz-transition: opacity 1.5s;
+        -webkit-transition: opacity 1.5s;
+    }
+
+/*当第一页显示的时候触发,当第一页时就会自动加上active类*/
+    .page1.active img{
+        opacity: 1;
+    }
+</code></pre><p><strong>3.实现第二屏的动画：</strong><br>第二屏的动画，就是左侧的三个图片在页面显示时，从下到上依次滑进窗口。<br>核心思路 ：使用transform:translateY 和transition配合实现;<br>transition是检测属性值变化<br>translateY平移</p>
+<pre><code>/*动画的完成时间为1s，初始位置三个图片都处于向下移动到1000像素，即移出屏幕外。*/
+    .page2 .list img{
+        transition:1s;
+        transform: translateY(1000px);
+    }
+
+ /*当第二屏触发时，图片回到原始位置*/
+    .page2.active .list img{
+        transform:translateY(0px);
+    }
+
+/*利用结构化伪类找到每一个图片并设置延时，为了使动画更灵活*/
+    .page2 .list img:nth-child(1){
+        transition-delay: 0.5s;
+    }
+    .page2 .list img:nth-child(2){
+        transition-delay: 0.8s;
+    }
+    .page2 .list img:nth-child(3){
+        transition-delay: 1s;
+    }
+</code></pre><p><strong>4.实现第三屏的动画</strong><br>有了translateY那么第三屏是向左右移动，必然会有translateX控制水平方向。首先初始状态让三张图片都重叠在最左侧，当触发动画时依次铺开，仿照第二屏的例子，很容易写出来‘<br>.page .list img{<br>/<em>设置动画持续时间为1s，动画开始时延迟0.5s</em>/<br>transition: 1s 0.5s;<br>}</p>
+<p>由于本屏的两个图片初始状态的位置都要叠加在最左侧的图片上，所以对于这两个图片分别设置它们的translateX</p>
+<p>.page .list img:nth-child(2){<br>/<em>向左移动了250px刚好与第一个重叠</em>/<br>transform:translateX(-250px);<br>}</p>
+<p>.page .list img:nth-child(3){<br>/<em>向左移动了500px刚好与第一个重叠</em>/<br>transform:translateX(-500px);<br>}</p>
+<p>/<em>设置触发时的动画，让所有的img归位</em>/<br>.page3.active .list img{<br>transform:translateX(0px);<br>}</p>
+<p><strong>5.设置第五屏的动画。</strong><br>第五屏的动画就是左侧的三个图片先重叠在中间的图片上，触发后归位。<br>①.依照上面的思想利用tanslateX可以实现；</p>
+<pre><code>.page4 .list img{
+        transition: 1s 0.5s;
+    }
+    /*设置第一个和第三个的初始位置处于中间的位置上*/
+    .page4 .list img:nth-child(1){
+        transform:translateX(250px);
+    }
+    .page4 .list img:nth-child(3){
+        transform:translateX(-250px);
+    }
+  /*触发时归位*/
+    .page4.active .list img{
+        transform:translateX(0px);
+    }
+</code></pre><p>②.除了css3的transition和transform属性，还可以利用css3的动画：keyframes</p>
+<pre><code>.page4.active .list img:nth-child(1){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove1&apos; 1s ease-in 1;    /*动画名、持续时间、更细粒度动画，重复次数*/
+    }
+
+    .page4.active .list img:nth-child(3){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove2&apos; 1s ease-in 1;
+    }
+
+     @-webkit-keyframes flymove1{
+        0%{ transform: translateX(250px);}
+        100%{ transform: translateX(0px);}
+     }
+
+     @-webkit-keyframes flymove2{
+        from{ transform: translateX(-250px);}
+        to{ transform: translateX(0px);}
+     }
+</code></pre><p>关于keyframes的参数的了解，可以查一下手册，熟悉一下就可以了。</p>
+<p><strong>通过上面的代码，一个炫酷的全屏滚动页面就完成了！</strong></p>
+<p>附上源代码：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;fullpage 实现全屏滚动&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./fullpage/jquery.fullPage.css&quot;&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fullpage/jquery.fullPage.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0;
+        padding:0;
+    }
+
+    #audioBox{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        background: url(./images/music_on.png) no-repeat center;
+        border-radius: 22px;
+        top: 5%;
+        right: 3%;
+        cursor: pointer;
+    }
+
+    .section{
+        overflow: hidden;
+    }
+
+    /*设置第一屏的图片*/
+    .page1 img{
+        width: 50%;
+        margin-left: 30%;
+    }
+
+
+    [class *= &quot;page&quot;] .list{
+        margin-left: 5%;
+    }
+
+    [class *= &quot;page&quot;] .list img{
+        width: 240px;
+
+    }
+
+    /*所有页的背景图片*/
+    [class *= &quot;page&quot;] .bg{
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        width: 30%;
+    }
+
+    /*所有页的文字图片*/
+    [class *= &quot;page&quot;] .text{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+
+    /*第一屏图片的动画
+      思路:通过改变opacity属性，结合transition来改变透明度，实现淡入的效果;
+    */
+    .page1 img{
+        opacity: 0;/*初始状态为全透明*/
+        -moz-transition: opacity 1.5s;
+        -webkit-transition: opacity 1.5s;
+    }
+
+    /*当第一页显示的时候触发*/
+
+    .page1.active img{
+        opacity: 1;
+    }
+
+    /*第二页的动画
+    核心思路 ：使用transform:translateY 和transition配合实现;
+    transition是检测属性值变化
+    translateY平移
+    */
+
+    .page2 .list img{
+        transition:1s;
+        transform: translateY(1000px);
+    }
+
+    .page2.active .list img{
+        transform:translateY(0px);
+    }
+
+    .page2 .list img:nth-child(1){
+        transition-delay: 0.5s;
+
+    }
+    .page2 .list img:nth-child(2){
+        transition-delay: 0.8s;
+
+    }
+    .page2 .list img:nth-child(3){
+        transition-delay: 1s;
+
+    }
+
+   /*设置第三页的动画*/
+    .page3 .list img{
+        transition: 1s 0.5s;
+    }
+    .page3 .list img:nth-child(2){
+        transform:translateX(-250px);
+    }
+    .page3 .list img:nth-child(3){
+        transform:translateX(-500px);
+    }
+
+    .page3.active .list img{
+        transform:translateX(0px);
+    }
+
+
+   /*设置第四页的动画*/
+    /*.page4 .list img{
+        transition: 1s 0.5s;
+    }
+    .page4 .list img:nth-child(1){
+        transform:translateX(250px);
+    }
+    .page4 .list img:nth-child(3){
+        transform:translateX(-250px);
+    }
+
+    .page4.active .list img{
+        transform:translateX(0px);
+    }*/
+
+    .page4.active .list img:nth-child(1){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove1&apos; 1s ease-in 1; /*动画名、持续时间、更细粒度动画，重复次数*/
+    }
+
+    .page4.active .list img:nth-child(3){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove2&apos; 1s ease-in 1;
+    }
+
+     @-webkit-keyframes flymove1{
+        0%{ transform: translateX(250px);}
+        100%{ transform: translateX(0px);}
+     }
+
+     @-webkit-keyframes flymove2{
+        from{ transform: translateX(-250px);}
+        to{ transform: translateX(0px);}
+     }
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class = &quot;main&quot;&gt;
+
+    &lt;div class=&quot;section page1&quot;&gt;
+        &lt;img src=&quot;./images/page1.png&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;section page2&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page2_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_3.png&quot;&gt;
+        &lt;/div&gt;
+
+            &lt;img class = &quot;text&quot; src = &quot;./images/page2_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page2_5.png&quot;&gt;
+
+    &lt;/div&gt;
+     &lt;div class=&quot;section page3&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page3_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_3.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;img class = &quot;text&quot; src = &quot;./images/page3_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page3_5.png&quot;&gt;
+    &lt;/div&gt;
+
+       &lt;div class=&quot;section page4&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page4_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page4_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page4_5.png&quot;&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+ &lt;div id = &quot;audioBox&quot;&gt;
+        &lt;audio id = &quot;audio&quot; autoplay loop  src= &quot;./music/music.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function(){
+
+        //1.fullpage
+        $(&quot;.main&quot;).fullpage({
+            sectionsColor: [&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;]
+        });
+        //2.控制音频的播放
+
+        var audioBox = document.getElementById(&apos;audioBox&apos;);
+        var audio = document.getElementById(&quot;audio&quot;);
+
+        audioBox.onclick = function(){
+
+        if(audio.paused){
+            audio.play();
+        }
+        else
+        {
+            audio.pause();
+        }
+    }
+    });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十四、css3和fullpage实现全屏滚动/" data-id="cjl60q3lc001x75tfvt3ogr9d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例十四、游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十四、游戏/" class="article-date">
+  <time datetime="2017-05-03T08:43:54.000Z" itemprop="datePublished">2017-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例十四、游戏/">案例十四、游戏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20170503155051681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>玩法就是，点击右边的摇杆，上面的水果图片就会一直不停的滚动，再点击右边的摇杆，就会停止滚动，此时就会判断三个图片是否一样，一样的话就会提示你赢了，否则提示继续加油！</p>
+<p>首先利用html和css进行布局：</p>
+<pre><code>    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #title{
+        margin: 0 auto;
+        width: 446px;
+        height: 110px;
+        background-image: url(./images/title.png);
+    }
+
+    #content {
+            width:1024px;
+            height:500px;
+            background:url(&apos;./images/jiqi.png&apos;) no-repeat;
+            background-position:70% 50%;
+            position:relative;
+    }
+
+    #content #scroll1,#content #scroll2,#content #scroll3{
+        width: 58px;
+        height: 90px;
+        position: absolute;
+    }
+
+      #content #scroll1{
+            left:560px;
+            top:212px;
+            overflow:hidden;
+
+        }
+        #content #scroll2{
+            left:626px;
+            top:212px;
+            overflow:hidden;
+        }
+        #content #scroll3{
+            left:692px;
+            top:212px;
+            overflow:hidden;
+        }
+        ul{
+            list-style:none;
+        }
+
+        ul img{
+            width:58px;
+            height:90px;
+        }
+
+        #content #yaogan{
+            width: 107px;
+            height: 243px;
+
+            left: 770px;
+            top:180px;
+            position: absolute;
+        }
+
+        #content #yaogan button{
+            width: 50px;
+            height: 120px;
+            background:url(&apos;./images/yaogan1.png&apos;) no-repeat;
+            border:none;
+            background-size:100% 100%;
+        }
+
+
+    &lt;/style&gt;
+
+&lt;body&gt;
+&lt;div id = &quot;title&quot;&gt;
+&lt;/div&gt;
+&lt;div id = &quot;content&quot;&gt;
+    &lt;div id = &quot;scroll1&quot;&gt;
+        &lt;ul id = &quot;scroll1_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll2&quot;&gt;
+        &lt;ul id = &quot;scroll2_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll3&quot;&gt;
+        &lt;ul id = &quot;scroll3_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;yaogan&quot;&gt;
+        &lt;button type=&quot;button&quot;  id=&quot;mybu&quot; onclick=&quot;action()&quot;&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>先让图片滚动起来：</p>
+<p>全局变量speed1、speed2、speed3分别产生三个随机的速度。<br>全局变量 time1、time2、time3分别产生三个随机的时间间隔。用来控制每个窗口图片滚动的时间间隔。<br>全局变量t1、 t2、 t3用来记录每个setInterval()的状态<br>全局变量pos1、pos2、pos3为距离图片顶部的高度<br>布尔变量bool用来确定是否是首次按下摇杆。</p>
+<p>要使图片滚动起来：</p>
+<pre><code>//设置ul的滚动方式
+    function scroll(){
+        //设置每一个ul的随机速度
+        speed1 = Math.floor(Math.random() * 10 + 3);
+        speed2 = Math.floor(Math.random() * 10 + 3);
+        speed3 = Math.floor(Math.random() * 10 + 3);
+
+        //设置每一个ul的滚动时间
+        time1 = Math.floor(Math.random() * 10 + 5);
+        time2 = Math.floor(Math.random() * 10 + 5);
+        time3 = Math.floor(Math.random() * 10 + 5);
+
+        //通过计时器去调用方法，使得ul中的li可以有随机滚动的  时间间隔和速度
+        t1 = setInterval(&quot;rotate1()&quot;, time1);
+        t2 = setInterval(&quot;rotate2()&quot;, time2);
+        t3 = setInterval(&quot;rotate3()&quot;, time3);
+    }
+
+   //图片进行滚动
+    function rotate1(){
+        pos1 -= speed1;
+document.getElementById(&quot;scroll1_ul&quot;).style.marginTop=pos1+&quot;px&quot;;
+        if(pos1&lt;=-900){
+            pos1=0;
+        }
+    }
+
+    function rotate2(){
+        pos2 -= speed2;
+        document.getElementById(&quot;scroll2_ul&quot;).style.marginTop=pos2+&quot;px&quot;;
+        if(pos2&lt;=-900){
+            pos2=0;
+        }
+    }
+
+    function rotate3(){
+        pos3 -= speed3;
+         document.getElementById(&quot;scroll3_ul&quot;).style.marginTop=pos3+&quot;px&quot;;
+        if(pos3&lt;=-900){
+            pos3=0;
+        }
+    }
+</code></pre><p>有了图片的滚动方式，现在就是怎样去调用。</p>
+<p>在点击了摇杆之后，要判断是否是刚进来，还是要停止，就要用到全局的布尔变量。默认值为false；</p>
+<pre><code>function changgesetImg(){
+document.getElementById(&quot;mybu&quot;).style.backgroundImage = &quot;url(./images/yaogan1.png)&quot;;
+
+    //bool默认只为false，如果满足if(bool)说明已经点击了摇杆，此时再点击时，就要停止图片的滚动，并进行判断
+
+        if(bool){
+            //先清空定时器
+            clearInterval(t1);
+            clearInterval(t2);
+            clearInterval(t3);
+
+            var pos_1 = Math.floor(pos1 * 95) / 95;
+            var pos_2 = Math.floor(pos2 * 95) / 95;
+            var pos_3 = Math.floor(pos3 * 95) / 95;
+                        document.getElementById(&quot;scroll1_ul&quot;).style.marginTop = pos_1 + &apos;px&apos;;
+            document.getElementById(&quot;scroll2_ul&quot;).style.marginTop = pos_2 + &apos;px&apos;;
+            document.getElementById(&quot;scroll3_ul&quot;).style.marginTop = pos_3 + &apos;px&apos;;
+
+            if(pos_1 == pos_2 &amp;&amp; pos_1 == pos_3){
+                alert(&quot;很棒哦!&quot;);
+            }
+
+            else{
+                alert(&quot;继续加油!&quot;);
+            }
+
+        }
+
+    //不满足的话，就说明是首次点击摇杆，那么就要进行图片的切换滚动。调用scroll()函数
+    else{
+            scroll();
+        }
+
+        bool = !bool;
+}
+</code></pre><p>点击了摇动杆之后，图片以自己的随机速度和随机时间进行切换<br><img src="https://img-blog.csdn.net/20170503162316158?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>再次点击摇动杆，图片停止滚动，并进行判断<br><img src="https://img-blog.csdn.net/20170503162511127?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>最后附上完整的源码</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;老虎机&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #title{
+        margin: 0 auto;
+        width: 446px;
+        height: 110px;
+        background-image: url(./images/title.png);
+    }
+
+    #content {
+            width:1024px;
+            height:500px;
+            background:url(&apos;./images/jiqi.png&apos;) no-repeat;
+            background-position:70% 50%;
+            position:relative;
+    }
+
+    #content #scroll1,#content #scroll2,#content #scroll3{
+        width: 58px;
+        height: 90px;
+        position: absolute;
+    }
+
+      #content #scroll1{
+            left:560px;
+            top:212px;
+            overflow:hidden;
+
+        }
+        #content #scroll2{
+            left:626px;
+            top:212px;
+            overflow:hidden;
+        }
+        #content #scroll3{
+            left:692px;
+            top:212px;
+            overflow:hidden;
+        }
+        ul{
+            list-style:none;
+        }
+
+        ul img{
+            width:58px;
+            height:90px;
+        }
+
+        #content #yaogan{
+            width: 107px;
+            height: 243px;
+
+            left: 770px;
+            top:180px;
+            position: absolute;
+        }
+
+        #content #yaogan button{
+            width: 50px;
+            height: 120px;
+            background:url(&apos;./images/yaogan1.png&apos;) no-repeat;
+            border:none;
+            background-size:100% 100%;
+        }
+
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id = &quot;title&quot;&gt;
+&lt;/div&gt;
+&lt;div id = &quot;content&quot;&gt;
+    &lt;div id = &quot;scroll1&quot;&gt;
+        &lt;ul id = &quot;scroll1_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll2&quot;&gt;
+        &lt;ul id = &quot;scroll2_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll3&quot;&gt;
+        &lt;ul id = &quot;scroll3_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;yaogan&quot;&gt;
+        &lt;button type=&quot;button&quot;  id=&quot;mybu&quot; onclick=&quot;action()&quot;&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    var t1, t2, t3, 
+        speed1, speed2, speed3, 
+        time1, time2, time3, 
+        pos1 = 0, 
+        pos2 = 0, 
+        pos3 = 0,
+        bool = false;
+
+    function action() {
+        setTimeout(&quot;changeImg()&quot;, 200);
+    }
+
+    function changeImg(){
+        document.getElementById(&apos;mybu&apos;).style.backgroundImage = &quot;url(./images/yaogan2.png)&quot;;
+        setTimeout(&quot;changesetImg()&quot;, 400);
+    }
+
+
+    //设置ul的滚动方式
+    function scroll(){
+
+        //设置每一个ul的随机速度
+        speed1 = Math.floor(Math.random() * 10 + 3);
+        speed2 = Math.floor(Math.random() * 10 + 3);
+        speed3 = Math.floor(Math.random() * 10 + 3);
+
+        //设置每一个ul的滚动时间
+        time1 = Math.floor(Math.random() * 10 + 5);
+        time2 = Math.floor(Math.random() * 10 + 5);
+        time3 = Math.floor(Math.random() * 10 + 5);
+
+        //通过计时器去调用方法，使得ul中的li可以滚动
+        t1 = setInterval(&quot;rotate1()&quot;, time1);
+        t2 = setInterval(&quot;rotate2()&quot;, time2);
+        t3 = setInterval(&quot;rotate3()&quot;, time3);
+
+    }
+
+    function rotate1(){
+        pos1 -= speed1;
+         document.getElementById(&quot;scroll1_ul&quot;).style.marginTop=pos1+&quot;px&quot;;
+        if(pos1&lt;=-900){
+            pos1=0;
+        }
+    }
+
+    function rotate2(){
+        pos2 -= speed2;
+         document.getElementById(&quot;scroll2_ul&quot;).style.marginTop=pos2+&quot;px&quot;;
+        if(pos2&lt;=-900){
+            pos2=0;
+        }
+    }
+
+    function rotate3(){
+        pos3 -= speed3;
+         document.getElementById(&quot;scroll3_ul&quot;).style.marginTop=pos3+&quot;px&quot;;
+        if(pos3&lt;=-900){
+            pos3=0;
+        }
+    }
+
+
+    function changesetImg(){
+        document.getElementById(&quot;mybu&quot;).style.backgroundImage = &quot;url(./images/yaogan1.png)&quot;;
+
+        if(bool){
+            //先清空定时器
+            clearInterval(t1);
+            clearInterval(t2);
+            clearInterval(t3);
+
+            var pos_1 = Math.floor(pos1 * 95) / 95;
+            var pos_2 = Math.floor(pos2 * 95) / 95;
+            var pos_3 = Math.floor(pos3 * 95) / 95;
+
+            document.getElementById(&quot;scroll1_ul&quot;).style.marginTop = pos_1 + &apos;px&apos;;
+            document.getElementById(&quot;scroll2_ul&quot;).style.marginTop = pos_2 + &apos;px&apos;;
+            document.getElementById(&quot;scroll3_ul&quot;).style.marginTop = pos_3 + &apos;px&apos;;
+
+            if(pos_1 == pos_2 &amp;&amp; pos_1 == pos_3){
+                alert(&quot;很棒哦!&quot;);
+            }
+
+            else{
+                alert(&quot;继续加油!&quot;);
+            }
+
+        }
+        else{
+            scroll();
+        }
+
+        bool = !bool;
+
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十四、游戏/" data-id="cjl60q3lc001y75tfmz0nl7fo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CSS3动画实现背景滚动" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/CSS3动画实现背景滚动/" class="article-date">
+  <time datetime="2017-04-26T08:28:08.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/CSS3动画实现背景滚动/">CSS3动画实现背景滚动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在上一个模仿微信打飞机的游戏中，在敌机掉落下来时，如果背景图片也可以一直无穷滚动的话，那么效果就会更好。<br>现在就是要利用CSS3来实现一张图片的无穷滚动。</p>
+<p>首先了解一下CSS3的动画属性：<br>①.animation-name:<br>用于将动画（@keyframes 语法）附加到元素上；<br>②. animation-duration:<br>定义动画完成一次迭代（从0%到100%）所花的时间；<br>③. animation-timing-function:<br>类似于transition-timing-function属性，<br>用来更细粒度的控制动画的速度。<br>取值有: ease\ linear\ ease-in\ ease-out\ ease-in-out 之一<br>④.animation-iteration-count:<br>此属性用来定义动画要执行多少次。infinite无限次<br>⑤. animation-direction:<br>当动画迭代时，可以使用具有alternate的 animation- direction属性来使其他迭代反向播放动画。 默认normal；<br>⑥. animation-delay:<br>在开始执行动画时的延迟<br>⑦. animation-fill-mode:<br>取值有：none、forwards、backwards、both<br>定义在动画开始之前或者结束之后发生的动作<br>⑧. animation-play-state:<br>定义动画运行还是暂停</p>
+<p>当上面的太复杂时，还可以简写animation属性:</p>
+<p><strong>-供应商前缀-animation: ‘自定义动画名’ 30ms ease-in 1 alternate 5s backwords;</strong></p>
+<p><strong>再对照上面的属性来看一下。这些顺序不可以颠倒</strong></p>
+<p>下来就是实战了。定义一个背景图片，使其无限滚动</p>
+<pre><code>#background{
+        position: absolute;
+        width: 300px;
+        height: 500px;
+        background:url(../images/background.jpg);
+        z-index:1;
+        -webkit-animation-name: flymove;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: 20000;
+
+        -moz-animation-name: flymove;
+        -moz-animation-duration: 10s;
+        -moz-animation-timing-function: linear;
+        -moz-animation-iteration-count: 20000;
+
+        -ms-animation-name: flymove;
+        -ms-animation-duration: 10s;
+        -ms-animation-timing-function: linear;
+        -ms-animation-iteration-count: 20000;
+    }
+
+     @-webkit-keyframes flymove{
+            0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+        @-moz-keyframes flymove{
+           0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+        @-ms-keyframes flymove{
+          0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+</code></pre><p>body中就只有一个canvas元素</p>
+<pre><code>&lt;canvas id = &quot;background&quot;&gt;
+&lt;/canvas&gt;
+</code></pre><p>向上面这样就可以实现背景图片无限滚动了。上面每一个都添加了三个供应商的前缀，我们可以简写将#background中的十二行代码写成三行：</p>
+<pre><code>#background{
+        position: absolute;
+        width: 300px;
+        height: 500px;
+        background:url(../images/background.jpg);
+        z-index:1;
+        -webkit-animation: &apos;flymove&apos; 10s linear 20000;
+        -moz-animation: &apos;flymove&apos; 10s linear 20000;
+        -ms-animation: &apos;flymove&apos; 10s linear 20000;
+}
+</code></pre><p>这样就简单多了。<br>自己也写一个可以滚动的图片吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/CSS3动画实现背景滚动/" data-id="cjl60q3jf000275tfy0cjran2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例十三、模仿微信打飞机游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十三、模仿微信打飞机游戏/" class="article-date">
+  <time datetime="2017-04-25T12:27:29.000Z" itemprop="datePublished">2017-04-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例十三、模仿微信打飞机游戏/">案例十三、模仿微信打飞机游戏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先实现微信打飞机游戏，首先会有自己和敌机，采用canvas绘图来生成自己和敌人。<br>1.生成自己，且可以通过左右键来进行左右移动。</p>
+<pre><code>//生成自己，且可以左右移动
+//控制飞机向右移动的函数
+ function moveRight(event){
+
+ context.clearRect(aligh,100,47,47);
+
+ //防止飞机移除背景外
+    if(aligh &lt; 260){
+        var img = new Image();
+        img.src = &quot;../images/self.png&quot;;
+        img.onload = function(){
+            context.drawImage(img, aligh,100);
+            }
+        aligh += 10 ;
+    }
+
+//当飞机即将移出背景外时，让它停在最右端
+ if (aligh == 260){
+         var img = new Image();
+         img.src = &quot;../images/self.png&quot;;
+         img.onload = function(){
+        context.drawImage(img, 260,100);
+             }
+         }
+      }
+
+ //控制飞机向左移动的函数
+ function moveLeft(event){
+     context.clearRect(aligh,100,47,47);
+
+//防止飞机移出最左边的边界
+    if(aligh &gt; 0){
+    var img = new Image();
+    img.src = &quot;../images/self.png&quot;;
+    img.onload = function(){
+        context.drawImage(img, aligh,100);
+         }
+        aligh -= 10 ;
+    }
+
+//使其控制在最左侧
+    if (aligh == 0){
+        var img = new Image();
+        img.src = &quot;../images/self.png&quot;;
+        img.onload = function(){
+        context.drawImage(img, 0,100);
+         }
+     }
+
+}
+//判断按下的是哪个键，然后控制飞机左右移动
+ document.onkeydown = function(event){
+    if(event.keyCode == 37){
+             moveLeft();
+          }
+    if(event.keyCode == 39){
+             moveRight();       
+            }
+ }
+</code></pre><p>2.生成敌机。敌机就是在背景上随机生成图片。每隔一秒使其从上面下落。</p>
+<pre><code>var createId = setInterval(function(){
+    var top = 0+&apos;px&apos;; 
+    var enemy  = document.createElement(&quot;img&quot;);
+    enemy.src = &quot;../images/enemy.png&quot;;
+
+    //生成随机的位置
+    var randomleft = Math.floor(Math.random() * 300) ;
+    //如果生成的位置出现在背景外，则就取260
+left = randomleft &gt; 260 ? 260 + &apos;px&apos;: randomleft + &apos;px&apos;;
+
+    leftArr.push(left); //保存每个敌机的距左边的距离，方便碰撞检测的计算
+    arrPic.push(enemy); //将每个敌机的图片保存在数组中，方便碰撞检测后移除
+
+    main.appendChild(enemy);
+    enemy.style.paddingLeft = left ;
+    enemy.style.paddingTop = top;
+    var spandom = $(&quot;#main&gt;img:last-child&quot;);//这儿利用jquery找到最后一个img
+
+//让最后一个img动起来。则就相当于为每一个img都绑定了动画
+spandom.animate({&quot;paddingTop&quot;:420},6000,function(){
+    //当下落到底部时移除元素
+    this.remove();
+    arrPic.splice(0,1);  //从数组中移除图片
+    leftArr.splice(0,1);  //从数组中移除距离
+    fallCount ++;   //检测下落了多少个飞机，超过十个没被打中，游戏就结束
+    });
+
+    //如果落下的飞机数超过十个没有被打中，则游戏结束
+        if(fallCount &gt; 10){
+            clearInterval(createId);
+            clearInterval(crashId);
+            alert(&quot;当前得分 ：&quot;+count+&quot; , 很遗憾，游戏结束!&quot;)
+         }
+    },1000);
+</code></pre><p>3。现在主要是碰撞检测。每隔2.2秒进行一次检测，因为检测台频繁的话，直接长按向左向右键，都可以直接消除。就没有意义了</p>
+<pre><code>function checkCrash(){
+
+    crashId = setInterval(function(){
+
+    //由于每次自由落下的飞机在上面函数中都被移除了。所以leftArr数组中保存的就是当前页面存在的飞机的左距离数组。
+    for(var i = 0; i &lt; leftArr.length; i++)
+    {
+
+    //首先将两种都转换成int型进行比较
+    var tempL = parseInt(leftArr[i]);
+    var tempA = parseInt(aligh); //表示自己距左侧的位置
+
+   //当自己的中心距离处于敌机的左右两侧范围内，则表示被击中
+    if(tempL &lt;= (tempA + 20)  &amp;&amp; (tempA + 20) &lt;= (tempL + 40)){
+        arrPic[i].remove(); //碰撞检测，移除敌机的图片
+        arrPic.splice(i,1); //从图片数组中移除图片
+        leftArr.splice(i,1); //从记录敌机左侧距离数组中移除该敌机的距离
+        count++;
+    score.innerHTML = &quot;当前得分 &quot;+count;                        
+    break; //检测到之后直接跳出循环，进行下一个2.2秒的碰撞检测
+       }    
+    }       
+        },2200);
+
+    }
+    checkCrash();
+</code></pre><p>这个游戏还不太完整，没有生成子弹。大部分功能都已经实现了。</p>
+<p>4。效果图如下：</p>
+<p><img src="https://img-blog.csdn.net/20170426112239135?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170426112258197?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>最后附上源代码：<br>html&amp;css</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot;/ &gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fightFlight.js&quot;&gt;&lt;/script&gt;
+    &lt;script src = &quot;../jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #main{
+        width: 300px;
+        height: 500px;
+        border:1px solid red;
+        margin: 0 auto;
+    }
+    #my{
+
+        position: absolute;
+        z-index: 2;
+        top:350px;
+    }
+    #background{
+        position: absolute;
+        z-index: 1;
+        width: 300px;
+        height:500px;
+        border: 1px solid green;
+        background-image: url(../images/background.jpg);
+    }
+    img{
+        position: absolute;
+        z-index: 2;
+    }
+    #enmey{
+        width: 50px;
+        height: 50px;
+    }
+
+    #score{
+        position: absolute;
+        margin-left: 50%;
+        left: 150px;
+        top:100px;
+        width: 160px;
+        font-size: 20px;
+        font-family: &quot;微软雅黑&quot;;
+        font-weight: bold;
+        line-height: 70px;
+        text-align: center;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+&lt;div id = &quot;main&quot;&gt;
+&lt;canvas id = &quot;background&quot;&gt;&lt;/canvas&gt;
+&lt;canvas id = &quot;my&quot;&gt;&lt;/canvas&gt;
+&lt;div id = &quot;score&quot;&gt;当前得分：0&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>JavaScript</p>
+<pre><code>    var main = document.getElementById(&apos;main&apos;);
+    var my = document.getElementById(&apos;my&apos;);
+    var score = document.getElementById(&quot;score&quot;);
+    var context = my.getContext(&apos;2d&apos;);
+    var crashId;
+    var fallCount = 0;  //记录没被打中的飞机数，如果超过10，游戏结束
+    var aligh = 0 ;
+    var count = 0;  //记录打中的飞机数，即当前得分
+    var leftArr = [];
+    var arrPic = [];
+    var left;
+    var img = new Image();
+    img.src = &quot;../images/self.png&quot;;
+    img.onload = function(){
+        context.drawImage(img,aligh,100);
+    }
+
+        //生成自己，且可以左右移动
+         function move(event){
+
+            event = EventUtil.getEvent(event);
+            context.clearRect(aligh,100,47,47);
+
+          if(event.keyCode == 39 &amp;&amp; aligh &lt; 260 ){
+
+                var img = new Image();
+                img.src = &quot;../images/self.png&quot;;
+                img.onload = function(){
+                    context.drawImage(img, aligh,100);
+                 }
+                    aligh += 10 ;
+            }
+
+        if (aligh == 260){
+                 var img = new Image();
+                 img.src = &quot;../images/self.png&quot;;
+                 img.onload = function(){
+                    context.drawImage(img, 260,100);
+                  }
+             }
+
+         }
+        document.onkeypress = move;
+
+
+        //随机生成敌机
+
+        (function(){
+            var createId = setInterval(function(){
+            var top = 0+&apos;px&apos;; 
+            var enemy  = document.createElement(&quot;img&quot;);
+            enemy.src = &quot;../images/enemy.png&quot;;
+            var randomleft = Math.floor(Math.random() * 300) ;
+            left = randomleft &gt; 260 ? 260 + &apos;px&apos;: randomleft + &apos;px&apos;;
+
+            leftArr.push(left); //保存每个敌机的距左边的距离，方便碰撞检测的计算
+            arrPic.push(enemy); //将每个敌机的图片保存在数组中，方便碰撞检测后移除
+
+            main.appendChild(enemy);
+            enemy.style.paddingLeft = left ;
+            enemy.style.paddingTop = top;
+            var spandom = $(&quot;#main&gt;img:last-child&quot;);//找到最后一个span
+            spandom.animate({&quot;paddingTop&quot;:420},6000,function(){
+            //移除元素
+            this.remove();
+            arrPic.splice(0,1);  //移除图片
+            leftArr.splice(0,1);  //从数组中移除距离
+            fallCount ++;
+            });
+
+            //如果落下的飞机数超过十个没有被打中，则游戏结束
+            if(fallCount &gt;= 10){
+                clearInterval(createId);
+                clearInterval(crashId);
+                alert(&quot;当前得分 ：&quot;+count+&quot; , 很遗憾，游戏结束!&quot;)
+              }
+
+         },1000);
+        })();
+
+
+      //碰撞检测
+        function checkCrash(){
+
+        crashId = setInterval(function(){
+
+            for(var i = 0; i &lt; leftArr.length; i++)
+            {
+                var tempL = parseInt(leftArr[i]);
+                var tempA = parseInt(aligh);
+                if(tempL &lt;= (tempA + 20)  &amp;&amp; (tempA + 20) &lt;= (tempL + 40)){
+
+                    arrPic[i].remove(); //碰撞检测，移除敌机的图片
+                    count++;
+                    score.innerHTML = &quot;当前得分 &quot;+count;
+                        continue;
+                }
+
+            }
+            console.log(count);
+
+        },2200);
+
+    }
+        checkCrash();
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十三、模仿微信打飞机游戏/" data-id="cjl60q3lb001w75tfish6e0hw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-案例十二、JavaScript实现无穷滚动加载数据" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/" class="article-date">
+  <time datetime="2017-04-17T12:12:07.000Z" itemprop="datePublished">2017-04-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/">案例十二、JavaScript实现无穷滚动加载数据</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先实现滚动要借助onscroll事件处理程序。<br>无穷滚动就是滑动滚动条，实现数据块的无穷加载。<br>我们以瀑布流的布局来实现无穷加载。瀑布流就是一些等宽不等高的数据块布局。在滚动条下拉时，它会进行加载。那么问题就是在判断什么时候应该加载。<br><img src="https://img-blog.csdn.net/20170417193550795?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>我们首先应该明白瀑布流布局的特点。它将下一个图片总是放在当前列数最低的那一列。所以当加载最后一个蓝色的图片时，也就无疑是最后一个图片了。所以要判断该图片加载到什么程度来触发滚动事件。<br>图上灰色的表示页面的大小，后面蓝色边框表示窗口的大小。当拖动滚动条时，灰色部分上移。我们希望页面最后一个图片（蓝色图片）加载一半时触发滚动事件。那么就要形成参照。</p>
+<p>下来写代码：</p>
+<pre><code>//检测是否具备滚动条加载数据块的条件
+
+function checkScrollSlide(){
+
+    var oparent = document.getElementById(&apos;main&apos;);
+
+    var oBoxs = getByClass(oparent,&apos;box&apos;);
+
+    var scrollH = document.body.scrollTop || document.documentElement.scrollTop + document.body.clientHeight || document.documentElement.clientHeight;
+
+   var lastBoxH = oBoxs[oBoxs.length - 1].offsetTop + Math.floor(oBoxs[oBoxs.length - 1].offsetHeight/2);
+
+    return (lastBoxH &lt; scrollH )? true : false;
+}
+</code></pre><p>getClass是根据类名查找元素集合的自己写的函数，待会儿会附上源码</p>
+<p><strong>我们要进行加载的数据块的格式是这样的.每个图片被一个class= pic的div包裹。最后整体属于父元素main</strong></p>
+<pre><code>&lt;div id = &quot;main&quot;&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/0.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/1.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/2.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;div&gt;
+</code></pre><p>首先我们要加载的数据块应该是从后台传过来的，在这里我们用json模拟一下就可以：</p>
+<pre><code>var DataIn = {&quot;data&quot;:[{&quot;src&quot;:&apos;0.jpg&apos;},{&quot;src&quot;:&apos;1.jpg&apos;},{&quot;src&quot;:&apos;2.jpg&apos;},{&quot;src&quot;:&apos;3.jpg&apos;},{&quot;src&quot;:&apos;4.jpg&apos;},{&quot;src&quot;:&apos;5.jpg&apos;}]};
+</code></pre><p>比如这个就是后台传过来的数据。</p>
+<p>上面的函数返回一个布尔值，当为true时，触发滚动事件。</p>
+<pre><code>  window.onscroll = function(){
+    var oparent = document.getElementById(&apos;main&apos;);
+    //当满足加载条件时，就要向页面中加载数据块
+    if(checkScrollSlide){
+        for(var i = 0; i&lt; DataIn.data.length; i++){
+                var oBox = document.createElement(&apos;div&apos;);
+                oBox.className = &apos;box&apos;;
+                oparent.appendChild(oBox);
+
+                var opic = document.createElement(&apos;div&apos;);
+                opic.className = &apos;pic&apos;;
+                oBox.appendChild(opic);
+
+                var oImg = document.createElement(&apos;img&apos;);
+                oImg.src = &apos;./images/&apos;+DataIn.data[i].src;
+                opic.appendChild(oImg);
+
+            }
+            waterFull(&apos;main&apos;,&apos;box&apos;);
+        }
+    }
+}
+</code></pre><p>附上源码：<br>css和html</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+&lt;script src = &quot;./jswaterfll.js&quot;&gt;&lt;/script&gt;
+    &lt;title&gt;瀑布流布局&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+
+    #main{
+        position: relative;
+
+    }
+    .box{
+/*      display: inline-block;*/
+        padding: 15px 0px 0px 15px;
+        float: left;
+
+    }
+    .pic{
+        padding: 10px;
+        border-radius: 5px;
+        border:1px solid #ccc;
+        box-shadow: 0 0 5px #ccc;
+    }
+
+    .pic img{
+        width: 165px;
+        height: auto;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &apos;main&apos;&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/3.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/20.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/21.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/2.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/3.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/5.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/6.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/7.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/8.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/9.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/10.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/11.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/17.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/18.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/19.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/4.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/5.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/6.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/7.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/8.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/11.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/12.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/13.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/14.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/15.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/16.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/17.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/18.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/19.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/20.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class = &quot;box&quot;&gt;
+        &lt;div class = &quot;pic&quot;&gt;
+            &lt;img src = &quot;images/21.jpg&quot;&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><p>js代码：</p>
+<pre><code>window.onload = function(){
+    waterFull(&apos;main&apos;,&apos;box&apos;);
+
+    var DataIn = {&quot;data&quot;:[{&quot;src&quot;:&apos;0.jpg&apos;},{&quot;src&quot;:&apos;1.jpg&apos;},{&quot;src&quot;:&apos;2.jpg&apos;},{&quot;src&quot;:&apos;3.jpg&apos;},{&quot;src&quot;:&apos;4.jpg&apos;},{&quot;src&quot;:&apos;5.jpg&apos;}]};
+    window.onscroll = function(){
+        var oparent = document.getElementById(&apos;main&apos;);
+        if(checkScrollSlide){
+            for(var i = 0; i&lt; DataIn.data.length; i++){
+                var oBox = document.createElement(&apos;div&apos;);
+                oBox.className = &apos;box&apos;;
+                oparent.appendChild(oBox);
+
+                var opic = document.createElement(&apos;div&apos;);
+                opic.className = &apos;pic&apos;;
+                oBox.appendChild(opic);
+
+                var oImg = document.createElement(&apos;img&apos;);
+                oImg.src = &apos;./images/&apos;+DataIn.data[i].src;
+                opic.appendChild(oImg);
+
+            }
+            waterFull(&apos;main&apos;,&apos;box&apos;);
+        }
+    }
+}
+
+function waterFull(parent,children){
+    var oParent = document.getElementById(parent);
+    //var oBoxs = parent.querySelectorAll(&quot;.box&quot;);
+
+     var oBoxs = getByClass(oParent,children);
+
+    //计算整个页面显示的列数
+
+    var oBoxW = oBoxs[0].offsetWidth;
+
+    var cols = Math.floor(document.documentElement.clientWidth/oBoxW);
+
+    //设置main的宽度，并且居中
+
+    oParent.style.cssText = &apos;width:&apos;+oBoxW * cols +&apos;px; margin: 0 auto&apos;;
+
+    //找出高度最小的图片，将下一个图片放在下面
+
+    //定义一个数组，存放每一列的高度，初始化存的是第一行的所有列的高度
+
+    var arrH = [];
+
+    for(var i = 0; i&lt; oBoxs.length ; i++){
+        if(i &lt; cols){
+            arrH.push(oBoxs[i].offsetHeight);
+        }
+        else{
+            var minH = Math.min.apply(null,arrH);
+
+            var minIndex = getMinhIndex(arrH,minH);
+
+            oBoxs[i].style.position = &apos;absolute&apos;;
+            oBoxs[i].style.top= minH + &apos;px&apos;;
+            //oBoxs[i].style.left = minIndex * oBoxW + &apos;px&apos;; 
+            oBoxs[i].style.left = oBoxs[minIndex].offsetLeft+&apos;px&apos;;
+
+            arrH[minIndex] += oBoxs[i].offsetHeight; 
+        }
+    }
+
+
+}
+function getByClass(parent,className){
+
+    var boxArr = new Array();//用来获取所有class为box的元素
+
+    oElement = parent.getElementsByTagName(&apos;*&apos;);
+
+    for (var i = 0; i &lt;oElement.length; i++) {
+
+        if(oElement[i].className == className){
+
+            boxArr.push(oElement[i]);
+
+        }
+    };
+    return boxArr;
+}
+
+
+//获取当前最小值得下标
+function getMinhIndex(array,min){
+
+    for(var i in array){
+
+        if(array[i] == min)
+
+            return i;
+    }
+}
+
+//检测是否具备滚动条加载数据块的条件
+function checkScrollSlide(){
+    var oparent = document.getElementById(&apos;main&apos;);
+    var oBoxs = getByClass(oparent,&apos;box&apos;);
+    var scrollH = document.body.scrollTop || document.documentElement.scrollTop + document.body.clientHeight || document.documentElement.clientHeight;
+    var lastBoxH = oBoxs[oBoxs.length - 1].offsetTop + Math.floor(oBoxs[oBoxs.length - 1].offsetHeight/2);
+
+    return (lastBoxH &lt; scrollH )? true : false;
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十二、JavaScript实现无穷滚动加载数据/" data-id="cjl60q3lb001v75tfif99w5gg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-将按钮按照value值排序，并且点击按钮后值1s自减一" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/将按钮按照value值排序，并且点击按钮后值1s自减一/" class="article-date">
+  <time datetime="2017-04-12T13:10:39.000Z" itemprop="datePublished">2017-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/将按钮按照value值排序，并且点击按钮后值1s自减一/">将按钮按照value值排序，并且点击按钮后值1s自减一</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>body中的代码和CSS</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+        }
+
+        input{
+            padding: 20px 30px;
+            background-color: lightgreen;
+            border:2px inset #ccc;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: &quot;微软雅黑&quot;;
+
+        }
+
+        &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &quot;buttonLinks&quot; &gt;
+    &lt;input type = &quot;button&quot; value = &quot;100&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;60&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;23&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;55&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;56&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;10&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;344&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;600&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;50&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;50&quot;&gt;
+    &lt;input type = &quot;button&quot; value = &quot;30&quot;&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    window.onload = function(){
+    //1. 先获取标签名为input的集合，在这里由于所有input都是button，获得的集合就都是button的集合
+var btns = document.getElementById(&apos;buttonLinks&apos;).getElementsByTagName(&apos;input&apos;);
+
+//2. 定义一个数组，存放每个btn的value
+        var result = [];
+        for(var i = 0; i &lt; btns.length; i++){
+            (function(num){
+                result[num] = btns[num].value;
+            })(i);  
+        }
+
+//比较函数，value从大到小排列
+        function compare(a, b){
+                return b-a;
+        }
+        result.sort(compare);
+
+//在进行了上面那一步。result中的数字有序，但是并没有对应到相应的btns[i]中，所以先将result赋值进去
+        for(var i = 0; i&lt; result.length; i++){
+            btns[i].value = result[i];
+        }
+
+
+        var functionId;
+     for(var i = 0; i&lt; btns.length; i++){
+
+   //使用立即调用函数，为每一个btn都绑定一个click事件。    
+
+     (function(num){
+
+         btns[num].onclick = function(){
+
+           //setInterval 进行每一秒钟btns[num]的值减1
+
+          functionId =  setInterval(function(){
+
+               if(btns[num].value &gt; 0){
+
+                    //更新btn中的值，并减一
+                   btns[num].value =  btns[num].value;
+                   btns[num].value -= 1;
+
+              }else{
+
+                     clearInterval(functionId);
+
+                    }
+
+           },1000);
+
+         }
+
+    })(i)
+
+  }
+
+    }
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/将按钮按照value值排序，并且点击按钮后值1s自减一/" data-id="cjl60q3kd000y75tfqyl94952" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/zsdf/page/3/">&laquo; Prev</a><a class="page-number" href="/zsdf/">1</a><a class="page-number" href="/zsdf/page/2/">2</a><a class="page-number" href="/zsdf/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/zsdf/page/5/">5</a><a class="page-number" href="/zsdf/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/zsdf/page/8/">8</a><a class="extend next" rel="next" href="/zsdf/page/5/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

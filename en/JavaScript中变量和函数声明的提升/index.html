@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>JavaScript中变量和函数声明的提升 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="js中变量的提升和函数声明提升也是笔试常常会考到的知识点。1。变量提升那什么是变量的提升？可以理解为就是不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。来看看一个例子。在JS中，就是把定义在后面的（变量或函数）提升到前面中定义。 var world = &amp;quot;Hello World!&amp;quot;； function hello(){     alert(world);    //">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中变量和函数声明的提升">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/JavaScript中变量和函数声明的提升/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="js中变量的提升和函数声明提升也是笔试常常会考到的知识点。1。变量提升那什么是变量的提升？可以理解为就是不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。来看看一个例子。在JS中，就是把定义在后面的（变量或函数）提升到前面中定义。 var world = &amp;quot;Hello World!&amp;quot;； function hello(){     alert(world);    //">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript中变量和函数声明的提升">
+<meta name="twitter:description" content="js中变量的提升和函数声明提升也是笔试常常会考到的知识点。1。变量提升那什么是变量的提升？可以理解为就是不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。来看看一个例子。在JS中，就是把定义在后面的（变量或函数）提升到前面中定义。 var world = &amp;quot;Hello World!&amp;quot;； function hello(){     alert(world);    //">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-JavaScript中变量和函数声明的提升" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/JavaScript中变量和函数声明的提升/" class="article-date">
+  <time datetime="2017-03-27T13:58:18.000Z" itemprop="datePublished">2017-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript中变量和函数声明的提升
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>js中变量的提升和函数声明提升也是笔试常常会考到的知识点。<br><strong>1。变量提升</strong><br>那什么是变量的提升？可以理解为就是不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。来看看一个例子。<br>在JS中，就是把定义在后面的（变量或函数）提升到前面中定义。</p>
+<pre><code>var world = &quot;Hello World!&quot;；
+function hello(){
+    alert(world);    //Hello World
+}
+</code></pre><p>显然这个结果是显而易见的。如果是这样的话：</p>
+<pre><code>var world = &quot;Hello World!&quot;；
+function hello(){
+    alert(world);    //undefined
+    var world = &quot;What&apos;s  Your Name? &quot;;
+}
+</code></pre><p>为什么会输出undefined，因为不管变量的位置在哪里，它们的声明都会在后台提升至代码顶部。所以其实上面的代码是这样的。</p>
+<p>var world = “Hello World!”；<br>function hello(){<br>var world;<br>alert(world); //undefined<br>world = “What’s Your Name? “;<br>}<br>我们会对world 为什么会弹出出 undefined 有更好的理解了。正如我们所学到的，当局部变量world声明后，它会自动被浏览器提升至函数作用域的顶部，在alert 的时候，变量早已经声明完成，然而，因为变量的初始化不会被提升的，所以变量的值是undefined 。</p>
+<p><strong>2。 函数声明提升</strong><br>定义函数有两种方式：函数声明和函数表达式</p>
+<p>函数声明提升会在编译阶段把声明和函数体整体都提前到执行环境顶部，所以我们可以在函数声明之前调用这个函数</p>
+<p>函数声明方式提升【成功】</p>
+<p>代码如下:</p>
+<pre><code>function myTest(){ 
+foo(); 
+function foo(){ 
+alert(&quot;我来自 foo&quot;); 
+} 
+} 
+myTest(); 
+</code></pre><p>函数表达式，其实就是变量声明的一种，声明操作会被提升到执行环境顶部，并赋值undefined。赋值操作被留在原地等到执行。</p>
+<p>函数表达式方式提升【失败】</p>
+<pre><code> 代码如下:
+
+function myTest(){ 
+foo(); 
+var foo =function foo(){ 
+alert(&quot;我来自 foo&quot;); 
+} 
+} 
+myTest(); 
+</code></pre><p>奇怪的函数声明</p>
+<p>复制代码</p>
+<pre><code>console.log(a); //undefined
+
+if (false) {
+    function a() {
+        console.log(100);
+    }
+}
+a();//TypeError: a is not a function 理论上应该是100
+</code></pre><p>奇怪吧？？函数提升发生在所有代码执行之前，所以尽管a函数的定义过程写在了if分支中，但是理论上，它是不会影响函数声明提升的</p>
+<p>在新版本的浏览器中会出现此问题，旧版本的浏览器中会在控制台中打印出100</p>
+<p>这也提醒了我们尽量不要在控制语句中进行声明，会造成很多无法预知的bug</p>
+<p><strong>3.函数优先</strong></p>
+<p>提升操作会优先进行函数的声明</p>
+<p>函数会首先被提升然后才是变量，重复的变量声明会被忽略，只剩下赋值操作，多个函数声明可以进行覆盖</p>
+<p>声明的顺序是这样的：</p>
+<ol>
+<li><p>找到所有的函数声明，初始化函数体，如有同名的函数则会进行覆盖</p>
+</li>
+<li><p>查找变量声明，初始化为undefined，如果已经存在同名的变量，就什么也不做直接略过.</p>
+</li>
+</ol>
+<pre><code>// 1，进行了函数覆盖
+foo(); //200
+
+function foo() {
+    console.log(100);
+}
+
+function foo() {
+    console.log(200);
+}
+
+// 2，先初始化了函数foo，后又发现同名的foo，就会什么也不做，即变量foo就会被不理睬
+console.log(foo); //function foo(){...}
+
+function foo(){
+    console.log(200);
+}
+var foo = 100;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/JavaScript中变量和函数声明的提升/" data-id="cjl60q3ji000475tf9pst9j0k" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/案例六-、打地鼠的小游戏/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          案例六 、打地鼠的小游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/拖放/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">拖放</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

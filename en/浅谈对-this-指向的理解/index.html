@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>浅谈对 this 指向的理解 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在《javaScript语言精粹》这本书中，把 this 出现的场景分为四类，简单的说就是： 有对象就指向调用对象；没调用对象就指向全局对象；用new构造就指向新对象；通过 apply 或 call 或 bind 来改变 this 的所指。 首先理解这句话：this对象是在运行时基于函数的执行环境绑定。 this引用是一种在JavaScript代码中随时都可以使用的只读变量，this引用的是一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅谈对 this 指向的理解">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/浅谈对-this-指向的理解/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在《javaScript语言精粹》这本书中，把 this 出现的场景分为四类，简单的说就是： 有对象就指向调用对象；没调用对象就指向全局对象；用new构造就指向新对象；通过 apply 或 call 或 bind 来改变 this 的所指。 首先理解这句话：this对象是在运行时基于函数的执行环境绑定。 this引用是一种在JavaScript代码中随时都可以使用的只读变量，this引用的是一个">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="浅谈对 this 指向的理解">
+<meta name="twitter:description" content="在《javaScript语言精粹》这本书中，把 this 出现的场景分为四类，简单的说就是： 有对象就指向调用对象；没调用对象就指向全局对象；用new构造就指向新对象；通过 apply 或 call 或 bind 来改变 this 的所指。 首先理解这句话：this对象是在运行时基于函数的执行环境绑定。 this引用是一种在JavaScript代码中随时都可以使用的只读变量，this引用的是一个">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-浅谈对-this-指向的理解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/浅谈对-this-指向的理解/" class="article-date">
+  <time datetime="2017-04-10T13:40:44.000Z" itemprop="datePublished">2017-04-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      浅谈对 this 指向的理解
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在《javaScript语言精粹》这本书中，把 this 出现的场景分为四类，简单的说就是：</p>
+<p>有对象就指向调用对象；没调用对象就指向全局对象；用new构造就指向新对象；通过 apply 或 call 或 bind 来改变 this 的所指。</p>
+<p><strong>首先理解这句话：this对象是在运行时基于函数的执行环境绑定。</strong></p>
+<p>this引用是一种在JavaScript代码中随时都可以使用的只读变量，this引用的是一个对象。因此根据函数的调用方式不同，引用的对象也会有所不同。<br>this会根据代码的上下文语境自动改变其引用。<br>接下来看第一种情况：<br><strong>1. 有对象就指向调用对象</strong></p>
+<pre><code>var  name = &quot;this is gloabal&quot;;
+var obj = {
+    name : &quot;my object&quot;，
+
+   getName : function(){
+       return this.name;
+   }
+}
+alert(obj.getName());      //my object
+</code></pre><p>函数的执行环境在obj内，所以访问的是obj.name;</p>
+<p><strong>2.没对象调用就指向全局对象</strong></p>
+<pre><code>var name = &quot; this is global&quot;;
+function getName(){
+    return this.name;
+}
+alert(gertName()); //this is global
+</code></pre><p><strong>3. 用new构造函数就指向新对象</strong></p>
+<pre><code>function getObj(){
+ console.log(this);    //控制台输出: getObj{}  
+                       //this指向的新创建的getObj对象
+    }
+new getObj();
+}
+</code></pre><p><strong>4. 通过 apply 或 call 或 bind 来改变 this 的所指。</strong></p>
+<pre><code>var name = &apos;this is window&apos;;  //定义window的name属性,看this.name是否会调用到
+var testObj1 = {
+    name : &apos;this is testObj1&apos;,
+    getName:function(){
+        console.log(this);   
+        console.log(this.name); 
+    }
+}
+
+var testObj2 = {
+    name: &apos;this is testObj2&apos;
+}
+
+//就相当于使testObj1.getName在testObj2的环境中运行。所以得到的是 this is testObj2
+testObj1.getName.apply(testObj2);  
+
+  //控制台输出: this is testObj2  
+testObj1.getName.call(testObj2);
+</code></pre><p><strong>最后有一种情况：</strong></p>
+<pre><code>var obj={
+    name:&apos;this is obj&apos;,
+    getname:function(){
+        return function(){
+            return this.name;
+        }
+    }
+}
+alert(obj.getname()());
+</code></pre><p>obj.getname()执行返回的是一个 函数，两个括号就是要执行返回的函数。因为该函数是在windows作用域中执行的，<br>所以 这个this对象 指向的是windows作用域 而非 obj的作用域。</p>
+<pre><code>var name = &quot;this is global&quot;;
+    var myObject = {
+    name : &quot;my object&quot;,
+    getValue: function(){
+
+        var foo = function(){
+            alert(this.name);
+            }
+        foo();
+    }
+}
+
+myObject.getValue();   //this is global
+</code></pre><p>在上述代码块中，foo 函数虽然定义在 getValue 的函数体内，但实际上它既不属于 getValue 也不属于 myObject。foo 并没有被绑定在任何对象上，所以当调用时，它的 this 指针指向了全局对象 global。</p>
+<p>varname=’this is windows’;<br>varobj={<br>name:’this is obj’,<br>getname:(function(){<br>alert(this.name)<br>})();<br>}<br>同样 该代码 弹出 this is windows;</p>
+<p>因为 getname函数会在页面加载的时候就执行，<br>而执行环境是在windows下执行的，所以this 指向的就是windows作用域。<br>千万不要理解为 写在obj体里就认为this对象肯定指向obj体。。这是错误的。。<br><strong>this对象是在运行时基于函数的执行环境绑定。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/浅谈对-this-指向的理解/" data-id="cjl60q3kn001a75tfty1k9a1o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/谈谈对原型链的理解/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          谈谈对原型链的理解
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/JavaScript创建对象-工厂模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript创建对象---工厂模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

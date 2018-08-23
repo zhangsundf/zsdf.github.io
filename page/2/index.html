@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zsdf&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zsdfBlog">
+<meta property="og:url" content="http://yoursite.com/zsdf/page/2/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="zsdf&apos;s blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsdfBlog">
+<meta name="twitter:description" content="zsdf&apos;s blog">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-es6的Promise对象详解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/es6的Promise对象详解/" class="article-date">
+  <time datetime="2017-10-27T04:06:45.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/es6的Promise对象详解/">es6的Promise对象详解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>秋招已经进入了尾声，这两个月以来一直忙着找工作，没有时间看新东西，这几天得空将es6的Promise对象又细细的理解了一下，所以下来整理一下我对Promise对象以及用法的理解。</p>
+<p>什么是Promise？为什么要使用Promise？<br>当我们使用js的异步调用时通常习惯使用回调函数，这样的代码简单便于理解，但是当回调嵌套的时候就会造成代码混乱，不好梳理，比如：</p>
+<pre><code>function fun1(arg1,function(){
+// dosomething 
+})
+</code></pre><p>这样简单的嵌套自然是没问题，还便于理解。但是当有多层嵌套的时候：<br>我们只知道Promise是最大的好处是为了避免“回调地狱”，就是多层的回调</p>
+<pre><code>function fun1(arg1,function(data1){
+    function fun1(arg2, function(data2){
+        function fun1(arg3, function(data3){
+            //.....
+        })
+    })
+})
+</code></pre><p>像上面这样，三层嵌套就已经很麻烦了，更何况更多层的嵌套，所以为了让回调更明显，代码更容易理解，使用Promise可以很优雅的解决这个问题：<br>var p = new Promise(function(resolve，reject){</p>
+<p>}).then(function(data){</p>
+<p>}).then(function(data){</p>
+<p>}).then……</p>
+<p>上面就是Promise的基本用法，Promise接受一个回调函数，回调函数接收两个参数，<strong>resolve（将Promise的状态从pending变为fulfilled，在异步操作成功时调用，并将异步操作的结果传递出去）</strong>、<strong>reject（将Promise的状态从pending变为rejected，在异步操作失败时调用，将异步操作的错误作为参数传递出去）</strong>这两个都是函数，表示成功和失败的处理函数。then中接受的是上一次回调返回的结果，所以这样的链式调用就可以完全清晰的实现多层调用。</p>
+<p>Promise对象有两个特点：<br>①，对象的状态不受外界的影响，Promise有三种状态：Pending（进行中）、fulfilled（已成功）、rejected（失败），只用异步操作的结果可以决定当前是哪一种状态，其他任何操作都无法改变这个操作。<br>②<strong>.一旦状态改变之后就不会再改变。任何时候都可以得到这个结果。</strong>状态变化只有两种可能：从pending到fulfilled和从pending到rejected。只要改变就已经定型了。</p>
+<p>Promise的缺点：<br>① 一旦创建就无法取消，一旦新建就会立即执行<br>② 如果不设置回调函数，它的内部错误就不会反映到外部。<br>③ 当处于pending状态时，无法判断进展到哪一阶段（刚开始还是快完成）。</p>
+<p>接下来讲一下Promise的基本语法，先看一下Promise打印出来的结果<br><img src="https://img-blog.csdn.net/20171027095753343?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>从上图可以看到Promise.prototype上有catch、then、constructor方法。所以这几个方法可以被实例继承。</p>
+<p>Promise自身会有Promise.all()、Promise.race()、Promise.resolve()、Promise.reject()一些常用的方法。</p>
+<p><strong>1.Promise.prototype.then()</strong></p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        console.log(&quot;promise&quot;);
+        resolve();
+});
+setTimeout(function(){
+    console.log(&quot;setTimeout&quot;);
+},0)
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+})
+console.log(&quot;hi&quot;);
+
+// promise   hi   resolved  setTimeout
+</code></pre><p>上面的代码很好的验证了，promise是创建之后立即执行，then方法指定的脚本在当前的所有同步任务完成之后再执行,<strong>setTimeout是在下一轮“时间循环”开始时执行，then在本轮事件循环结束时执行。</strong></p>
+<p><strong>2.Promise.prototype.catch()</strong><br>当Promise对象执行成功时使用的是resolve回调函数，进而在then方法中进一步处理，当promise对象失败时在那儿进行处理？<br>有两种方法：①在then方法接受第二个函数参数，用来处理错误。（不推荐）<br>② 在catch中进行处理。（推荐）<br>先看第一种：</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        reject();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+},function(){
+    console.log(&quot;rejected&quot;)
+})
+
+输出 rejected
+</code></pre><p>使用catch</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        reject();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+}).catch(function(){
+    console.log(&quot;catch the reject&quot;)
+})
+
+输出 catch the reject
+</code></pre><p>reject的作用就相当于抛出错误，catch或者then的第二个函数参数进行捕获，再resolve之后再抛出错误是没有用的，因为状态一旦发生就无法改变。</p>
+<p>Promise对象的错误具有冒泡的性质，即所有的错误一直可以向后传递，知道遇到cantch被捕获。<br>注意：一般尽量不要使用then的第二个函数参数进行错误处理，尽量使用catch进行错误的统一处理。</p>
+<p>Promise对象若没有指定错误处理，内部错误不会退出进程或终止脚本执行，也就是说promise对象的内部错误不会影响外部代码的执行。</p>
+<pre><code>let promise = new Promise(function(resolve,reject){
+        resolve();
+});
+
+promise.then(function(){
+        console.log(&quot;resolved&quot;);
+        y+2;
+})
+
+setTimeout(function() {
+            console.log(&quot;我出现在y+2之后&quot;)
+},3000)
+上面的代码，浏览器遇到y+2未声明抛出错误，但是setTimeout中的字符串在3秒后依然可以打印出来。
+</code></pre><p>看一下Promise对象的一些方法：<br><strong>1. Promise.resolve()</strong><br>我觉得介绍Promise的方法时应该先介绍这个方法，因为后面要用到。<br><strong>不要觉得它生成的Promise对象的状态直接是resolved。（视情况而定）</strong><br>该方法的作用是将现有对象转化为一个Promise对象。<br>将一个对象转化为Promise对象分为四种情况：<br>① 参数是Promise的实例，不做任何改变。<br>② 参数是一个对象，且含有then方法（简称thenable对象）；</p>
+<pre><code>var thenable = {
+        then：function（resolve，rejected）{
+                resolve（42）；
+    }
+}
+
+let p1 = Promise.resolve(thenable);
+p1.then(function(data){
+    console.log(data);//42
+})
+</code></pre><p>thanable的then方法执行后，对象p1的状态就变为resolved，立即执行then。<br><strong>当然Promise.resolve()也可以生成状态为rejected的promise对象，上面只需要将resolve改为reject，再在p1.then后面加上.catch用于捕获错误就可以啦！</strong><br>③ 参数不具有then方法，或者说根本就不是对象的时候。<br>var p = Promise.resolve(“Hello”);<br>p.then(function(s){<br>console.log(s);//Hello<br>})<br>返回的promise的实例的状态直接就是resolved，所以会执行then方法。并且Promise.resolve()的参数会传递给回调函数。</p>
+<p>④ 不带有任何参数，用于快速的生成一个Promise对象。<br>var p = Promise.resolve();</p>
+<p><strong>2. Promise.all()</strong><br>该方法接受多个Promise实例作为参数，返回一个新的Promise实例。<br>当所有的Promise实例都返回resolve的时候，新的Promise实例的状态是fulfilled，此时p1,p2,p3的返回值组成一个数组传递给新实例的回调函数。当有一个返回的是rejecte的时候，新实例的状态就是rejected。此时第一个返回reject的实例的返回值就会传递给p的回调函数。</p>
+<p>promise接受的参数都是promise的实例，那么怎样将所有的参数都转化为promise的实例呢？使用上面的Promise.resolve()方法。<br>为了更好的掌握Promise.all()方法，来做一个例题。</p>
+<p>怎样使用Promise的相关知识输出 Welcome To XIAN</p>
+<pre><code>var p1 = Promise.resolve(&quot;Welcome&quot;);
+var p2 = &quot;To&quot;;
+var p3 = new Promise(function(resolve,reject){
+    setTimeout(function(){
+        resolve(&quot;XIAN&quot;);
+    },1000)
+})
+</code></pre><p>其实这个题在我讲的这块出现，大家都知道要使用Promise.all方法，还有问题就是他的参数必须都是Promise的实例，p1已经通过Promise.resolve转化成了Promise对象，p2我们再使用它转换一下，p3本身就是Promise对象的实例。</p>
+<p>使用下面的代码就完美的解决了：</p>
+<pre><code>Promise.all([p1,Promise.resolve(p2),p3])
+       .then(function(data){
+
+        console.log(data instanceof Array)//true
+        console.log(data.join(&quot; &quot;));//转化为字符串输出
+
+}).catch(function(e){
+    console.log(new Error(e));
+})
+</code></pre><p><strong>上面的data是Promise对象resolve函数的参数组成的数组。还有all中的顺序决定了输出的顺序，与其他的因素没有关系。</strong></p>
+<p>如果所有实例中有catch方法用于捕获错误，则使用Promise.all方法的catch是不会捕获到的。但是会执行Promise.all中的then方法，为什么？不是说当所有实例都返回的是resolve状态时才会触发Promise.all的then方法么？</p>
+<p>因为当某一个实例报错时，使用catch进行错误处理，返回的是一个新的Promise实例，该实例完成catch之后状态也会变为resolve，所以导致Promise.all所有实例的都返回resolve，会触发Promise.all的then。<br>解决方法就是在实例中不添加catch，那么实例中reject就会触发Promise.all的catch，从而达到Promise.all存在的真正意义。</p>
+<p><strong>3.Promise.race()</strong><br>与Promise.all一样，接受的是promise实例数组作为参数，新生成一个新的Promise对象。所以该方法的参数可以使用Promise.resolve()方法来解决。</p>
+<p>该方法的Promise的对象由第一个返回reject或者resolve的实例的状态决定。可以使用我们经常看到的是图片加载超时什么提示，那么可以使用该方法实现一下。<br>加载图片的函数也使用Promise对象</p>
+<pre><code>function preloadImage(path){
+    return new Promise(function(resolve,reject){
+        var image = new Image();
+        image.onload = resolve;
+        image.onerror = reject;
+        image.src = path;
+    })
+}
+</code></pre><p>要实现的功能是在五秒之后如果图片加载不出来就提醒图片加载超时。</p>
+<pre><code>Promise.race([preloadImage(&quot;/images/1.png&quot;),
+            new Promise(function(resolve,reject){
+                setTimeout(function() {
+                    reject();
+                },5000);
+    })]).then(function(){
+        alert(&quot;图片加载成功!&quot;)
+    }).catch(function(){
+    alert(&quot;图片加载失败!&quot;)
+    })
+</code></pre><p>在五秒中之内先是图片加载，（当然图片加载也有可能失败）还是在五秒后出发setTimeout函数执行reject。这样可以允许图片在五秒之内完成加载给提示。</p>
+<p><strong>4.Promise.reject()</strong><br>看到这个就会想到Promise.resolve().区别就是：<br>Promise.resolve()生成的Promise对象可以是rejected状态和resolve状态。<br>Promise.reject()只能生成状态为rejected的Promise实例。</p>
+<pre><code>var arg = &quot;Hello&quot;;
+var pro1 = Promise.reject(arg);
+
+pro1.then(function(){
+    console.log(&quot;resolved&quot;);
+}).catch(function(e){
+    console.log(e === arg)//true
+    console.log(e) //Hello
+})
+
+
+var thenable = {
+    then(resolve,reject){
+        reject(&quot;出错了&quot;);
+    }
+}
+var pro1 = Promise.reject(thenable);
+
+pro1.then(function(){
+    console.log(&quot;resolved&quot;);
+}).catch(function(e){
+    console.log(e === thenable) //true
+    conaloe.log(e);
+    //{then: ƒ}
+    //then:ƒ then(resolve,reject)
+    //__proto__:Object
+    console.log(e instanceof Object); //true
+})
+</code></pre><p><strong>可以看出Promise.reject()方法的参数会原封不动的作为reject的理由，编程后续方法的参数。</strong>所以这里输出的e不是“出错了”字符串，而是传入Promise.reject()中的参数。<strong>它不是像Promise.resolve()一样使用resolve或者reject中的参数。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/es6的Promise对象详解/" data-id="cjl60q3l6001n75tfnec8ju1j" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-自适应多列布局" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/自适应多列布局/" class="article-date">
+  <time datetime="2017-09-26T10:23:27.000Z" itemprop="datePublished">2017-09-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/自适应多列布局/">自适应多列布局</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>多列布局自适应是一个经常被问到的问题，所以今天仔细看了一下，首先是BFC实现多列布局是一个经典的例子。<br>什么是BFC？<br>BFC称为块级格式上下文，它是由于块级元素设置了某些属性而形成的一个独立的区域。在这个区域中，它里面的布局不会影响到外面元素的布局，反之也一样。<br>可以触发BFC的属性：<br>1、 float属性不为none</p>
+<p>2、 position为absolute或fixed</p>
+<p>3、 overflow的值不为visible</p>
+<p>4、 display的值为table-cell，table-caption，inline-block中的任何一个。</p>
+<p>一、实现自适应的两列布局：<br>首先来使用最基础的方法实现两列布局，左边固定宽度，右面自适应 。<br>①。div+float+margin</p>
+<pre><code>&lt;div class= &quot;left&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;right&quot;&gt;&lt;/div&gt;
+&lt;style&gt;
+    .left{
+        width:180px;
+        height:100px;
+        float:left;
+        background-color:red;
+}
+   .right{
+      margin-left:180px;
+      background-color:blue;
+      height:100px;
+ }
+&lt;/style&gt;
+</code></pre><p><img src="https://img-blog.csdn.net/20170926144743964?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>右边蓝色的是自适应的，但这样做的缺点就是，margin-left的值每次都要设置和左边一样的宽度。<br>② 使用BFC的特性：BFC的区域不会与外部浮动元素重叠。那么我们就可以使浮动元素的右边为BFC区域就可以，使用overflow:hidden来实现BFC。<br>只需将right中改为如下：</p>
+<pre><code>.right{
+     overflow: hidden;
+     background-color:blue;
+     height:100px;
+}
+</code></pre><p>可以实现与方法一同样的效果。<br>除此之外还可以设置display:table-cell;width:9999px;</p>
+<p>③。使用table+css实现<br>*{<br>margin: 0px;<br>padding: 0px;<br>}<br>html,body{<br>width: 100%;<br>height: 100%;<br>}<br>.left{<br>width: 100px;<br>background-color:red;<br>}</p>
+<p>.right{</p>
+<p>background-color:green;<br>}<br>.content{<br>width: 100%;<br>height: 100px;<br>border: 0px;<br>border-collapse: collapse;<br>}</p>
+<p>那么左侧自适应右侧定宽该怎样实现？</p>
+<p>首先使两个元素向左浮动，这时候处于同一行，如果左侧不设置宽度的话，那么是不能显示的，如果设置宽度该设置多少呢？先设成100%；那么右边的元素就会被挤到下一行浮动，再左侧加上margin-right:右侧元素的宽度，这样就可以实现了。<br>.left{<br>float: left;<br>height: 100px;<br>background-color: red;<br>width: 100%;<br>margin-right: -200px;<br>}<br>.right{<br>float: left;<br>height: 100px;<br>width: 200px;<br>background-color: blue;</p>
+<pre><code>}
+</code></pre><p>现两边宽度固定中间自适应的三列布局：<br>①。div + float + margin-left + margin-right<br>从上面实现两列布局的第一种方法，我们使用div + float + margin-left实现右侧宽度自适应，当要实现中间自适应时，可以给中间的元素加上margin-right。<br><img src="https://img-blog.csdn.net/20170926163222199?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>代码如下</p>
+<pre><code>    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    .left{
+        width:180px;
+        height:100px;
+        float:left;
+        background-color:red;
+   }
+   .right{
+        width:180px;
+        height:100px;
+        float:right;
+        background-color:green;
+   }
+   .center{
+     /* display: table-cell;
+      width: 9999px;*/
+      margin-left: 180px;
+      margin-right: 180px;
+      background-color:blue;
+      height:100px;
+ }
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div class= &quot;left&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;right&quot;&gt;&lt;/div&gt;
+     &lt;div class = &quot;center&quot;&gt;&lt;/div&gt;
+
+&lt;/body&gt;
+</code></pre><p>其中注意上面的center必须在最后面。因为float脱离文档流，如果div有是块级元素。如果顺序为</p>
+<pre><code>&lt;div class= &quot;left&quot;&gt;&lt;/div&gt;
+&lt;div class = &quot;center&quot;&gt;&lt;/div&gt;
+ &lt;div class = &quot;right&quot;&gt;&lt;/div&gt;
+</code></pre><p>会出现这种情况![这里写图片描述](<a href="https://img-blog.csdn.net/20170926163633496?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" target="_blank" rel="noopener">https://img-blog.csdn.net/20170926163633496?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast</a>) 原因是左侧脱离文档流，中间的就当做红色的不占据位置，一次紧跟其后，之后蓝色的为块级元素，会独占一行，所以蓝色的就会在下一行中右浮动。就会出现这种情况。 如果采用上面正确的顺序，红色的先左浮动，绿色右浮动时当做左侧的不存在，加入蓝色时，它也相当于不知道其他两个的存在，所以可以正确的出现在一行。形成自适应布局。 接下来使用两列布局同样的原理使用BFC进行三列自适应布局。</p>
+<pre><code>.center{
+     /* display: table-cell;
+      width: 9999px;*/
+      overflow: hidden;
+      background-color:blue;
+      height:100px;
+ }
+</code></pre><p>只需修改center中 display: table-cell; width: 9999px;和 overflow: hidden;二选一都会触发BFC，从而形成两边宽度固定，中间自适应的三列布局。 ③。table+css实现 *{ margin: 0px; padding: 0px; } html,body{ width: 100%; height: 100%; } .left{ width: 100px; background-color:red; } .center{ background-color:blue; } .right{ width: 100px; background-color:green; } .content{ width: 100%; height: 100px; border: 0px; border-collapse: collapse; }</p>
+<p><strong>三、两列宽度自适应，中间宽度固定。</strong></p>
+<pre><code>   *{
+       margin: 0px;
+       padding: 0px;
+   }
+   html,body{
+       width: 100%;
+       height: 100%;
+   }
+   .left{
+       width:50%;
+       margin-left: -100px;
+       height:100px;
+       float:left;
+       background-color:red;
+  }
+     .center{
+       width: 200px;
+       float: left;
+       background-color:blue;
+      height:100px;
+
+}
+  .right{
+       width:50%;
+       height:100px;
+       margin-left: -100px;
+       float:left;
+       background-color:green;
+  }
+</code></pre><p>使用table+css</p>
+<pre><code>.left{
+
+        background-color:red;
+   }
+      .center{
+
+        width: 100px;
+        background-color:blue;
+
+ }
+   .right{
+
+        background-color:green;
+   }
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/自适应多列布局/" data-id="cjl60q3ks001i75tfogjh2595" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-由setTimeout引出的浏览器事件循环机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/由setTimeout引出的浏览器事件循环机制/" class="article-date">
+  <time datetime="2017-09-25T12:23:42.000Z" itemprop="datePublished">2017-09-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/由setTimeout引出的浏览器事件循环机制/">由setTimeout引出的浏览器事件循环机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>先看一下代码：</p>
+<pre><code>    function aa(){
+        console.log(&quot;aa&quot;);
+    }   
+
+    function bb(){
+        console.log(&quot;bb&quot;);
+    }
+    function cc(){
+        console.log(&quot;cc&quot;);
+    }
+    setTimeout(cc,100);
+    setTimeout(bb,500);
+    setTimeout(aa,1000);
+
+    function loop(){
+    for (var i = 0; i &lt; 1000; i++) {
+        console.log(&quot;asdfghjk&quot;);
+    }
+}
+loop();
+</code></pre><p>知道setTimeout执行机制的都知道，会输出1000个asdfghjk字符串，再是cc,bb,aa。<br>原因是当有setTimeout存在时，首先会执行完外部的任务，再执行setTimeout。setTimeout执行顺序是先进先出。但如果第二个参数不一样，会优先执行时短的。<br>比如：</p>
+<pre><code>setTimeout(function(){
+    console.log(&quot;aa&quot;);
+},100);
+setTimeout(function(){
+    console.log(&quot;bb&quot;);
+},100);
+setTimeout(function(){
+    console.log(&quot;cc&quot;);
+},100);
+setTimeout(function(){
+    console.log(&quot;dd&quot;);
+},50);
+</code></pre><p>结果为dd aa bb cc.<br>然而为什么setTimeout要被放到所有的任务执行完之后执行？所以这就引出了js的运行机制。</p>
+<p><strong>首先js是单线程的，意味着一次只能执行一个任务。为什么会是单线程的？看过最经典的一句话就是：js主要是对DOM节点进行操作，如果js是多线程的，一个在节点上添加内容，一个要对这个dom节点进行删除，到底是以哪个为准？所以这就是js从一出现就秉承着单线程的运行机制。</strong></p>
+<p>所以js执行任务就是当前一个任务执行完成之后，再执行下一个任务。<br>那么当js执行任务时，有的任务耗时短，有的任务耗时长，那么后边的任务就要一直等到前面的任务执行完成之后才可以执行。<br>如果耗时长的是由于计算量大，cpu一直忙着计算的话，就还好，可大部分事件就浪费在了IO上（ajax从网络上获取数据），还有其他的如鼠标的点击，setTimeout等等。</p>
+<p>所以就出现了将耗时长的任务先挂起，让其他的任务先执行，执行完成之后执行那些已经具备执行条件的任务。</p>
+<p>所以所有的任务分为同步和异步。js中将同步任务放到主线程上执行，形成“执行栈”。异步任务放到任务队列中，任务队列中的任务达到执行要求后会通知主线程。当所有主线程上的任务执行完成后再去将任务队列中已经可以执行的任务放到主线程去执行。</p>
+<p>比如setTimeout。如果设置第二个参数为10000ms，那么这个任务就会在10s后执行。其他的任务就要等10秒，这会导致运行效率极大地下降。而js的这种机制可以很好的提高效率。先将其他的同步任务加入到主线程中。将异步任务加入到任务队列中。同步任务执行时，异步任务处于挂起的状态，所以可以说也在执行只是不返回结果。当同步任务执行完成之后去执行setTimeout，这时候或许同步任务的时间大于10s，所以setTimeout可以立即执行。如果小于10s，那么setTimeout也不会等待10s后再执行，因为同步任务的执行肯定是耗费一些时间的。</p>
+<p>说了这么多，看一下下面的例子，看看会输出什么。</p>
+<pre><code>console.log(&quot;1&quot;);
+
+setTimeout(function(){
+    console.log(&quot;3&quot;);
+},1000);
+
+for(var i=0;i&lt;1000;i++){  //循环C
+     console.log(&quot;a&quot;);
+}
+console.log(&quot;2&quot;);
+
+document.getElementById(&apos;button&apos;).onclick=function(){     
+   setTimeout(function(){
+    console.log(&quot;4&quot;)
+   },5000);
+console.log(&quot;5&quot;);
+}
+</code></pre><p>上面这个例子，<br>① 当在1s后点击按钮时 会打印出1，1000个a，2，3，5，4。<br>② 当在刚开始就点击按钮时: 1，1000个a，2、5、3、4。<br>③ 不点击按钮就只会打印出1，1000个a，2，3。</p>
+<p>首先这个代码中，会将setTimeout(function(){console.log(“3”);},1000);和那个click事件加入到任务队列中挂起。等待主线程上的任务执行完成之后再去将符合条件的异步任务加入到主线程中执行。<br>①。当1s之后点击按钮时，3已经打印出来了。而click函数内部的setTimeout将被挂起，先执行同步任务，所以当点击按钮，算上执行console.log(5)的时间 5s之后会打印出4。<br>②. 当刚开始就点击按钮，首先1，1000个a，2毫无疑问是先打印出来的。其次以及触发了click事件，所以5也是直接打印出来的，算上前面这些时间，如果加起来等于或者大于1s就会立即输出3，否则等待的时间也是小于1s的会输出。接下来输出4，它的时间是从点击按钮到出现的时间。<br>③。不点击按钮时，不会出现5和4。</p>
+<p>说了这么多，最后看一下js的事件循环机制。<br>上面已经说到了，js会将同步函数加入到主线程中形成执行栈，异步任务加入到任务队列中最后调用。<br>所以当主线程执行完执行栈中的任务时，会向任务队列中读取事件，有可以执行的就放入主线程中执行，再依次读取，执行。这个机制就叫做事件循环机制。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/由setTimeout引出的浏览器事件循环机制/" data-id="cjl60q3kq001f75tftw6opyjv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-css实现三角形" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/css实现三角形/" class="article-date">
+  <time datetime="2017-09-23T12:38:12.000Z" itemprop="datePublished">2017-09-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/css实现三角形/">css实现三角形</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>css实现三角形是经常被问到的问题。<br>所以下来就讲一下css实现三角形的三种方法：<br>①.<br><img src="https://img-blog.csdn.net/20170923203714525?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<pre><code>.tritangle1{
+        width:0;
+        height:0;
+        border-left: 50px solid transparent;
+        border-right:50px solid transparent;
+        border-bottom:100px solid red;//这是一个向上的箭头，向左向右向下可以自己写。
+    }
+</code></pre><p>②.<br><img src="https://img-blog.csdn.net/20170923203612640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<pre><code>.list3{
+        width: 0px;
+        height: 0px;
+        border-width:50px;
+        border-style: solid;
+        border-color:transparent transparent transparent orange;
+    }
+</code></pre><p>transparent设置时透明的。顺序为上右下左。<br>③。实现类似于对话框的形式。<br><img src="https://img-blog.csdn.net/20170923201743408?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>底下的三角形的实现是两个三角形。一个是背景色，一个是边框色。背景色的比边框色少1px，且利用背景色覆盖在边框色上面，就看到的只是边框了。<br>首先先对元素进行定位。</p>
+<pre><code>.messageBox{
+    position:relative;
+    width: 240px;
+    height: 60px;
+     border:1px solid blue;
+    background-color: lightgreen;
+}
+
+.trangle{
+    position: absolute;
+    top:60px;
+    left: 30px;
+    width: 0px;
+    height: 0px;
+    border-width: 10px;
+    border-style:solid dashed dashed dashed;
+
+}
+.border{ //下面背景色是蓝色的三角形，一会会被上面淡绿色的覆盖掉，只留下蓝色边框
+    border-color: blue transparent transparent transparent;
+}
+.bg{
+    top:59px; //背景的话就稍微往上移一点就可以看到蓝色边框了。
+    border-color: lightgreen transparent transparent transparent;
+}
+</code></pre><p>HTML：</p>
+<pre><code>&lt;div class = &quot;messageBox&quot;&gt;
+    &lt;span&gt;这是一段话&lt;/span&gt;
+    &lt;div class  = &quot;trangle border&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;trangle bg&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>④。再做一个对话框，利用css3的transform的旋转45度的方法。</p>
+<pre><code>&lt;div class = &quot;messageBox1&quot;&gt;
+    &lt;span&gt;这是一段话&lt;/span&gt;
+    &lt;div class  = &quot;trangle1&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>实现的原理是利用一个大的框和一个小的正方形（将来要旋转成三角形的）组成的，首先定位。</p>
+<pre><code>.messageBox1{
+        position:relative;
+        width: 240px;
+        height: 60px;
+         border:1px solid blue;
+        background-color: lightgreen;
+    }
+    .trangle1{
+        position: absolute;
+        top:55px;
+        left: 30px;
+        width: 10px;
+        height: 10px;
+        border:1px;
+        border-style: solid ;
+        transform:rotate(45deg);
+        background-color: lightgreen;
+        border-color:lightgreen blue blue lightgreen;
+    }
+</code></pre><p>对于底下三角形的边框就是旋转45度后发现相对于原来来说是右和下是有边框的。所以设置边框。就可以实现了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/css实现三角形/" data-id="cjl60q3jq000a75tflyikhnha" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-常见的HTTP请求响应头以及状态码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/常见的HTTP请求响应头以及状态码/" class="article-date">
+  <time datetime="2017-09-22T08:10:10.000Z" itemprop="datePublished">2017-09-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/常见的HTTP请求响应头以及状态码/">常见的HTTP请求响应头以及状态码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先看一下http的请求头中会有些什么东西。<br><img src="https://img-blog.csdn.net/20170922152750713?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>这是一个我请求的网站的请求头信息，首先来看一下这些字段的含义：</p>
+<pre><code>1.Host：请求的主机和端口号
+2.User-Agent：浏览器的相关信息。
+3.Accept：浏览器可以接收的请求的类型。
+4.Accept-Language：浏览器可以接收的语言和国家类型。
+5.Accept-Encoding: 浏览器可以接收的压缩编码的类型。
+6.Cookie：浏览器暂存服务器发送的信息。
+7.Connection：Http请求版本的特点。
+除此之外还有：
+8.Accept-charset：浏览器可以接收的编码类型。
+9.If-Modefied-Since:（格林威治时间） 页面缓存时的时间。
+10.Date： （格林威治时间）：页面请求的时间。
+11.Refer：请求来自于哪个页面。
+12.Keep-Alive：5     连接时间
+13.Cache-Control:max-age=3000   缓存最长时间为3000秒。
+</code></pre><p>常见的响应头：<br><img src="https://img-blog.csdn.net/20170922153757440?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<pre><code>1.Server：服务器的类型。
+2.Date：相应的时间
+3.Content-Type：响应类型。
+4.Etag：请求资源的唯一标识符。
+5.Last-Modified：服务器最后一次的修改时间。
+6.Expires：资源的过期时间，提供给浏览器缓存数据。-1表示永远过期。
+7.Age：当代理服务器用自己缓存的实体去响应请求时，用该头部表明该实体从产生到现在经过多长时间了。
+8.Cache-Control：max-age=xxxx  设置资源的过期时间。
+9.Content-Encoding：服务器发送的压缩编码格式。
+10.Vary：用来指明内容压缩格式。
+11.Ohc-Response-Time：OHC的响应时间 
+除此之外还有：
+12.Content-Length：服务器发送显示的字节码长度。
+13.Refresh：1，url= “”，1秒后跳转到某页面
+14.Pragma：no-cache  服务器告诉浏览器，不缓存页面。
+</code></pre><p>常见的HTTP状态码：<br>1XX：浏览器的请求已被服务器正确接收。还需进一步操作</p>
+<pre><code>100：客户端的请求已被服务器端正确接收。客户端可以采取继续发送或者或略此响应。
+101：服务器理解了客户的请求，并且通过Upgrade消息头通知客户端采用不同协议完成这个请求。
+</code></pre><p>2XX: 请求被服务器端正确处理。</p>
+<pre><code>200：请求被正确处理，并且返回了所希望的响应头和相应数据。
+201：请求被实现，且一个新的资源已经根据请求的需要所建立，其url已经随着location消息头返回。若所需资源无法建立，则返回202.
+202：服务器接受了请求，但尚未处理，并且是否处理成功也不一定。此状态吗的作用是可以让服务器接受其他的请求。是异步的思想。
+204：服务器正确处理了请求，但没有返回任何内容。
+</code></pre><p>3XX 重定向。</p>
+<pre><code>301：请求的网址已经被永久的移到某个新的url。并且搜索引擎保存新的url。Location头部信息更新。
+302：请求的网址暂时性的的移到某个新的url。并且搜索引擎不会保存新的url。还是原来的url。
+304：自从用户上次访问后，该资源没有被修改，可以继续使用。
+</code></pre><p>4XX客户端的错误</p>
+<pre><code>400：服务器不理解的请求语法。
+401：当前用户请求无权限。
+403：服务器理解请求，但是拒绝执行。
+404：服务器上没有找到相应的资源。
+408：请求超时。客户端没有在服务器端的预备等待时间内发出请求。客户端可以随时提交这个请求，而无需在修改。
+</code></pre><p>5XX服务器端的错误</p>
+<pre><code>500:服务器遇到未知的错误，一般是服务器端源码的问题。
+502：作为代理服务器尝试执行请求时，从上游服务器接收到无效的响应。
+503：服务器临时进行维护。过段时间就好了。
+504：座位代理服务器，未及时收到上游服务器的响应。
+509：服务器达到带宽限制。被广泛使用。
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/常见的HTTP请求响应头以及状态码/" data-id="cjl60q3ke000z75tfjivommvd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ES6的新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/ES6的新特性/" class="article-date">
+  <time datetime="2017-09-21T10:19:21.000Z" itemprop="datePublished">2017-09-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/ES6的新特性/">ES6的新特性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>ES6（ ECMAScript6），由于是在2015年发布的，所以也称为ECMAScript 2015。<br>不是所有的es6的新特性浏览器都支持。所以要保证es6能正常的运行，需要了解一下Babel。它是将es6转化为es5，从而执行。<br>现在来看几个最常用的es6的新特性。</p>
+<p>一、let\const声明的变量没有变量提升,会出现not defined。<br>同一个变量名不能在一个作用域中同时使用let和const声明，会报错<br>变量不能在作用域外访问<br>首先我们知道在js中没有块级作用域的概念，只能自己想办法创建块级作用域。<br>最常比较的就是let和var。es6出现了let，那么这个let就可以完全取代var，且没有副作用。</p>
+<pre><code>for(var i = 0; i&lt;10; i++){} alert(i);//10
+for (let i = 0; i &lt; 10; i++) {}
+console.log(i);   //ReferenceError: i is not defined```
+</code></pre><p>let和const的比较<br>const和let一般优先选择const，尤其是在全局作用域下，应该优先声明的是常量，而不是变量。<br>const可以提醒阅读的人，这个值不应该被改变，并且const也是一个符合函数式编程思想，运算不改变值，只是用于创建新的值，有利于将来的分布式运算。最后一个原因是JavaScript编译器会对const进行优化。所以多使用const有利于提高程序的运行效率。</p>
+<pre><code>{
+    console.log(x);//not defined
+     let x= 10; 
+    console.log(x);//10
+    }
+console.log(x);//not defined
+</code></pre><p><strong>二、const声明的变量值不可以修改，但是声明的对象的属性可以修改。</strong></p>
+<pre><code>  const a = 10;
+   a = 11;
+   alert(a);//报错
+
+ const obj = {x:1,y:2};
+    function foo(obj){
+    alert(obj.x++);//1
+    alert(obj.y--);//2
+}
+foo(obj);
+</code></pre><p><strong>三、模板字符串。</strong><br>在es6中：使用“引起来的字符串中可以使用${变量}来读取变量的值，不用麻烦的字符拼接。</p>
+<pre><code>const a = 10;
+alert(`这是a 的值 ${a}`);//这是a的值10
+</code></pre><p><strong>四、多行字符串</strong></p>
+<pre><code>var centence = &quot;dhuewbfewfb
+                dnejwnewj
+                cnekwcnekw&quot;
+alert(centence);
+</code></pre><p>这样是不被允许的。会报错，只能通过+拼接。</p>
+<p>但在es6中，使用反引号就可以实现多行字符串。</p>
+<pre><code>var centence = `dhuewbfewfb
+                dnejwnewj
+                cnekwcnekw`;
+alert(centence);
+</code></pre><p><strong>五、默认参数defalut和rest</strong><br>js中默认的是这样，当没有参数时就使用默认的。</p>
+<pre><code>function print(width,height,color){
+    var width = width||50;
+    var height = height||60;
+    var color = color || &quot;blue&quot;;
+        alert(width+&quot;,&quot;+&quot;height&quot;+&quot;,&quot;+color);
+
+ }
+
+print(); // 50,60,blue
+</code></pre><p>在es6中这样实现。这样的写法简略了许多代码。当没有值时采用参数后面的默认值<br>注：这不是赋值，只是如果没有参数时使用。</p>
+<pre><code>function print(width = 50, height = 60, color = &quot;blue&quot;){
+    alert(`${width} ${height} ${color}`);
+}
+print();// 50,60,blue
+ print(100,20,&quot;red&quot;);// 100,20,red
+</code></pre><p><strong>rest</strong><br>function animals(…types){<br>console.log(types)<br>}<br>animals(‘cat’, ‘dog’, ‘fish’) //[“cat”, “dog”, “fish”]</p>
+<p>避免使用了arguments。</p>
+<p><strong>六、对象中的方法可以不用使用function来进行声明</strong></p>
+<p>var obj = {<br>aa:function(a,b){<br>return a+b;<br>}<br>}<br>等价于<br>var obj = {<br>aa(a,b){<br>return a+b;<br>}<br>}</p>
+<p><strong>七、箭头函数</strong><br>es6为编写函数提供了一种新语法。最常用的特性.<br>一般写函数的时候是这样的。</p>
+<pre><code>function fun(i){
+    return i+1;
+}
+</code></pre><p>es6就可以简化成这样.和上面的是等价的。</p>
+<pre><code>var fun = i=&gt; (i + 1);
+</code></pre><p>调用的时候和普通函数一样：alert(fun(3));<br>它的语法非常简单：标识符=&gt;表达式。你无需输入function和return，一些小括号、大括号以及分号也可以省略。<br>如果函数比较复杂的话可以使用{}括起来。</p>
+<pre><code>es5
+function aa(a,b,c){
+    a ++;
+    b --;
+    c *= b;
+    return a*b *c;
+}
+
+es6
+
+let aa=(a,b,c)=&gt;{
+    a ++;
+    b --;
+    c *= b;
+    return a*b *c;
+ }
+</code></pre><p>需要多重参数的时候，使用小括号括起来。</p>
+<p><strong>还有使用rest参数和箭头函数的例子</strong></p>
+<p>const numbers = (…nums) =&gt; nums;<br>numbers(1,2,3,4,5,6,7,8,9); //[1,2,3,4,5,6,7,8,9]<br>//…nums 表示的是一个数组<br>const headAndTail = ( head, …tail) =&gt; [head, tail];<br>headAndTail(1,2,3,4,5,6,7,8,9);// [1, [2,3,4,5,6,7,8,9]]</p>
+<p>除了这个特性以外，箭头函数还有更重要的用途。</p>
+<p>就是关于this的指向。<br>一般在对象中，为了使this只想当前的对对象，我们通常使用that= this，_this = this等类似的方法来记录this的指向，还得特别小心。</p>
+<pre><code>class Animal {
+    constructor(){
+        this.type = &apos;animal&apos;
+    }
+    says(say){
+
+        setTimeout(function(){
+            console.log(this.type + &apos; says &apos; + say)
+        }.bind(this), 1000)
+    }
+}
+
+ var animal = new Animal()
+ animal.says(&apos;hi&apos;)  //undefined says hi
+</code></pre><p>因为setTimeout中的this指向的是全局,所以要正确执行这个函数，需要改变this的指向。<br>可以这样：</p>
+<pre><code>says(say){
+        var that = this;
+        setTimeout(function(){
+            console.log(that.type + &apos; says &apos; + say)
+        }, 1000)
+    }
+</code></pre><p>也可以使用bind.</p>
+<pre><code>says(say){
+     setTimeout(function(){
+         console.log(that.type + &apos; says &apos; + say)
+     }.bind(this), 1000)
+ }
+</code></pre><p>但是这儿有了箭头函数就没必要那么麻烦了。</p>
+<pre><code>class Animal {
+    constructor(){
+        this.type = &apos;animal&apos;
+    }
+    says(say){
+        setTimeout( () =&gt; {
+            console.log(this.type + &apos; says &apos; + say)
+        }, 1000)
+    }
+}
+ var animal = new Animal()
+ animal.says(&apos;hi&apos;)  //animal says hi
+</code></pre><p>当我们使用箭头函数时，函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。<br>并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，它的this是继承外面的，因此内部的this就是外层代码块的this。</p>
+<p>使用箭头函数注意几点：<br>1、函数体内的this对象就是定义时所在的对象，而不是使用时所在对象；<br>2、不可以当作构造函数使用，也就是不能用new命令实例化一个对象，否则会抛出一个错误；<br>3、不可以使用arguments对象，该对象在函数体内不存在，如果要用的话，可以用rest参数代替；<br>4、不可以使用yield命令，箭头函数不能用作Generator函数；</p>
+<p><strong>八、解构赋值</strong><br>ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。</p>
+<p><strong>1.在使用给数组赋值时优先使用解构赋值。</strong><br>const one = arr[0];<br>const two = arr[1];<br>······<br>const nine = arr[9];<br>这样赋值是很麻烦的。我们可以这样使用解构赋值：<br>const[one,two,……nine] = arr;<br><strong>2.函数的参数如果是对象，优先使用解构赋值</strong><br>function bb(obj){<br>const first = obj.name;<br>const second = obj.age;<br>}<br>好一点的办法是：<br>function bb(obj){<br>const {first,second} = obj;<br>}<br>最好的办法是：<br>function bb({first,second}){ }；</p>
+<p>3.如果函数有多个返回值，优先使用对象的解构赋值，而不是数组的解构赋值。</p>
+<p>// bad<br>function processInput(input) {<br>return [left, right, top, bottom];<br>}</p>
+<p>// good<br>function processInput(input) {<br>return { left, right, top, bottom };<br>}</p>
+<p>const { left, right } = processInput(input);</p>
+<p><strong>九、模块的导入导出</strong><br>以前我们写的js代码都没有一个明确的引用关系将代码组织起来，只能依靠第三方工具CommonJs，AMD(requireJs),CMD(seat.js)等等来进行js的组织。<br>但是现在es6实现了自己的模块化来进行js代码间的关系组织,它可以很好地成为浏览器端和服务器端的通用的模块解决方案。</p>
+<p>export 和 export default都是导出文件，函数，常量，模块等。<br>用import{函数|常量|模块} from “引用路径” 进行导入。<br><strong>export可以有多个，但export default只能有一个。</strong><br>//index.js</p>
+<pre><code>var a = &quot;123&quot;;
+function b(){
+    alert(&quot;asdf&quot;);
+}
+</code></pre><p>导出的方法：</p>
+<pre><code>1.export a; 
+   export b;
+2. export {a,b};
+3.  export var a = &quot;123&quot;;
+    export function b(){
+    alert(&quot;asdf&quot;);
+ }
+4.export{a as aa, b as bb}以重命名的方式导出;
+</code></pre><p>引入<br>1.import {a,b} from ‘./index.js’;<br>2.如果要引入某一个文件的全部的导出的方法<br>import * as 文件名 form “路径名”;</p>
+<p><strong>对象的导出与导入</strong><br>module.exports = “对象名”;<br>import 对象名 from 路径;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/ES6的新特性/" data-id="cjl60q3l1001l75tf09qxy7cc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-实现九宫格" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/实现九宫格/" class="article-date">
+  <time datetime="2017-09-14T14:39:37.000Z" itemprop="datePublished">2017-09-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/实现九宫格/">实现九宫格</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20170914222636624?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>像这种，实现该九宫格。<br>外部的大小为120px，120px。边框为蓝色1px。<br>问题就每个相邻的小格子的边框不会自动重叠，比如这儿是1px，如果每个都设置为1px，那么相邻的格子边框就会出现2px的。<br>思路：<br>设置父元素的上方和左方的padding为1px；<br>即相当于里面的内容普遍就会像右下方偏移1px；<br>这时设置里面每一个的小格子的margin-top和margin-left都为-1px；但是格子的大小还需要设定，包含边框刚好每个40px；所以使用IE的盒子模型，box-sizing:border-box。<br>这时的每个格子都会在原始位置上普遍向左上移了一段距离。而且格子间的边框刚好重叠。</p>
+<pre><code>    &lt;style type=&quot;text/css&quot;&gt;
+    #content{
+        width: 120px;
+        height: 120px;
+        padding: 1px 0 0 1px;
+
+        box-sizing:border-box;
+
+    }
+    .divs{
+        width: 40px;
+        height: 40px;
+        float: left;
+        margin-top: -1px;
+        margin-left: -1px;
+        border:1px solid blue;
+        box-sizing:border-box;
+    }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id = &quot;content&quot;&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+    &lt;div class = &quot;divs&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/实现九宫格/" data-id="cjl60q3kd000x75tfrg7tikw6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-怎样在浏览器中校验并修改密码" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/怎样在浏览器中校验并修改密码/" class="article-date">
+  <time datetime="2017-08-23T04:59:40.000Z" itemprop="datePublished">2017-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/怎样在浏览器中校验并修改密码/">怎样在浏览器中校验并修改密码</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先按照正常的逻辑要修改密码的话，有三个文本框，第一个是输入原始密码，第二个是输入新密码，第三个是确认新密码。</p>
+<p>首先为每一个输入框添加一个onblur事件。</p>
+<pre><code>&lt;form action = &quot;/XYDL/changePassServlet&quot; method = &quot;POST&quot; name = &quot;form&quot;&gt;
+
+&lt;label for = &quot;oldpass&quot; class = &quot;labels&quot;&gt;旧密码&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/label&gt;
+&lt;input type = &quot;password&quot; id = &quot;oldPass&quot; name = &quot;oldPass&quot; placeholder = &quot;请输入原始密码&quot; onblur = &quot;a()&quot;/&gt;&lt;span id = &quot;span1&quot;&gt;&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;
+
+&lt;label for = &quot;newPass&quot; class = &quot;labels&quot;&gt;新密码&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/label&gt;
+&lt;input type = &quot;password&quot;  id = &quot;newPass&quot; name = &quot;newPass&quot; placeholder = &quot;请输入新密码&quot; onblur = &quot;b()&quot; disabled/&gt;&lt;span id = &quot;span2&quot;&gt;&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;
+
+&lt;label for = &quot;reNewPass&quot; class = &quot;labels&quot;&gt;确认密码&lt;/label&gt;
+&lt;input type = &quot;password&quot; id = &quot;reNewPass&quot; name = &quot;reNewPass&quot; placeholder = &quot;再次输入新密码&quot;  onblur = &quot;c()&quot;disabled/&gt;&lt;br/&gt;&lt;br/&gt;
+
+  &lt;button type = &quot;button&quot; class=&quot;button&quot; id = &quot;change&quot; onclick = &quot;checkAll()&quot;&gt;确认修改&lt;/button&gt;
+
+&lt;/form&gt;
+</code></pre><p>初始值除了输入原密码的文本框，下面两个文本框都属于禁用状态，当用户第当前这步成功之后使下一个文本框可用。每一个input后跟有一个span，用来显示密码输入与否。<br>确认修改中button有一个checkAll()事件，当前面三个<br>a(),b(),c()都返回为true时，才进行提交，否则进行错误提示。</p>
+<p>接下来就是js：<br>首先获取到要用到的元素：</p>
+<pre><code>script type = &quot;text/javascript&quot;&gt;
+var oldpass =document.getElementById(&quot;oldPass&quot;);
+var newpass =document.getElementById(&quot;newPass&quot;);
+var renewpass = document.getElementById(&quot;reNewPass&quot;);
+var change = document.getElementById(&quot;change&quot;);
+
+/*这行的passsword是通过在登录时获取到的登录的用户名和密码。通过String password =(String) request.getSession().setAttribute(&quot;cz_pass&quot;);设置的，方便在任何时候都可以通过下面的方法获取到（只要页面不关闭）*/
+&lt;%String password =(String) request.getSession().getAttribute(&quot;cz_pass&quot;);%&gt;
+</code></pre><p>获取到登陆时的密码后，要和文本框输入的密码进行对比，只要文本框失焦后，就出发a（）函数：</p>
+<pre><code>function a(){
+//校验成功，并且使下一个文本框可用
+if(oldpass.value == &quot;&lt;%=password%&gt;&quot;)
+{                               $(&quot;#span1&quot;).css({&quot;color&quot;:&quot;green&quot;});
+$(&quot;#span1&quot;).text(&quot;√&quot;);
+newpass.disabled = false;
+}
+
+//否则校验失败，显示错误信息，返回false；
+else{                   $(&quot;#span1&quot;).css({&quot;color&quot;:&quot;red&quot;});
+$(&quot;#span1&quot;).text(&quot;密码错误&quot;);
+return false;
+    }
+    return true;
+}
+</code></pre><p>//输入新密码的文本框的校验</p>
+<pre><code>function b(){
+
+if(newpass.value == &quot;&quot;){
+                $(&quot;#span2&quot;).css({&quot;color&quot;:&quot;red&quot;});
+$(&quot;#span2&quot;).text(&quot;密码不能为空&quot;);
+return false;
+}
+else if(oldpass.value == newpass.value){
+    $(&quot;#span2&quot;).css({&quot;color&quot;:&quot;red&quot;});
+    $(&quot;#span2&quot;).text(&quot;不能与原始密码相同&quot;);
+    return false;
+    }
+    else{
+    $(&quot;#span2&quot;).css({&quot;color&quot;:&quot;green&quot;});
+    $(&quot;#span2&quot;).text(&quot;√&quot;);
+    renewpass.disabled = false;
+    }
+  return true;
+ }
+</code></pre><p>//检验两次密码输入是否一致的c函数</p>
+<pre><code>function c(){
+    if(renewpass.value != newpass.value){
+        alert(&quot;两次密码输入不一致!&quot;);
+        return false;
+    }
+    return true;
+    }
+</code></pre><p>最后点击提交按钮，执行checkAll()函数。</p>
+<pre><code>function checkAll(){
+    if(a()&amp;&amp;b()&amp;&amp;c()){
+        document.form.submit();
+    }
+    else{
+        alert(&quot;输入信息不完整!&quot;);
+        return false;
+    }
+}
+</code></pre><p>当三个函数都返回true时，提交表单到后台。否则返回false，肯定是某一步输入有误，都会有提示的。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/怎样在浏览器中校验并修改密码/" data-id="cjl60q3kg001275tfyaxqdxbx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-浏览器的缓存机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/浏览器的缓存机制/" class="article-date">
+  <time datetime="2017-08-08T07:39:42.000Z" itemprop="datePublished">2017-08-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/浏览器的缓存机制/">浏览器的缓存机制</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>以前只知道返回的状态码是304说明上次请求的资源没有被修改，可以直接访问，增加访问速度，但是当别人问304是怎么来的时候，却又不知道从何说起了。</p>
+<p>所以今天就对于浏览器缓存机制进行了比较全面的理解。</p>
+<p>浏览器的缓存机制就是将请求的内容保存在了本地，不用每次请求相同的内容时都需要向服务器发送同样的请求去获取，这样就大大的浪费了带宽，增加了页面的展现速度和增大了服务器的压力。<br>那么什么时候可以向服务器发送请求，什么时候可以直接使用本地的缓存的内容呢？</p>
+<p>当用户第一次访问的时候，很显然必须是要向服务器端发送请求获取资源的，获取资源之后一般会保存到本地缓存，当下次访问同样的资源时，就会进行一系列的比较，会确定到底是应该在本地缓存中获取还是向服务器端获取，那么怎样判断呢？</p>
+<p>浏览器会在第一次请求完服务器后得到响应，我们可以在服务器中设置这些响应，从而达到在以后的请求中尽量减少甚至不从服务器获取资源的目的。<strong>浏览器是依靠请求和响应中的的头信息来控制缓存的。</strong><br>先来看一下http响应头中有关缓存的字段信息：<br><img src="https://img-blog.csdn.net/20170808143443356?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>在这里我们通过三方面来进行讨论。<br>①. Cache-Control和Expires(响应)<br>②. Last-Modified和If-Modified-Since(响应和请求)<br>③. ETag和If-None-Match(响应和请求)</p>
+<p>一、首先来讨论Cache-Control和Expires<br>是服务器端用来约定和客户端的有效时间的。<br><img src="https://img-blog.csdn.net/20170808144135582?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>Expires规定了缓存失效时间（Date为当前时间），而Cache-Control的max-age规定了缓存有效时间（2552s），理论上这两个值计算出的有效时间应该是相同的（上图好像不一致）。Expires是HTTP1.0的东西，而Cache-Control是HTTP1.1的，规定如果max-age和Expires同时存在，前者优先级高于后者。Cache-Control的参数可以设置很多值，譬如 public/private/no-cache/no-store/no-transform/max-age/must-revalidate等等，其中每个值的含义自己可以参考相关文章。</p>
+<p>二、 Last-Modified和If-Modified-Since(响应和请求)<br>这是当上面设置的服务器端时间过期过后，检查服务器端文件是否更新的一种方法。<br>Last-Modified（响应），标识响应资源的最后修改时间，web服务器在响应资源时，告诉浏览器资源的最后修改时间。<br>If-Modified-Since(请求)，需要配合Cache-Control一起使用。当缓存资源过期后，也就是（Cache-Control：max-age = 0）,假设该资源有Last-Modified声明，则再次向服务器请求时带上头 If-Modified-Since，表示请求时间。服务器收到请求后发现有If-Modified-Since，则与被请求资源的最后修改时间进行对比。如果Last-Modified日期比较新，说明在请求的资源被修改过，或者说已经不是缓存中的相同的资源录入，所以http就会返回200。反之说明没被修改，返回状态码304，告知浏览器继续使用所保存的缓存资源，同时更新响应头last-Modified的值（以备下次对比）。</p>
+<p>三、 ETag和If-None-Match(响应和请求)<br>是第二种方式检测服务器端文件是否更新的一种方式，同样需要配合Cache-Control使用。<br><img src="https://img-blog.csdn.net/20170808150810142?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>响应头中的ETag(实体标签)不是什么版本号或者什么，它是web服务器（比如Apache将文件的索引节（INode），大小（Size）和最后修改时间（MTime）进行Hash后得到的。））标识文件的唯一标识符。<br>当缓存资源过期后，浏览器发现服务器端返回的头部信息中有ETag信息，就会在请求中加入If-None-Match信息(上一次请求后的响应头的ETag)，该值在服务端和服务端代表该文件唯一的字符串对比（如果服务端该文件改变了，该值就会变），如果相同，则响应HTTP304，客户端直接读取缓存，如果不相同，则响应HTTP200，返回最新的数据资源，更新ETag值。<br>Etag的出现主要是为了解决Last-Modified的以下不足：</p>
+<p>1。Last-Modified标注的最后修改只能精确到秒级，如果某些文件在1秒钟以内，被修改多次的话，它将不能准确标注文件的修改时间。<br>2。如果某些文件会被定期生成，但有时内容并没有任何变化（仅仅改变了时间），但Last-Modified却改变了，导致文件没法使用缓存<br>3。有可能存在服务器没有准确获取文件修改时间，或者与代理服务器时间不一致等情形。</p>
+<p>简言之，就是当浏览器缓存过期后，客户端就会重新向服务器端发送请求，请求头中带有If-None-Match（上一次请求后的响应ETag）信息，会在服务器端进行匹配，与响应头中的ETag值相等，则没有发生变化，反之发生了变化。</p>
+<p>但当上图同时存在If-None-Match和If-Modified-Since时，前者优先。因为前者的出现就是为了解决后者的不足。</p>
+<p>当然并不是所有请求都能，或者都被应该缓存。</p>
+<p>HTTP信息头中包含Cache-Control:no-cache，pragma:no-cache，或Cache-Control:max-age=0等告诉浏览器不用缓存的请求</p>
+<p>需要根据Cookie，认证信息等决定输入内容的动态请求是不能被缓存的</p>
+<p>经过HTTPS安全加密的请求（有人也经过测试发现，ie其实在头部加入Cache-Control：max-age信息，firefox在头部加入Cache-Control:Public之后，能够对HTTPS的资源进行缓存，参考《HTTPS的七个误解》）</p>
+<p><strong>POST请求无法被缓存</strong></p>
+<p>HTTP响应头中不包含Last-Modified/Etag，也不包含Cache-Control/Expires的请求无法被缓存。</p>
+<p><img src="https://img-blog.csdn.net/20170808152617599?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>图片来源：<a href="http://www.cnblogs.com/Leo_wl/p/5686610.html" target="_blank" rel="noopener">http://www.cnblogs.com/Leo_wl/p/5686610.html</a></p>
+<p>所以接下来简单的总结一下：</p>
+<p>在第一次请求资源时，毫无疑问会向服务器端发送请求请求资源，当再次发送请求时就会进行一系列的比较：</p>
+<p>首先会检查浏览器是否存在缓存，有的话比较缓存是否过期，没有过期的话，直接读取缓存中的信息，返回304。</p>
+<p>如果缓存过期了查看响应头中是否存在ETag（实体标签）信息，有的话向服务器端发送带有If-None-Match（为上一次的ETag值）的请求，对比两个是否相等，相等的话服务器端返回304，读取缓存。不相等的话返回200，更新缓存和ETag。</p>
+<p>如果缓存过期了并且响应头中不存在ETag信息，则继续检查是否存在Last-Modified信息，如果存在则在请求头中附上带If-Modified-Since（上次文件修改的时间）的请求。判断两者是否相等，相等的话服务器端返回304，读取缓存。不相等的话返回200，更新缓存和Last-Modified。</p>
+<p>若缓存过期了，并且响应头中不存在ETag或者Last-Modified，则直接向服务器发送新的请求，等待请求响应，缓存协商，呈现页面。</p>
+<p>以上就是自己对浏览器缓存机制的理解，参照的是<a href="http://blog.csdn.net/liujie19901217/article/details/52071481" target="_blank" rel="noopener">http://blog.csdn.net/liujie19901217/article/details/52071481</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/浏览器的缓存机制/" data-id="cjl60q3kp001c75tfbeusyavx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-js实现点击div隐藏相应部分，再次点击显示" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/js实现点击div隐藏相应部分，再次点击显示/" class="article-date">
+  <time datetime="2017-08-04T07:40:51.000Z" itemprop="datePublished">2017-08-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/js实现点击div隐藏相应部分，再次点击显示/">js实现点击div隐藏相应部分，再次点击显示</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先看一下html和css的结构：</p>
+<pre><code>&lt;style&gt;
+#nav_left{
+    width:120px;
+    height:600px;
+    background-color:#333;
+    margin-left:0px;
+}
+.list {
+    color:#fff;
+    padding:10px;
+    font-size:18px;
+}
+
+.list:hover{
+    cursor:pointer;
+    color:red;
+}
+
+.detail p{
+    font-size:16px;
+    right: 10px;
+    padding-top:10px;
+}
+
+.detail p:hover{
+    color:#fff;
+}
+
+&lt;/style&gt;
+
+&lt;body&gt;
+&lt;div class = &quot;nav_top&quot;&gt;
+    &lt;div class = &quot;right&quot;&gt;
+        &lt;img src = &quot;./img/surf.jpg&quot;&gt;&amp;nbsp;&amp;nbsp;
+         &lt;span&gt; 欢迎:${requestScope.name}&lt;/span&gt;
+     &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id = &quot;nav_left&quot;&gt;
+
+        &lt;div class = &quot;list&quot;&gt;
+            系统管理
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;list&quot;&gt;
+            日程管理
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;list&quot;&gt;
+            日报统计
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+        &lt;/div&gt;
+&lt;/div&gt;
+</code></pre><p>点击list时相应的现实detail，再次点击合上，旁边还有一个小图标。<br><img src="https://img-blog.csdn.net/20170804153204182?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170804153244732?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>效果就是这样：<br>首先获得所有的list和detail,这里用自己写的一个函数获得所有的class为list和dtail的标签。<br>函数如下：</p>
+<pre><code> unction getByClassName(obj,cls){
+// obj目标元素，cls要获得的class名
+
+var element = obj.getElementsByTagName(&apos;*&apos;);//将目标下的所有子元素获取到
+
+var result = []; //定义一个数组，存放获得的classname = &quot;cls&quot; 的所有值
+
+for(var i = 0; i&lt; element.length; i++){
+
+if(element[i].className == cls){
+
+result.push(element[i]);
+
+}
+
+}
+
+return result;
+
+}
+</code></pre><p>返回一个数组，接下来先获取到所有用的标签</p>
+<pre><code>var nav_left = document.getElementById(&quot;nav_left&quot;);
+var list = getByClassName(nav_left,&apos;list&apos;);
+var img = nav_left.getElementsByTagName(&apos;img&apos;);
+console.log(list);
+var detail = getByClassName(nav_left,&apos;detail&apos;);
+console.log(detail);
+
+
+//主要的函数
+function dianji(){
+//先初始化所有的detail显示为none，利用立即调用函数为每一个绑定所有的detail显示为none；
+for (var i = 0; i &lt; detail.length; i++) {
+    (function(index){
+        detail[index].style.display = &quot;none&quot;;
+    })(i);
+    }
+
+//在利用立即调用函数为每一个list绑定点击事件
+for(var i = 0; i&lt; list.length; i++){
+    (function(value){
+        list[value].onclick = function(){
+             toggle(detail[value],img[value]);
+        }
+        })(i);
+    }
+}
+dianji();
+
+//使用toggle()函数进行判断，为每一个detail添加相应的动作。
+function toggle(element,img){
+    if(element.style.display == &quot;none&quot;){
+        element.style.display = &quot;block&quot;;
+        img.src = &quot;./images/zhankai.png&quot;;
+    }
+    else if(element.style.display == &quot;block&quot;){
+            element.style.display = &quot;none&quot;;
+            img.src = &quot;./images/heshang.png&quot;;
+        }
+    else{
+        alert(&apos;chucuo&apos;);
+    }
+}
+</code></pre><p>下面附上完整的源码</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot;/&gt;
+ &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, maximum-scale=1&quot;&gt;
+&lt;title&gt;成功页&lt;/title&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+    @CHARSET &quot;UTF-8&quot;;
+*{
+    margin:0px;
+    padding:0px;
+}
+div.nav_top{
+    width:100%;
+    height:60px;
+    background-color:#333;
+}
+
+.nav_top .right{
+    float:right;
+    margin-right:100px;
+}
+.nav_top img{
+    width:50px;
+    height:50px;
+    border-radius:25px;
+    background-color:#fff;
+    border:0;
+}
+.nav_top span{
+    line-height:60px;
+    color:#fff;
+    font-size:16px;
+    font-weight:blod;
+
+}
+
+
+#nav_left{
+    width:120px;
+    height:600px;
+    background-color:#333;
+    margin-left:0px;
+}
+.list {
+    color:#fff;
+    padding:10px;
+    font-size:18px;
+}
+
+.list:hover{
+    cursor:pointer;
+    color:red;
+}
+
+.detail p{
+    font-size:16px;
+    right: 10px;
+    padding-top:10px;
+}
+
+.detail p:hover{
+    color:#fff;
+}
+
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class = &quot;nav_top&quot;&gt;
+    &lt;div class = &quot;right&quot;&gt;
+        &lt;img src = &quot;./img/surf.jpg&quot;&gt;&amp;nbsp;&amp;nbsp;
+         &lt;span&gt; 欢迎:${requestScope.name}&lt;/span&gt;
+     &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div id = &quot;nav_left&quot;&gt;
+
+        &lt;div class = &quot;list&quot;&gt;
+            系统管理
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+                    &lt;p&gt;系统&lt;/p&gt;
+        &lt;/div&gt;
+
+
+        &lt;div class = &quot;list&quot;&gt;
+            日程管理
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+                    &lt;p&gt;日程管理&lt;/p&gt;
+        &lt;/div&gt;
+
+
+
+        &lt;div class = &quot;list&quot;&gt;
+            日报统计
+            &lt;img src=&quot;./images/heshang.png&quot;&gt;
+        &lt;/div&gt;
+
+        &lt;div class = &quot;detail&quot;&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+                    &lt;p&gt;日报统计&lt;/p&gt;
+        &lt;/div&gt;
+
+
+&lt;/div&gt;
+
+
+&lt;script src = &quot;./layui/layui/layui.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+
+var nav_left = document.getElementById(&quot;nav_left&quot;);
+var list = getByClassName(nav_left,&apos;list&apos;);
+var img = nav_left.getElementsByTagName(&apos;img&apos;);
+console.log(list);
+var detail = getByClassName(nav_left,&apos;detail&apos;);
+console.log(detail);
+
+
+function dianji(){
+for (var i = 0; i &lt; detail.length; i++) {
+    (function(index){
+        detail[index].style.display = &quot;none&quot;;
+    })(i);
+    }
+for(var i = 0; i&lt; list.length; i++){
+    (function(value){
+        list[value].onclick = function(){
+
+             toggle(detail[value],img[value]);
+        }
+        })(i);
+    }
+}
+dianji();
+function toggle(element,img){
+    if(element.style.display == &quot;none&quot;){
+        element.style.display = &quot;block&quot;;
+        img.src = &quot;./images/zhankai.png&quot;;
+    }
+    else if(element.style.display == &quot;block&quot;){
+            element.style.display = &quot;none&quot;;
+            img.src = &quot;./images/heshang.png&quot;;
+        }
+    else{
+        alert(&apos;chucuo&apos;);
+    }
+}
+
+
+function getByClassName(obj,cls){
+// obj目标元素，cls要获得的class名
+
+var element = obj.getElementsByTagName(&apos;*&apos;);//将目标下的所有子元素获取到
+
+var result = []; //定义一个数组，存放获得的classname = &quot;cls&quot; 的所有值
+
+for(var i = 0; i&lt; element.length; i++){
+
+if(element[i].className == cls){
+
+result.push(element[i]);
+
+}
+
+}
+
+return result;
+
+}
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/js实现点击div隐藏相应部分，再次点击显示/" data-id="cjl60q3l7001o75tfwgxwor33" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/zsdf/">&laquo; Prev</a><a class="page-number" href="/zsdf/">1</a><span class="page-number current">2</span><a class="page-number" href="/zsdf/page/3/">3</a><a class="page-number" href="/zsdf/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/zsdf/page/8/">8</a><a class="extend next" rel="next" href="/zsdf/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

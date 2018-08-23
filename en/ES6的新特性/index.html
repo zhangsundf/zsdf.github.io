@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ES6的新特性 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ES6（ ECMAScript6），由于是在2015年发布的，所以也称为ECMAScript 2015。不是所有的es6的新特性浏览器都支持。所以要保证es6能正常的运行，需要了解一下Babel。它是将es6转化为es5，从而执行。现在来看几个最常用的es6的新特性。 一、let\const声明的变量没有变量提升,会出现not defined。同一个变量名不能在一个作用域中同时使用let和con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES6的新特性">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/ES6的新特性/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="ES6（ ECMAScript6），由于是在2015年发布的，所以也称为ECMAScript 2015。不是所有的es6的新特性浏览器都支持。所以要保证es6能正常的运行，需要了解一下Babel。它是将es6转化为es5，从而执行。现在来看几个最常用的es6的新特性。 一、let\const声明的变量没有变量提升,会出现not defined。同一个变量名不能在一个作用域中同时使用let和con">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ES6的新特性">
+<meta name="twitter:description" content="ES6（ ECMAScript6），由于是在2015年发布的，所以也称为ECMAScript 2015。不是所有的es6的新特性浏览器都支持。所以要保证es6能正常的运行，需要了解一下Babel。它是将es6转化为es5，从而执行。现在来看几个最常用的es6的新特性。 一、let\const声明的变量没有变量提升,会出现not defined。同一个变量名不能在一个作用域中同时使用let和con">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ES6的新特性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/ES6的新特性/" class="article-date">
+  <time datetime="2017-09-21T10:19:21.000Z" itemprop="datePublished">2017-09-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ES6的新特性
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>ES6（ ECMAScript6），由于是在2015年发布的，所以也称为ECMAScript 2015。<br>不是所有的es6的新特性浏览器都支持。所以要保证es6能正常的运行，需要了解一下Babel。它是将es6转化为es5，从而执行。<br>现在来看几个最常用的es6的新特性。</p>
+<p>一、let\const声明的变量没有变量提升,会出现not defined。<br>同一个变量名不能在一个作用域中同时使用let和const声明，会报错<br>变量不能在作用域外访问<br>首先我们知道在js中没有块级作用域的概念，只能自己想办法创建块级作用域。<br>最常比较的就是let和var。es6出现了let，那么这个let就可以完全取代var，且没有副作用。</p>
+<pre><code>for(var i = 0; i&lt;10; i++){} alert(i);//10
+for (let i = 0; i &lt; 10; i++) {}
+console.log(i);   //ReferenceError: i is not defined```
+</code></pre><p>let和const的比较<br>const和let一般优先选择const，尤其是在全局作用域下，应该优先声明的是常量，而不是变量。<br>const可以提醒阅读的人，这个值不应该被改变，并且const也是一个符合函数式编程思想，运算不改变值，只是用于创建新的值，有利于将来的分布式运算。最后一个原因是JavaScript编译器会对const进行优化。所以多使用const有利于提高程序的运行效率。</p>
+<pre><code>{
+    console.log(x);//not defined
+     let x= 10; 
+    console.log(x);//10
+    }
+console.log(x);//not defined
+</code></pre><p><strong>二、const声明的变量值不可以修改，但是声明的对象的属性可以修改。</strong></p>
+<pre><code>  const a = 10;
+   a = 11;
+   alert(a);//报错
+
+ const obj = {x:1,y:2};
+    function foo(obj){
+    alert(obj.x++);//1
+    alert(obj.y--);//2
+}
+foo(obj);
+</code></pre><p><strong>三、模板字符串。</strong><br>在es6中：使用“引起来的字符串中可以使用${变量}来读取变量的值，不用麻烦的字符拼接。</p>
+<pre><code>const a = 10;
+alert(`这是a 的值 ${a}`);//这是a的值10
+</code></pre><p><strong>四、多行字符串</strong></p>
+<pre><code>var centence = &quot;dhuewbfewfb
+                dnejwnewj
+                cnekwcnekw&quot;
+alert(centence);
+</code></pre><p>这样是不被允许的。会报错，只能通过+拼接。</p>
+<p>但在es6中，使用反引号就可以实现多行字符串。</p>
+<pre><code>var centence = `dhuewbfewfb
+                dnejwnewj
+                cnekwcnekw`;
+alert(centence);
+</code></pre><p><strong>五、默认参数defalut和rest</strong><br>js中默认的是这样，当没有参数时就使用默认的。</p>
+<pre><code>function print(width,height,color){
+    var width = width||50;
+    var height = height||60;
+    var color = color || &quot;blue&quot;;
+        alert(width+&quot;,&quot;+&quot;height&quot;+&quot;,&quot;+color);
+
+ }
+
+print(); // 50,60,blue
+</code></pre><p>在es6中这样实现。这样的写法简略了许多代码。当没有值时采用参数后面的默认值<br>注：这不是赋值，只是如果没有参数时使用。</p>
+<pre><code>function print(width = 50, height = 60, color = &quot;blue&quot;){
+    alert(`${width} ${height} ${color}`);
+}
+print();// 50,60,blue
+ print(100,20,&quot;red&quot;);// 100,20,red
+</code></pre><p><strong>rest</strong><br>function animals(…types){<br>console.log(types)<br>}<br>animals(‘cat’, ‘dog’, ‘fish’) //[“cat”, “dog”, “fish”]</p>
+<p>避免使用了arguments。</p>
+<p><strong>六、对象中的方法可以不用使用function来进行声明</strong></p>
+<p>var obj = {<br>aa:function(a,b){<br>return a+b;<br>}<br>}<br>等价于<br>var obj = {<br>aa(a,b){<br>return a+b;<br>}<br>}</p>
+<p><strong>七、箭头函数</strong><br>es6为编写函数提供了一种新语法。最常用的特性.<br>一般写函数的时候是这样的。</p>
+<pre><code>function fun(i){
+    return i+1;
+}
+</code></pre><p>es6就可以简化成这样.和上面的是等价的。</p>
+<pre><code>var fun = i=&gt; (i + 1);
+</code></pre><p>调用的时候和普通函数一样：alert(fun(3));<br>它的语法非常简单：标识符=&gt;表达式。你无需输入function和return，一些小括号、大括号以及分号也可以省略。<br>如果函数比较复杂的话可以使用{}括起来。</p>
+<pre><code>es5
+function aa(a,b,c){
+    a ++;
+    b --;
+    c *= b;
+    return a*b *c;
+}
+
+es6
+
+let aa=(a,b,c)=&gt;{
+    a ++;
+    b --;
+    c *= b;
+    return a*b *c;
+ }
+</code></pre><p>需要多重参数的时候，使用小括号括起来。</p>
+<p><strong>还有使用rest参数和箭头函数的例子</strong></p>
+<p>const numbers = (…nums) =&gt; nums;<br>numbers(1,2,3,4,5,6,7,8,9); //[1,2,3,4,5,6,7,8,9]<br>//…nums 表示的是一个数组<br>const headAndTail = ( head, …tail) =&gt; [head, tail];<br>headAndTail(1,2,3,4,5,6,7,8,9);// [1, [2,3,4,5,6,7,8,9]]</p>
+<p>除了这个特性以外，箭头函数还有更重要的用途。</p>
+<p>就是关于this的指向。<br>一般在对象中，为了使this只想当前的对对象，我们通常使用that= this，_this = this等类似的方法来记录this的指向，还得特别小心。</p>
+<pre><code>class Animal {
+    constructor(){
+        this.type = &apos;animal&apos;
+    }
+    says(say){
+
+        setTimeout(function(){
+            console.log(this.type + &apos; says &apos; + say)
+        }.bind(this), 1000)
+    }
+}
+
+ var animal = new Animal()
+ animal.says(&apos;hi&apos;)  //undefined says hi
+</code></pre><p>因为setTimeout中的this指向的是全局,所以要正确执行这个函数，需要改变this的指向。<br>可以这样：</p>
+<pre><code>says(say){
+        var that = this;
+        setTimeout(function(){
+            console.log(that.type + &apos; says &apos; + say)
+        }, 1000)
+    }
+</code></pre><p>也可以使用bind.</p>
+<pre><code>says(say){
+     setTimeout(function(){
+         console.log(that.type + &apos; says &apos; + say)
+     }.bind(this), 1000)
+ }
+</code></pre><p>但是这儿有了箭头函数就没必要那么麻烦了。</p>
+<pre><code>class Animal {
+    constructor(){
+        this.type = &apos;animal&apos;
+    }
+    says(say){
+        setTimeout( () =&gt; {
+            console.log(this.type + &apos; says &apos; + say)
+        }, 1000)
+    }
+}
+ var animal = new Animal()
+ animal.says(&apos;hi&apos;)  //animal says hi
+</code></pre><p>当我们使用箭头函数时，函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。<br>并不是因为箭头函数内部有绑定this的机制，实际原因是箭头函数根本没有自己的this，它的this是继承外面的，因此内部的this就是外层代码块的this。</p>
+<p>使用箭头函数注意几点：<br>1、函数体内的this对象就是定义时所在的对象，而不是使用时所在对象；<br>2、不可以当作构造函数使用，也就是不能用new命令实例化一个对象，否则会抛出一个错误；<br>3、不可以使用arguments对象，该对象在函数体内不存在，如果要用的话，可以用rest参数代替；<br>4、不可以使用yield命令，箭头函数不能用作Generator函数；</p>
+<p><strong>八、解构赋值</strong><br>ES6允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（Destructuring）。</p>
+<p><strong>1.在使用给数组赋值时优先使用解构赋值。</strong><br>const one = arr[0];<br>const two = arr[1];<br>······<br>const nine = arr[9];<br>这样赋值是很麻烦的。我们可以这样使用解构赋值：<br>const[one,two,……nine] = arr;<br><strong>2.函数的参数如果是对象，优先使用解构赋值</strong><br>function bb(obj){<br>const first = obj.name;<br>const second = obj.age;<br>}<br>好一点的办法是：<br>function bb(obj){<br>const {first,second} = obj;<br>}<br>最好的办法是：<br>function bb({first,second}){ }；</p>
+<p>3.如果函数有多个返回值，优先使用对象的解构赋值，而不是数组的解构赋值。</p>
+<p>// bad<br>function processInput(input) {<br>return [left, right, top, bottom];<br>}</p>
+<p>// good<br>function processInput(input) {<br>return { left, right, top, bottom };<br>}</p>
+<p>const { left, right } = processInput(input);</p>
+<p><strong>九、模块的导入导出</strong><br>以前我们写的js代码都没有一个明确的引用关系将代码组织起来，只能依靠第三方工具CommonJs，AMD(requireJs),CMD(seat.js)等等来进行js的组织。<br>但是现在es6实现了自己的模块化来进行js代码间的关系组织,它可以很好地成为浏览器端和服务器端的通用的模块解决方案。</p>
+<p>export 和 export default都是导出文件，函数，常量，模块等。<br>用import{函数|常量|模块} from “引用路径” 进行导入。<br><strong>export可以有多个，但export default只能有一个。</strong><br>//index.js</p>
+<pre><code>var a = &quot;123&quot;;
+function b(){
+    alert(&quot;asdf&quot;);
+}
+</code></pre><p>导出的方法：</p>
+<pre><code>1.export a; 
+   export b;
+2. export {a,b};
+3.  export var a = &quot;123&quot;;
+    export function b(){
+    alert(&quot;asdf&quot;);
+ }
+4.export{a as aa, b as bb}以重命名的方式导出;
+</code></pre><p>引入<br>1.import {a,b} from ‘./index.js’;<br>2.如果要引入某一个文件的全部的导出的方法<br>import * as 文件名 form “路径名”;</p>
+<p><strong>对象的导出与导入</strong><br>module.exports = “对象名”;<br>import 对象名 from 路径;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/ES6的新特性/" data-id="cjl60q3l1001l75tf09qxy7cc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/常见的HTTP请求响应头以及状态码/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          常见的HTTP请求响应头以及状态码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/实现九宫格/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">实现九宫格</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>几种常用的排序算法总结 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="几种常用的算法的时间空间复杂度1、冒泡排序思想：比较相邻的元素，如果第一个元素比第二个大，就交换位置，对每一对相邻的元素进行同样的操作。这样最后的元素应该是最大的数。排除最后一个数，针对前面的所有元素进行上述步骤，持续每次在越来越少的元素中找到最大。算法 Java代码：     static void popSort(int[] a){         for(int i = 0; i &amp;lt;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="几种常用的排序算法总结">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/几种常用的排序算法总结/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="几种常用的算法的时间空间复杂度1、冒泡排序思想：比较相邻的元素，如果第一个元素比第二个大，就交换位置，对每一对相邻的元素进行同样的操作。这样最后的元素应该是最大的数。排除最后一个数，针对前面的所有元素进行上述步骤，持续每次在越来越少的元素中找到最大。算法 Java代码：     static void popSort(int[] a){         for(int i = 0; i &amp;lt;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170321210225591?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="几种常用的排序算法总结">
+<meta name="twitter:description" content="几种常用的算法的时间空间复杂度1、冒泡排序思想：比较相邻的元素，如果第一个元素比第二个大，就交换位置，对每一对相邻的元素进行同样的操作。这样最后的元素应该是最大的数。排除最后一个数，针对前面的所有元素进行上述步骤，持续每次在越来越少的元素中找到最大。算法 Java代码：     static void popSort(int[] a){         for(int i = 0; i &amp;lt;">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170321210225591?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-几种常用的排序算法总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/几种常用的排序算法总结/" class="article-date">
+  <time datetime="2017-03-21T14:24:13.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      几种常用的排序算法总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>几种常用的算法的时间空间复杂度<br><img src="https://img-blog.csdn.net/20170321210225591?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>1、冒泡排序<br>思想：比较相邻的元素，如果第一个元素比第二个大，就交换位置，对每一对相邻的元素进行同样的操作。这样最后的元素应该是最大的数。排除最后一个数，针对前面的所有元素进行上述步骤，持续每次在越来越少的元素中找到最大。<br>算法 Java代码：</p>
+<pre><code>    static void popSort(int[] a){
+        for(int i = 0; i &lt; a.length-1; i++){
+            for(int j = i+1; j &lt; a.length; j++){
+                if(a[i]&gt;a[j]){
+                    var temp = a[i];
+                        a[i] = a[j];
+                        a[j] = temp;
+                }
+            }
+        }
+    }
+最后循环打印输出数组。
+</code></pre><p>注意if中的代码，是经常用到的交换两个元素的位置的常用方法。</p>
+<p>2、快速排序<br>思想：采用分治的策略，从数组选出一个数作为基准。分区过程，将比这个数大的数放在它的右边，比它小的数放在它的左边。再对左右空间重复上述，知道各区间只有一个元素。<br>快排是一种不稳定的排序。<br>算法 代码：</p>
+<pre><code>  static void quickSort(int[] a, int l, int r){
+    if(l &lt; r){
+        int i = l, j = r, x = a[l];
+        while(i &lt; j){
+            while(i &lt; j &amp;&amp; a[j] &gt; x)     j--;
+            if(i &lt; j)     a[i++] = a[j];
+            while(i &lt; j &amp;&amp; a[i] &lt; x)     i++;
+            if(i &lt; j)     a[j--] = a[i];
+        }
+        a[i] = x;
+        quickSort(a,l,i-1);
+        quickSort(a,i+1,r);
+    }
+}
+</code></pre><p>3、选择排序<br>思想：从数据中选择一个最小的与第一个值交换，再从剩下的部分找出最小的与第二个交换，以此类推。。。<br>算法代码 ：</p>
+<pre><code>static void selectSort(int [] a){
+    int minIndex = 0, temp = 0;
+    //minIndex保存最小下标。temp是用于连个元素进行交换的临时变量
+    for(int i = 0; i&lt; a.length-1; i++){
+        minIndex = i;
+
+        for(int j = i+1; j &lt; a.length; j++){
+            if(a[j] &lt; a[minIndex])
+                minIndex = j;
+        }
+        if(minIndex != i){
+            temp = a[minIndex];
+            a[minIndex] = a[i];
+            a[i] = temp;
+        }
+    }
+}　
+</code></pre><p>4、直接插入排序<br>思想：<br><strong>1</strong>. 插入排序， 从第二个数开始，先将第二个数做一个副本放在一旁（变量中）。<br><strong>2</strong> .第二个数同前一个数比较，小于则用前一个数覆盖第二个数， 然后将副本放在前一个数前面<br><strong>3</strong>. 再将第三个数做一个副本取出，第三个数同前一个数比较，小于则用前一个数覆盖第三个数（此时第二个数位置空闲）， 然后用副本同前一个数的前一个数比较，如果小于，则用前一个数的前一个数覆盖在原本的第二个位置上（此时第一个位置空闲）， 将副本放入即可。<br><strong>4</strong>. 将数组中接下来的数依次做与3类似步骤，以3类推将副本往前作比较。直到副本不小于比较的数则该轮插入结束<br><strong>5</strong>. 重复4步骤，直到最后一个数</p>
+<pre><code>public static void insert_Sort(int[] a){
+    int temp;//设置一个临时变量，存放即将要插入的数。
+    for(int i = 1; i &lt; a.length; i ++){
+
+        for(int j = i; j &gt; 0; j --){
+
+            if(a[j]&lt; a[j-1]){
+
+                temp = a[j];
+                a[j] = a[j-1];
+                a[j-1] = temp;
+    //这几行代码是常用的将两个元素进行位置交换的方法
+            }
+        }
+    }
+</code></pre><p><strong>5、归并排序</strong><br>思路:<br>将数组分成二组A，B，如果这二组组内的数据都是有序的，那么就可以很方便的将这二组数据进行排序。如何让这二组组内数据有序了？</p>
+<p>可以将A，B组各自再分成二组。依次类推，当分出来的小组只有一个数据时，可以认为这个小组组内已经达到了有序，然后再合并相邻的二个小组就可以了。这样通过先递归的分解数列，再合并数列就完成了归并排序。</p>
+<p>设两个有序的子序列(相当于输入序列)放在同一序列中相邻的位置上：array[low..m]，array[m + 1..high]，先将它们合并到一个局部的暂存序列 temp (相当于输出序列)中，待合并完成后将 temp 复制回 array[low..high]中，从而完成排序。</p>
+<pre><code>//二路归并排序就是先将一个数组一半一半的分成若干个有序的数组，再进行组合
+    static void mergearray(int a[], int first, int mid, int last, int temp[])  
+    {  
+        int i = first, j = mid + 1;  
+        int m = mid,   n = last;  
+        int k = 0; 
+        while (i &lt;= m &amp;&amp; j &lt;= n)  
+        {  
+            if (a[i] &lt;= a[j])  
+                temp[k++] = a[i++];  
+            else  
+                temp[k++] = a[j++];  
+        } 
+        while (i &lt;= m)  
+            temp[k++] = a[i++];  
+       while (j &lt;= n)  
+            temp[k++] = a[j++];  
+      //将临时数组temp中的值复制到原来的数组中
+        for (i = 0; i &lt; k; i++)  
+            a[first + i] = temp[i];  
+    }  
+    //将数组进行多次划分，再进行合并排序
+    static void mergesort(int a[], int first, int last, int temp[])  
+    {  
+        if (first &lt; last)  
+        {  
+            int mid = (first + last) / 2;  
+            mergesort(a, first, mid, temp);    //左边有序  
+            mergesort(a, mid + 1, last, temp); //右边有序  
+            mergearray(a, first, mid, last, temp); //再将二个有序数列合并  
+        }  
+    }  
+    static Boolean MergeSort(int a[], int n)  
+    {  
+        int [] temp= new int[n];  
+        if (temp == null)  
+            return false;  
+        mergesort(a, 0, n - 1, temp);   
+        return true;  
+    }
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/几种常用的排序算法总结/" data-id="cjl60q3ka000t75tfypr2b2vj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/表单的知识点总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          表单的知识点总结
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/事件委托/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">事件委托</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

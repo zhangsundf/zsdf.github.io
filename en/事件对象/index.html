@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>事件对象 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事件主要有四种：HTML5、DOM0、DOM2 和 IE方法，在上篇已经叙 述到。而对于事件对象来说主要分为两部分来分析，即DOM级事件对象和IE的事件对象。在说事件对象时首先要了解什么是事件对象。在触发DOM上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件类型以及与其他特定事件相关的信息。例如，鼠标操作导致的事件中，会包含鼠标的位置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件对象">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/事件对象/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="事件主要有四种：HTML5、DOM0、DOM2 和 IE方法，在上篇已经叙 述到。而对于事件对象来说主要分为两部分来分析，即DOM级事件对象和IE的事件对象。在说事件对象时首先要了解什么是事件对象。在触发DOM上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件类型以及与其他特定事件相关的信息。例如，鼠标操作导致的事件中，会包含鼠标的位置">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件对象">
+<meta name="twitter:description" content="事件主要有四种：HTML5、DOM0、DOM2 和 IE方法，在上篇已经叙 述到。而对于事件对象来说主要分为两部分来分析，即DOM级事件对象和IE的事件对象。在说事件对象时首先要了解什么是事件对象。在触发DOM上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件类型以及与其他特定事件相关的信息。例如，鼠标操作导致的事件中，会包含鼠标的位置">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-事件对象" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件对象/" class="article-date">
+  <time datetime="2017-03-18T03:32:07.000Z" itemprop="datePublished">2017-03-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      事件对象
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>事件主要有四种：HTML5、DOM0、DOM2 和 IE方法，在上篇已经叙 述到。而对于事件对象来说主要分为两部分来分析，即DOM级事件对象和IE的事件对象。<br>在说事件对象时首先要了解什么是事件对象。<br>在触发DOM上的某个事件时，会产生一个事件对象 event，这个对象中包含着所有与事件有关的信息。包括导致事件的元素、事件类型以及与其他特定事件相关的信息。例如，鼠标操作导致的事件中，会包含鼠标的位置信息，而键盘操作导致的事件对象中，会包含与按下键有关的信息。所有浏览器都支持event对象，但支持方式不同，所以就要分两部分来讨论。<br><strong>1、DOM中的事件对象：</strong><br>兼容DOM的浏览器会将一个event对象传入到事件处理程序中。无论指定事件用什么方法（DOM0级或者DOM2级），都会传入event对象。</p>
+<pre><code>var btn = doucument.getElementById(&quot;myBtn&quot;);
+        btn.onclick = function(**event**){
+        alert(event.type);       //&quot;click&quot;
+}
+
+btn.addEventListener(&quot;click&quot;,  function(event)){
+        alert(event.type);    //&quot;click&quot;
+},false);
+
+  以上分别是DOM0级和DOM2级事件处理程序，当点击按钮时，都会弹出一个警告框显示由event.type显示的事件类型，在这里为click。
+</code></pre><p>通过HTML5特性定义的事件处理程序，变量event中也保存着event对象。</p>
+<pre><code>&lt;input type = &quot;button&quot; value = &quot;Click me &quot; onclick = alert(event.type)&quot; /&gt;
+</code></pre><p>event对象包含创建它特定事件有关的属性和方法。触发的事件类型不一样，可用的属性和方法也不一样。</p>
+<pre><code>属性/方法               类型               说明
+bubbles             Boolean       表明事件是否冒泡
+cancelable          Boolean       表明是否可以取消事件的默认行为
+currenTarget        Element       其当前事件处理程序正在处理事件的哪个                           元素
+
+defaultPrevented    Boolean       true表示已经调用了preventDefault()
+detail              Integer       与事件相关的细节信息
+eventPhase          Integer       调用事件处理程序的阶段 1表示捕获阶段2表示目标阶段3表示冒泡阶段
+
+preventDefault()    Function      取消事件的默认行为。如果cancelable是true，则可以使用该方法
+
+stopImmediatePropagation()        取消事件的进一步捕获或冒泡，同时阻止任何事件处理程序被调用
+
+stopPropagation()   Function      取消事件的进一步捕获或冒泡，如果bubbles()为true，可使用
+
+target               Element      事件的目标
+trusted              Boolean      为true表示事件是浏览器生成的，false表示事件通过JS创建的
+type                 String       被触发事件的类型
+
+view                AbstractView  与事件关联的抽象视图，等同于发生事件的window对象。   
+</code></pre><p>以上的方法都是可读的。<br>在事件处理程序内部，对象this始终等于currentTarget的值，而target则只包含事件的实际目标，如果直接将事件处理程序指定给了目标元素，则this、currentTarget和target包含相同的值。<br>在需要一个函数处理多个事件时需要type属性。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    var handler = function(event) {
+    switch(event.type){
+    case  &quot;click&quot; :
+         // do something
+         break;
+
+      case  &quot;mouseover&quot; :
+        // do something
+        break;
+
+     case  &quot;mouseout&quot; :
+        // do something
+        break;
+    }
+};
+btn.onclick = handler;
+btn.ommouseover = handler;
+btn.onmouseout = handler;
+</code></pre><p>要阻止特定事件的默认行为，可以使用preventDefault()方法。例如链接的默认行为就是在被单击时导航到特性指定的URL，要取消这一默认行为，那么通过连接的onclick事件处理程序取消。</p>
+<pre><code>var link = document.getElementById(&quot;myLink&quot;);
+link.onclick = function(event){
+    event.preventDefault();
+};
+</code></pre><p><strong>注意只有cancelable为true时才可以使用该方法取消事件的默认行为；</strong><br>另外stopPropagation()方法用于停止事件在DOM层次中的传播，即取消事件的进一步捕获或者冒泡。例如，直接添加到一个按钮的事件处理程序可以调用stopPropagation()，从而避免触发注册在document.body上面的事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    btn.onclick = function(event){
+        alert(&quot;Clicked&quot;);
+    event.stopPropagation();
+};
+
+document.body.onclick = function(event){
+    alert(&quot;body Clicked&quot;);
+}
+</code></pre><p>在上面的程序中，如果不使用event.stopPropagation();方法，那么在点击了按钮之后事件会冒泡到document.body上，就相当于点击了按钮会出现两个弹出框。但如果使用了event.stopPropagation();在执行了btn上的事件后，就阻止了沿着DOM层冒泡，所以就不会触发注册在body上的事件。<br>只有在事件处理程序执行期间，event对象才会存在，一旦事件处理程序完成，event对象就会被销毁。<br><strong>2、IE中的事件对象</strong><br>IE的对象也会包含与创建它的事件相关的属性和方法</p>
+<p><strong>cancelBubble()</strong><br>默认值为false，但将其设置为true就可以取消事件的冒泡 （与DOM中的event.stopPropagation();方法的作用相同）但这个是可以写的</p>
+<p><strong>returnValue</strong><br>默认为true，但将其设置为false就可以取消事件的默认行为。（与DOm中的preventDefault()方法的用法相同）但这个是可以写的</p>
+<p><strong>srcElement</strong><br>事件的目标，与DOM中的target属性相同。</p>
+<p><strong>type</strong><br>被触发事件的类型<br>因为事件处理作用域是根据指定它的方式来确定，不能认为this会始终等于事件目标，最好使用event.srcElement比较保险。<br>returnValue属性与DOM中的preventDefault()方法相同；将returnValue值设置为false就可以阻止事件的默认行为</p>
+<pre><code>var link = document.getElementById(&quot;myLink&quot;);
+link.onclick = function(event){
+    event.returnValue = false;
+};
+</code></pre><p>cancelBubble属性与DOM中的stopPropagation（）方法的作用相同，都是用来停止事件冒泡的(可以说停止事件向上一级传播)，由于IE不支持事件捕获，所以只能阻止事件冒泡，但stopPropagation可以同时取消事件捕获和事件冒泡</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+    btn.onclick = function(event){
+        alert(&quot;Clicked&quot;);
+    window.event.cancelBubble = true;
+};
+
+document.body.onclick = function(event){
+    alert(&quot;body Clicked&quot;);
+};
+</code></pre><p>在通过onclick事件处理程序中将cancelBubble设置为true就可以阻止事件冒泡而触发的body中注册的事件处理程序。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件对象/" data-id="cjl60q3k8000q75tfhyrqbk5e" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/事件委托/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          事件委托
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/事件处理程序和跨浏览器的事件处理程序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">事件处理程序和跨浏览器的事件处理程序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

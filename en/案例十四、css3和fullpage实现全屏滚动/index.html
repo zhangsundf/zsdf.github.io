@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例十四、css3和fullpage实现全屏滚动 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="首先说一下fullpage，它是一个jquery的插件，用来实现鼠标向上向下滑动，就会自动切换到上一屏或者下一屏，对于要做一些高大上的效果确实是一个很好的插件。首先先展示一下基本的效果图。总共有四屏的内容   当鼠标每次上下滑动时就会一整屏的切换。 第一屏是用一个图片，其他的三屏都是由左侧的三个图片和右侧的两个图片组成的。 这三屏左侧的图片展开方式不同，所以就更有炫酷的效果。第二屏的三个图片是当">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例十四、css3和fullpage实现全屏滚动">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例十四、css3和fullpage实现全屏滚动/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="首先说一下fullpage，它是一个jquery的插件，用来实现鼠标向上向下滑动，就会自动切换到上一屏或者下一屏，对于要做一些高大上的效果确实是一个很好的插件。首先先展示一下基本的效果图。总共有四屏的内容   当鼠标每次上下滑动时就会一整屏的切换。 第一屏是用一个图片，其他的三屏都是由左侧的三个图片和右侧的两个图片组成的。 这三屏左侧的图片展开方式不同，所以就更有炫酷的效果。第二屏的三个图片是当">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170505095841242?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170505095858066?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170505095916754?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170505095938539?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例十四、css3和fullpage实现全屏滚动">
+<meta name="twitter:description" content="首先说一下fullpage，它是一个jquery的插件，用来实现鼠标向上向下滑动，就会自动切换到上一屏或者下一屏，对于要做一些高大上的效果确实是一个很好的插件。首先先展示一下基本的效果图。总共有四屏的内容   当鼠标每次上下滑动时就会一整屏的切换。 第一屏是用一个图片，其他的三屏都是由左侧的三个图片和右侧的两个图片组成的。 这三屏左侧的图片展开方式不同，所以就更有炫酷的效果。第二屏的三个图片是当">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170505095841242?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例十四、css3和fullpage实现全屏滚动" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十四、css3和fullpage实现全屏滚动/" class="article-date">
+  <time datetime="2017-05-05T02:58:24.000Z" itemprop="datePublished">2017-05-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例十四、css3和fullpage实现全屏滚动
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>首先说一下fullpage，它是一个jquery的插件，用来实现鼠标向上向下滑动，就会自动切换到上一屏或者下一屏，对于要做一些高大上的效果确实是一个很好的插件。首先先展示一下基本的效果图。<br>总共有四屏的内容<br><img src="https://img-blog.csdn.net/20170505095841242?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095858066?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095916754?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p><img src="https://img-blog.csdn.net/20170505095938539?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>当鼠标每次上下滑动时就会一整屏的切换。</p>
+<p>第一屏是用一个图片，其他的三屏都是由左侧的三个图片和右侧的两个图片组成的。</p>
+<p>这三屏左侧的图片展开方式不同，所以就更有炫酷的效果。<br>第二屏的三个图片是当页面显示时从下到上依次出来到正确的位置。<br>第三屏的三个图片是当页面显示时从左到右依次展开到正确的位置。<br>第四屏的三个图片是当页面显示时从中间到两边展开到正确的位置。</p>
+<p>第一步：下载好jquery和fullpage插件，fullpage中包含css和js并引入。</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; src = &quot;./jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./fullpage/jquery.fullPage.css&quot;&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fullpage/jquery.fullPage.min.js&quot;&gt;&lt;/script&gt;
+</code></pre><p>第二步：用html建立好元素：</p>
+<pre><code>&lt;div class = &quot;main&quot;&gt;
+
+    &lt;div class=&quot;section page1&quot;&gt;
+        &lt;img src=&quot;./images/page1.png&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;section page2&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page2_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page2_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page2_5.png&quot;&gt;
+
+    &lt;/div&gt;
+     &lt;div class=&quot;section page3&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page3_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_3.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;img class = &quot;text&quot; src = &quot;./images/page3_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page3_5.png&quot;&gt;
+    &lt;/div&gt;
+
+       &lt;div class=&quot;section page4&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page4_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page4_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page4_5.png&quot;&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+ &lt;div id = &quot;audioBox&quot;&gt;
+        &lt;audio id = &quot;audio&quot; autoplay loop  src= &quot;./music/music.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;/div&gt;
+</code></pre><p>包含了四屏的内容和一个audio元素，用于播放音乐。</p>
+<p>第三步：利用fullpage的js实现每一屏的背景颜色 ，并使用js实现音乐的暂停播放</p>
+<pre><code>//1.fullpage，由于有四屏，其颜色也一样
+        $(&quot;.main&quot;).fullpage({
+sectionsColor: [&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;]
+        });
+
+        //2.控制音频的播放
+        var audioBox = document.getElementById(&apos;audioBox&apos;);
+        var audio = document.getElementById(&quot;audio&quot;);
+
+        audioBox.onclick = function(){
+
+        if(audio.paused){
+            audio.play();
+        }
+        else
+        {
+            audio.pause();
+        }
+    }
+</code></pre><p>第四步：利用css进行布局：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0;
+        padding:0;
+    }
+
+  //设置背景音乐的图标
+    #audioBox{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        background: url(./images/music_on.png) no-repeat center;
+        border-radius: 22px;
+        top: 5%;
+        right: 3%;
+        cursor: pointer;
+    }
+
+    //让每屏超出的都自动隐藏
+    .section{
+        overflow: hidden;
+    }
+
+    /*设置第一屏的图片，因为第一屏也只有一个图片*/
+    .page1 img{
+        width: 50%;
+        margin-left: 30%;
+    }
+
+ /*从第二屏开始都包含一个class=list的元素块，设置其距离左侧的距离*/
+    [class *= &quot;page&quot;] .list{
+        margin-left: 5%;
+    }
+
+ /*让左边的图片的宽度都为240px*/
+    [class *= &quot;page&quot;] .list img{
+        width: 240px;
+
+    }
+
+    /*利用属性选择器，选出所有页的背景图片*/
+    [class *= &quot;page&quot;] .bg{
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        width: 30%;
+    }
+
+    /*利用属性选择器，选择出所有页的文字图片*/
+    [class *= &quot;page&quot;] .text{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+</code></pre><p>通过第四步之后基本效果就已经完成了，但最后一点就是还没有给四屏的图片实现动画效果。</p>
+<p>第五步、实现动画效果。<br><strong>1.怎样判断当前滚动到了哪一屏？</strong><br>因为fullpage会给当前页加一个active的class，所以利用class就可以判断处于当前页的时候触发动画。<br><strong>2.实现第一屏的动画</strong><br>第一屏主要是图片的淡入效果。<br>思路:通过改变opacity属性，结合transition来改变透明度，实现淡入的效果；</p>
+<pre><code>.page1 img{
+        opacity: 0;   /*初始状态为全透明*/
+        /*加上供应商前缀，持续时间为1.5s*/
+        -moz-transition: opacity 1.5s;
+        -webkit-transition: opacity 1.5s;
+    }
+
+/*当第一页显示的时候触发,当第一页时就会自动加上active类*/
+    .page1.active img{
+        opacity: 1;
+    }
+</code></pre><p><strong>3.实现第二屏的动画：</strong><br>第二屏的动画，就是左侧的三个图片在页面显示时，从下到上依次滑进窗口。<br>核心思路 ：使用transform:translateY 和transition配合实现;<br>transition是检测属性值变化<br>translateY平移</p>
+<pre><code>/*动画的完成时间为1s，初始位置三个图片都处于向下移动到1000像素，即移出屏幕外。*/
+    .page2 .list img{
+        transition:1s;
+        transform: translateY(1000px);
+    }
+
+ /*当第二屏触发时，图片回到原始位置*/
+    .page2.active .list img{
+        transform:translateY(0px);
+    }
+
+/*利用结构化伪类找到每一个图片并设置延时，为了使动画更灵活*/
+    .page2 .list img:nth-child(1){
+        transition-delay: 0.5s;
+    }
+    .page2 .list img:nth-child(2){
+        transition-delay: 0.8s;
+    }
+    .page2 .list img:nth-child(3){
+        transition-delay: 1s;
+    }
+</code></pre><p><strong>4.实现第三屏的动画</strong><br>有了translateY那么第三屏是向左右移动，必然会有translateX控制水平方向。首先初始状态让三张图片都重叠在最左侧，当触发动画时依次铺开，仿照第二屏的例子，很容易写出来‘<br>.page .list img{<br>/<em>设置动画持续时间为1s，动画开始时延迟0.5s</em>/<br>transition: 1s 0.5s;<br>}</p>
+<p>由于本屏的两个图片初始状态的位置都要叠加在最左侧的图片上，所以对于这两个图片分别设置它们的translateX</p>
+<p>.page .list img:nth-child(2){<br>/<em>向左移动了250px刚好与第一个重叠</em>/<br>transform:translateX(-250px);<br>}</p>
+<p>.page .list img:nth-child(3){<br>/<em>向左移动了500px刚好与第一个重叠</em>/<br>transform:translateX(-500px);<br>}</p>
+<p>/<em>设置触发时的动画，让所有的img归位</em>/<br>.page3.active .list img{<br>transform:translateX(0px);<br>}</p>
+<p><strong>5.设置第五屏的动画。</strong><br>第五屏的动画就是左侧的三个图片先重叠在中间的图片上，触发后归位。<br>①.依照上面的思想利用tanslateX可以实现；</p>
+<pre><code>.page4 .list img{
+        transition: 1s 0.5s;
+    }
+    /*设置第一个和第三个的初始位置处于中间的位置上*/
+    .page4 .list img:nth-child(1){
+        transform:translateX(250px);
+    }
+    .page4 .list img:nth-child(3){
+        transform:translateX(-250px);
+    }
+  /*触发时归位*/
+    .page4.active .list img{
+        transform:translateX(0px);
+    }
+</code></pre><p>②.除了css3的transition和transform属性，还可以利用css3的动画：keyframes</p>
+<pre><code>.page4.active .list img:nth-child(1){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove1&apos; 1s ease-in 1;    /*动画名、持续时间、更细粒度动画，重复次数*/
+    }
+
+    .page4.active .list img:nth-child(3){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove2&apos; 1s ease-in 1;
+    }
+
+     @-webkit-keyframes flymove1{
+        0%{ transform: translateX(250px);}
+        100%{ transform: translateX(0px);}
+     }
+
+     @-webkit-keyframes flymove2{
+        from{ transform: translateX(-250px);}
+        to{ transform: translateX(0px);}
+     }
+</code></pre><p>关于keyframes的参数的了解，可以查一下手册，熟悉一下就可以了。</p>
+<p><strong>通过上面的代码，一个炫酷的全屏滚动页面就完成了！</strong></p>
+<p>附上源代码：</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;fullpage 实现全屏滚动&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./jQuery/jquery-3.2.0.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;./fullpage/jquery.fullPage.css&quot;&gt;
+    &lt;script type=&quot;text/javascript&quot; src = &quot;./fullpage/jquery.fullPage.min.js&quot;&gt;&lt;/script&gt;
+
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0;
+        padding:0;
+    }
+
+    #audioBox{
+        width: 45px;
+        height: 45px;
+        position: absolute;
+        background: url(./images/music_on.png) no-repeat center;
+        border-radius: 22px;
+        top: 5%;
+        right: 3%;
+        cursor: pointer;
+    }
+
+    .section{
+        overflow: hidden;
+    }
+
+    /*设置第一屏的图片*/
+    .page1 img{
+        width: 50%;
+        margin-left: 30%;
+    }
+
+
+    [class *= &quot;page&quot;] .list{
+        margin-left: 5%;
+    }
+
+    [class *= &quot;page&quot;] .list img{
+        width: 240px;
+
+    }
+
+    /*所有页的背景图片*/
+    [class *= &quot;page&quot;] .bg{
+        position: absolute;
+        bottom: 5%;
+        right: 5%;
+        width: 30%;
+    }
+
+    /*所有页的文字图片*/
+    [class *= &quot;page&quot;] .text{
+        position: absolute;
+        top: 10%;
+        right: 5%;
+    }
+
+    /*第一屏图片的动画
+      思路:通过改变opacity属性，结合transition来改变透明度，实现淡入的效果;
+    */
+    .page1 img{
+        opacity: 0;/*初始状态为全透明*/
+        -moz-transition: opacity 1.5s;
+        -webkit-transition: opacity 1.5s;
+    }
+
+    /*当第一页显示的时候触发*/
+
+    .page1.active img{
+        opacity: 1;
+    }
+
+    /*第二页的动画
+    核心思路 ：使用transform:translateY 和transition配合实现;
+    transition是检测属性值变化
+    translateY平移
+    */
+
+    .page2 .list img{
+        transition:1s;
+        transform: translateY(1000px);
+    }
+
+    .page2.active .list img{
+        transform:translateY(0px);
+    }
+
+    .page2 .list img:nth-child(1){
+        transition-delay: 0.5s;
+
+    }
+    .page2 .list img:nth-child(2){
+        transition-delay: 0.8s;
+
+    }
+    .page2 .list img:nth-child(3){
+        transition-delay: 1s;
+
+    }
+
+   /*设置第三页的动画*/
+    .page3 .list img{
+        transition: 1s 0.5s;
+    }
+    .page3 .list img:nth-child(2){
+        transform:translateX(-250px);
+    }
+    .page3 .list img:nth-child(3){
+        transform:translateX(-500px);
+    }
+
+    .page3.active .list img{
+        transform:translateX(0px);
+    }
+
+
+   /*设置第四页的动画*/
+    /*.page4 .list img{
+        transition: 1s 0.5s;
+    }
+    .page4 .list img:nth-child(1){
+        transform:translateX(250px);
+    }
+    .page4 .list img:nth-child(3){
+        transform:translateX(-250px);
+    }
+
+    .page4.active .list img{
+        transform:translateX(0px);
+    }*/
+
+    .page4.active .list img:nth-child(1){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove1&apos; 1s ease-in 1; /*动画名、持续时间、更细粒度动画，重复次数*/
+    }
+
+    .page4.active .list img:nth-child(3){
+        transform:translateX(0px);
+        -webkit-animation: &apos;flymove2&apos; 1s ease-in 1;
+    }
+
+     @-webkit-keyframes flymove1{
+        0%{ transform: translateX(250px);}
+        100%{ transform: translateX(0px);}
+     }
+
+     @-webkit-keyframes flymove2{
+        from{ transform: translateX(-250px);}
+        to{ transform: translateX(0px);}
+     }
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class = &quot;main&quot;&gt;
+
+    &lt;div class=&quot;section page1&quot;&gt;
+        &lt;img src=&quot;./images/page1.png&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;section page2&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page2_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page2_3.png&quot;&gt;
+        &lt;/div&gt;
+
+            &lt;img class = &quot;text&quot; src = &quot;./images/page2_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page2_5.png&quot;&gt;
+
+    &lt;/div&gt;
+     &lt;div class=&quot;section page3&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page3_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page3_3.png&quot;&gt;
+        &lt;/div&gt;
+        &lt;img class = &quot;text&quot; src = &quot;./images/page3_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page3_5.png&quot;&gt;
+    &lt;/div&gt;
+
+       &lt;div class=&quot;section page4&quot;&gt;
+        &lt;div class = &quot;list&quot;&gt;
+            &lt;img src = &quot;./images/page4_1.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_2.png&quot;&gt;
+            &lt;img src = &quot;./images/page4_3.png&quot;&gt;
+        &lt;/div&gt;
+            &lt;img class = &quot;text&quot; src = &quot;./images/page4_4.png&quot;&gt;
+            &lt;img  class = &quot;bg&quot; src = &quot;./images/page4_5.png&quot;&gt;
+    &lt;/div&gt;
+
+&lt;/div&gt;
+ &lt;div id = &quot;audioBox&quot;&gt;
+        &lt;audio id = &quot;audio&quot; autoplay loop  src= &quot;./music/music.mp3&quot;&gt;&lt;/audio&gt;
+    &lt;/div&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+    $(function(){
+
+        //1.fullpage
+        $(&quot;.main&quot;).fullpage({
+            sectionsColor: [&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;,&apos;#1bbc9b&apos;]
+        });
+        //2.控制音频的播放
+
+        var audioBox = document.getElementById(&apos;audioBox&apos;);
+        var audio = document.getElementById(&quot;audio&quot;);
+
+        audioBox.onclick = function(){
+
+        if(audio.paused){
+            audio.play();
+        }
+        else
+        {
+            audio.pause();
+        }
+    }
+    });
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十四、css3和fullpage实现全屏滚动/" data-id="cjl60q3lc001x75tfvt3ogr9d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/transition不支持display属性/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          transition不支持display属性
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例十四、游戏/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例十四、游戏</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

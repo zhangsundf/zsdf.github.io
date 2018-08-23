@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>案例十四、游戏 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="玩法就是，点击右边的摇杆，上面的水果图片就会一直不停的滚动，再点击右边的摇杆，就会停止滚动，此时就会判断三个图片是否一样，一样的话就会提示你赢了，否则提示继续加油！ 首先利用html和css进行布局：     &amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;     *{         margin: 0px;         padding: 0px;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="案例十四、游戏">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/案例十四、游戏/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="玩法就是，点击右边的摇杆，上面的水果图片就会一直不停的滚动，再点击右边的摇杆，就会停止滚动，此时就会判断三个图片是否一样，一样的话就会提示你赢了，否则提示继续加油！ 首先利用html和css进行布局：     &amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;     *{         margin: 0px;         padding: 0px;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503155051681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503162316158?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20170503162511127?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="案例十四、游戏">
+<meta name="twitter:description" content="玩法就是，点击右边的摇杆，上面的水果图片就会一直不停的滚动，再点击右边的摇杆，就会停止滚动，此时就会判断三个图片是否一样，一样的话就会提示你赢了，否则提示继续加油！ 首先利用html和css进行布局：     &amp;lt;style type=&amp;quot;text/css&amp;quot;&amp;gt;     *{         margin: 0px;         padding: 0px;">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170503155051681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-案例十四、游戏" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/案例十四、游戏/" class="article-date">
+  <time datetime="2017-05-03T08:43:54.000Z" itemprop="datePublished">2017-05-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      案例十四、游戏
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20170503155051681?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>玩法就是，点击右边的摇杆，上面的水果图片就会一直不停的滚动，再点击右边的摇杆，就会停止滚动，此时就会判断三个图片是否一样，一样的话就会提示你赢了，否则提示继续加油！</p>
+<p>首先利用html和css进行布局：</p>
+<pre><code>    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #title{
+        margin: 0 auto;
+        width: 446px;
+        height: 110px;
+        background-image: url(./images/title.png);
+    }
+
+    #content {
+            width:1024px;
+            height:500px;
+            background:url(&apos;./images/jiqi.png&apos;) no-repeat;
+            background-position:70% 50%;
+            position:relative;
+    }
+
+    #content #scroll1,#content #scroll2,#content #scroll3{
+        width: 58px;
+        height: 90px;
+        position: absolute;
+    }
+
+      #content #scroll1{
+            left:560px;
+            top:212px;
+            overflow:hidden;
+
+        }
+        #content #scroll2{
+            left:626px;
+            top:212px;
+            overflow:hidden;
+        }
+        #content #scroll3{
+            left:692px;
+            top:212px;
+            overflow:hidden;
+        }
+        ul{
+            list-style:none;
+        }
+
+        ul img{
+            width:58px;
+            height:90px;
+        }
+
+        #content #yaogan{
+            width: 107px;
+            height: 243px;
+
+            left: 770px;
+            top:180px;
+            position: absolute;
+        }
+
+        #content #yaogan button{
+            width: 50px;
+            height: 120px;
+            background:url(&apos;./images/yaogan1.png&apos;) no-repeat;
+            border:none;
+            background-size:100% 100%;
+        }
+
+
+    &lt;/style&gt;
+
+&lt;body&gt;
+&lt;div id = &quot;title&quot;&gt;
+&lt;/div&gt;
+&lt;div id = &quot;content&quot;&gt;
+    &lt;div id = &quot;scroll1&quot;&gt;
+        &lt;ul id = &quot;scroll1_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll2&quot;&gt;
+        &lt;ul id = &quot;scroll2_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll3&quot;&gt;
+        &lt;ul id = &quot;scroll3_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;yaogan&quot;&gt;
+        &lt;button type=&quot;button&quot;  id=&quot;mybu&quot; onclick=&quot;action()&quot;&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+</code></pre><p>先让图片滚动起来：</p>
+<p>全局变量speed1、speed2、speed3分别产生三个随机的速度。<br>全局变量 time1、time2、time3分别产生三个随机的时间间隔。用来控制每个窗口图片滚动的时间间隔。<br>全局变量t1、 t2、 t3用来记录每个setInterval()的状态<br>全局变量pos1、pos2、pos3为距离图片顶部的高度<br>布尔变量bool用来确定是否是首次按下摇杆。</p>
+<p>要使图片滚动起来：</p>
+<pre><code>//设置ul的滚动方式
+    function scroll(){
+        //设置每一个ul的随机速度
+        speed1 = Math.floor(Math.random() * 10 + 3);
+        speed2 = Math.floor(Math.random() * 10 + 3);
+        speed3 = Math.floor(Math.random() * 10 + 3);
+
+        //设置每一个ul的滚动时间
+        time1 = Math.floor(Math.random() * 10 + 5);
+        time2 = Math.floor(Math.random() * 10 + 5);
+        time3 = Math.floor(Math.random() * 10 + 5);
+
+        //通过计时器去调用方法，使得ul中的li可以有随机滚动的  时间间隔和速度
+        t1 = setInterval(&quot;rotate1()&quot;, time1);
+        t2 = setInterval(&quot;rotate2()&quot;, time2);
+        t3 = setInterval(&quot;rotate3()&quot;, time3);
+    }
+
+   //图片进行滚动
+    function rotate1(){
+        pos1 -= speed1;
+document.getElementById(&quot;scroll1_ul&quot;).style.marginTop=pos1+&quot;px&quot;;
+        if(pos1&lt;=-900){
+            pos1=0;
+        }
+    }
+
+    function rotate2(){
+        pos2 -= speed2;
+        document.getElementById(&quot;scroll2_ul&quot;).style.marginTop=pos2+&quot;px&quot;;
+        if(pos2&lt;=-900){
+            pos2=0;
+        }
+    }
+
+    function rotate3(){
+        pos3 -= speed3;
+         document.getElementById(&quot;scroll3_ul&quot;).style.marginTop=pos3+&quot;px&quot;;
+        if(pos3&lt;=-900){
+            pos3=0;
+        }
+    }
+</code></pre><p>有了图片的滚动方式，现在就是怎样去调用。</p>
+<p>在点击了摇杆之后，要判断是否是刚进来，还是要停止，就要用到全局的布尔变量。默认值为false；</p>
+<pre><code>function changgesetImg(){
+document.getElementById(&quot;mybu&quot;).style.backgroundImage = &quot;url(./images/yaogan1.png)&quot;;
+
+    //bool默认只为false，如果满足if(bool)说明已经点击了摇杆，此时再点击时，就要停止图片的滚动，并进行判断
+
+        if(bool){
+            //先清空定时器
+            clearInterval(t1);
+            clearInterval(t2);
+            clearInterval(t3);
+
+            var pos_1 = Math.floor(pos1 * 95) / 95;
+            var pos_2 = Math.floor(pos2 * 95) / 95;
+            var pos_3 = Math.floor(pos3 * 95) / 95;
+                        document.getElementById(&quot;scroll1_ul&quot;).style.marginTop = pos_1 + &apos;px&apos;;
+            document.getElementById(&quot;scroll2_ul&quot;).style.marginTop = pos_2 + &apos;px&apos;;
+            document.getElementById(&quot;scroll3_ul&quot;).style.marginTop = pos_3 + &apos;px&apos;;
+
+            if(pos_1 == pos_2 &amp;&amp; pos_1 == pos_3){
+                alert(&quot;很棒哦!&quot;);
+            }
+
+            else{
+                alert(&quot;继续加油!&quot;);
+            }
+
+        }
+
+    //不满足的话，就说明是首次点击摇杆，那么就要进行图片的切换滚动。调用scroll()函数
+    else{
+            scroll();
+        }
+
+        bool = !bool;
+}
+</code></pre><p>点击了摇动杆之后，图片以自己的随机速度和随机时间进行切换<br><img src="https://img-blog.csdn.net/20170503162316158?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>再次点击摇动杆，图片停止滚动，并进行判断<br><img src="https://img-blog.csdn.net/20170503162511127?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>最后附上完整的源码</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta charset = &quot;utf-8&quot; /&gt;
+    &lt;title&gt;老虎机&lt;/title&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    *{
+        margin: 0px;
+        padding: 0px;
+    }
+    #title{
+        margin: 0 auto;
+        width: 446px;
+        height: 110px;
+        background-image: url(./images/title.png);
+    }
+
+    #content {
+            width:1024px;
+            height:500px;
+            background:url(&apos;./images/jiqi.png&apos;) no-repeat;
+            background-position:70% 50%;
+            position:relative;
+    }
+
+    #content #scroll1,#content #scroll2,#content #scroll3{
+        width: 58px;
+        height: 90px;
+        position: absolute;
+    }
+
+      #content #scroll1{
+            left:560px;
+            top:212px;
+            overflow:hidden;
+
+        }
+        #content #scroll2{
+            left:626px;
+            top:212px;
+            overflow:hidden;
+        }
+        #content #scroll3{
+            left:692px;
+            top:212px;
+            overflow:hidden;
+        }
+        ul{
+            list-style:none;
+        }
+
+        ul img{
+            width:58px;
+            height:90px;
+        }
+
+        #content #yaogan{
+            width: 107px;
+            height: 243px;
+
+            left: 770px;
+            top:180px;
+            position: absolute;
+        }
+
+        #content #yaogan button{
+            width: 50px;
+            height: 120px;
+            background:url(&apos;./images/yaogan1.png&apos;) no-repeat;
+            border:none;
+            background-size:100% 100%;
+        }
+
+
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id = &quot;title&quot;&gt;
+&lt;/div&gt;
+&lt;div id = &quot;content&quot;&gt;
+    &lt;div id = &quot;scroll1&quot;&gt;
+        &lt;ul id = &quot;scroll1_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll2&quot;&gt;
+        &lt;ul id = &quot;scroll2_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+        &lt;div id = &quot;scroll3&quot;&gt;
+        &lt;ul id = &quot;scroll3_ul&quot;&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p01.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p02.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p03.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p04.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p05.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p06.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p07.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p08.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p09.jpg&quot;&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;img src=&quot;./images/p10.jpg&quot;&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;yaogan&quot;&gt;
+        &lt;button type=&quot;button&quot;  id=&quot;mybu&quot; onclick=&quot;action()&quot;&gt;&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+
+    var t1, t2, t3, 
+        speed1, speed2, speed3, 
+        time1, time2, time3, 
+        pos1 = 0, 
+        pos2 = 0, 
+        pos3 = 0,
+        bool = false;
+
+    function action() {
+        setTimeout(&quot;changeImg()&quot;, 200);
+    }
+
+    function changeImg(){
+        document.getElementById(&apos;mybu&apos;).style.backgroundImage = &quot;url(./images/yaogan2.png)&quot;;
+        setTimeout(&quot;changesetImg()&quot;, 400);
+    }
+
+
+    //设置ul的滚动方式
+    function scroll(){
+
+        //设置每一个ul的随机速度
+        speed1 = Math.floor(Math.random() * 10 + 3);
+        speed2 = Math.floor(Math.random() * 10 + 3);
+        speed3 = Math.floor(Math.random() * 10 + 3);
+
+        //设置每一个ul的滚动时间
+        time1 = Math.floor(Math.random() * 10 + 5);
+        time2 = Math.floor(Math.random() * 10 + 5);
+        time3 = Math.floor(Math.random() * 10 + 5);
+
+        //通过计时器去调用方法，使得ul中的li可以滚动
+        t1 = setInterval(&quot;rotate1()&quot;, time1);
+        t2 = setInterval(&quot;rotate2()&quot;, time2);
+        t3 = setInterval(&quot;rotate3()&quot;, time3);
+
+    }
+
+    function rotate1(){
+        pos1 -= speed1;
+         document.getElementById(&quot;scroll1_ul&quot;).style.marginTop=pos1+&quot;px&quot;;
+        if(pos1&lt;=-900){
+            pos1=0;
+        }
+    }
+
+    function rotate2(){
+        pos2 -= speed2;
+         document.getElementById(&quot;scroll2_ul&quot;).style.marginTop=pos2+&quot;px&quot;;
+        if(pos2&lt;=-900){
+            pos2=0;
+        }
+    }
+
+    function rotate3(){
+        pos3 -= speed3;
+         document.getElementById(&quot;scroll3_ul&quot;).style.marginTop=pos3+&quot;px&quot;;
+        if(pos3&lt;=-900){
+            pos3=0;
+        }
+    }
+
+
+    function changesetImg(){
+        document.getElementById(&quot;mybu&quot;).style.backgroundImage = &quot;url(./images/yaogan1.png)&quot;;
+
+        if(bool){
+            //先清空定时器
+            clearInterval(t1);
+            clearInterval(t2);
+            clearInterval(t3);
+
+            var pos_1 = Math.floor(pos1 * 95) / 95;
+            var pos_2 = Math.floor(pos2 * 95) / 95;
+            var pos_3 = Math.floor(pos3 * 95) / 95;
+
+            document.getElementById(&quot;scroll1_ul&quot;).style.marginTop = pos_1 + &apos;px&apos;;
+            document.getElementById(&quot;scroll2_ul&quot;).style.marginTop = pos_2 + &apos;px&apos;;
+            document.getElementById(&quot;scroll3_ul&quot;).style.marginTop = pos_3 + &apos;px&apos;;
+
+            if(pos_1 == pos_2 &amp;&amp; pos_1 == pos_3){
+                alert(&quot;很棒哦!&quot;);
+            }
+
+            else{
+                alert(&quot;继续加油!&quot;);
+            }
+
+        }
+        else{
+            scroll();
+        }
+
+        bool = !bool;
+
+    }
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/案例十四、游戏/" data-id="cjl60q3lc001y75tfmz0nl7fo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/案例十四、css3和fullpage实现全屏滚动/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          案例十四、css3和fullpage实现全屏滚动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/CSS3动画实现背景滚动/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">CSS3动画实现背景滚动</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

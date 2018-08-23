@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>打印出如下图形 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="通过观察我们发现*的规律是每行的个数是2乘以行数-1，如：第一行 2x1 - 1 = 1第二行 2x2 - 1 = 3….以此类推 但是仅仅通过控制星号生成的图像只会是直角三角形的样子，所以我们还要控制空格的数量，通过观察会有如下规律，稍后再代码中体现；现在要求是行数是输入的，会生成如上的图形。 首先写一个控制*数量的函数 public static void star(int m){">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打印出如下图形">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/打印出如下图形/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="通过观察我们发现*的规律是每行的个数是2乘以行数-1，如：第一行 2x1 - 1 = 1第二行 2x2 - 1 = 3….以此类推 但是仅仅通过控制星号生成的图像只会是直角三角形的样子，所以我们还要控制空格的数量，通过观察会有如下规律，稍后再代码中体现；现在要求是行数是输入的，会生成如上的图形。 首先写一个控制*数量的函数 public static void star(int m){">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://img-blog.csdn.net/20170724214739059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2018-08-23T03:36:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打印出如下图形">
+<meta name="twitter:description" content="通过观察我们发现*的规律是每行的个数是2乘以行数-1，如：第一行 2x1 - 1 = 1第二行 2x2 - 1 = 3….以此类推 但是仅仅通过控制星号生成的图像只会是直角三角形的样子，所以我们还要控制空格的数量，通过观察会有如下规律，稍后再代码中体现；现在要求是行数是输入的，会生成如上的图形。 首先写一个控制*数量的函数 public static void star(int m){">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170724214739059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-打印出如下图形" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/打印出如下图形/" class="article-date">
+  <time datetime="2017-07-24T14:03:03.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      打印出如下图形
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20170724214739059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>通过观察我们发现*的规律是每行的个数是2乘以行数-1，<br>如：第一行 2x1 - 1 = 1<br>第二行 2x2 - 1 = 3<br>….<br>以此类推</p>
+<p>但是仅仅通过控制星号生成的图像只会是直角三角形的样子，所以我们还要控制空格的数量，通过观察会有如下规律，稍后再代码中体现；<br>现在要求是行数是输入的，会生成如上的图形。</p>
+<p>首先写一个控制*数量的函数</p>
+<pre><code>public static void star(int m){
+    for(int i = 1; i&lt; m+1; i++){
+        space(m-i);
+        for(int j = 0; j &lt; 2*i-1; j++){
+            System.out.print(&quot;*&quot;);
+        }
+        space(m-i);
+        System.out.println();
+    }
+}
+
+public  static void space(int b){
+    for(int i = 0; i&lt; b; i++){
+        System.out.print(&quot; &quot;);
+    }
+}
+</code></pre><p>m为要输入的行数，space函数为空格函数，传入参数为m-i；如果有四行，第一行就会有3个空格，并且左右两边个数相等，所以就会调用两次</p>
+<p>最后在main函数中进行行数的输入，再调用star(行数)函数<br>就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/打印出如下图形/" data-id="cjl60q3kg001375tfjrdqw5bw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          jsp+javaBean+servlet+mysql完整的实现一个登录功能
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/java统计字符串中每个字符出现的次数/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">java统计字符串中每个字符出现的次数</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

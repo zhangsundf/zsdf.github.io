@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CSS3动画实现背景滚动 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="在上一个模仿微信打飞机的游戏中，在敌机掉落下来时，如果背景图片也可以一直无穷滚动的话，那么效果就会更好。现在就是要利用CSS3来实现一张图片的无穷滚动。 首先了解一下CSS3的动画属性：①.animation-name:用于将动画（@keyframes 语法）附加到元素上；②. animation-duration:定义动画完成一次迭代（从0%到100%）所花的时间；③. animation-t">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS3动画实现背景滚动">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/CSS3动画实现背景滚动/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="在上一个模仿微信打飞机的游戏中，在敌机掉落下来时，如果背景图片也可以一直无穷滚动的话，那么效果就会更好。现在就是要利用CSS3来实现一张图片的无穷滚动。 首先了解一下CSS3的动画属性：①.animation-name:用于将动画（@keyframes 语法）附加到元素上；②. animation-duration:定义动画完成一次迭代（从0%到100%）所花的时间；③. animation-t">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS3动画实现背景滚动">
+<meta name="twitter:description" content="在上一个模仿微信打飞机的游戏中，在敌机掉落下来时，如果背景图片也可以一直无穷滚动的话，那么效果就会更好。现在就是要利用CSS3来实现一张图片的无穷滚动。 首先了解一下CSS3的动画属性：①.animation-name:用于将动画（@keyframes 语法）附加到元素上；②. animation-duration:定义动画完成一次迭代（从0%到100%）所花的时间；③. animation-t">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-CSS3动画实现背景滚动" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/CSS3动画实现背景滚动/" class="article-date">
+  <time datetime="2017-04-26T08:28:08.000Z" itemprop="datePublished">2017-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CSS3动画实现背景滚动
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在上一个模仿微信打飞机的游戏中，在敌机掉落下来时，如果背景图片也可以一直无穷滚动的话，那么效果就会更好。<br>现在就是要利用CSS3来实现一张图片的无穷滚动。</p>
+<p>首先了解一下CSS3的动画属性：<br>①.animation-name:<br>用于将动画（@keyframes 语法）附加到元素上；<br>②. animation-duration:<br>定义动画完成一次迭代（从0%到100%）所花的时间；<br>③. animation-timing-function:<br>类似于transition-timing-function属性，<br>用来更细粒度的控制动画的速度。<br>取值有: ease\ linear\ ease-in\ ease-out\ ease-in-out 之一<br>④.animation-iteration-count:<br>此属性用来定义动画要执行多少次。infinite无限次<br>⑤. animation-direction:<br>当动画迭代时，可以使用具有alternate的 animation- direction属性来使其他迭代反向播放动画。 默认normal；<br>⑥. animation-delay:<br>在开始执行动画时的延迟<br>⑦. animation-fill-mode:<br>取值有：none、forwards、backwards、both<br>定义在动画开始之前或者结束之后发生的动作<br>⑧. animation-play-state:<br>定义动画运行还是暂停</p>
+<p>当上面的太复杂时，还可以简写animation属性:</p>
+<p><strong>-供应商前缀-animation: ‘自定义动画名’ 30ms ease-in 1 alternate 5s backwords;</strong></p>
+<p><strong>再对照上面的属性来看一下。这些顺序不可以颠倒</strong></p>
+<p>下来就是实战了。定义一个背景图片，使其无限滚动</p>
+<pre><code>#background{
+        position: absolute;
+        width: 300px;
+        height: 500px;
+        background:url(../images/background.jpg);
+        z-index:1;
+        -webkit-animation-name: flymove;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: 20000;
+
+        -moz-animation-name: flymove;
+        -moz-animation-duration: 10s;
+        -moz-animation-timing-function: linear;
+        -moz-animation-iteration-count: 20000;
+
+        -ms-animation-name: flymove;
+        -ms-animation-duration: 10s;
+        -ms-animation-timing-function: linear;
+        -ms-animation-iteration-count: 20000;
+    }
+
+     @-webkit-keyframes flymove{
+            0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+        @-moz-keyframes flymove{
+           0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+        @-ms-keyframes flymove{
+          0%{background-position:0px 0px;}
+            100%{background-position:0px 500px;}
+        }
+</code></pre><p>body中就只有一个canvas元素</p>
+<pre><code>&lt;canvas id = &quot;background&quot;&gt;
+&lt;/canvas&gt;
+</code></pre><p>向上面这样就可以实现背景图片无限滚动了。上面每一个都添加了三个供应商的前缀，我们可以简写将#background中的十二行代码写成三行：</p>
+<pre><code>#background{
+        position: absolute;
+        width: 300px;
+        height: 500px;
+        background:url(../images/background.jpg);
+        z-index:1;
+        -webkit-animation: &apos;flymove&apos; 10s linear 20000;
+        -moz-animation: &apos;flymove&apos; 10s linear 20000;
+        -ms-animation: &apos;flymove&apos; 10s linear 20000;
+}
+</code></pre><p>这样就简单多了。<br>自己也写一个可以滚动的图片吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/CSS3动画实现背景滚动/" data-id="cjl60q3jf000275tfy0cjran2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/案例十四、游戏/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          案例十四、游戏
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/案例十三、模仿微信打飞机游戏/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">案例十三、模仿微信打飞机游戏</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

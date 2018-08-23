@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>事件处理程序和跨浏览器的事件处理程序 | zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="事件分为：HTML5、DOM0级、DOM2级、IE方法；1、HTML5事件处理程序: &amp;lt;input type = &amp;quot;button&amp;quot; value = &amp;quot;Click Me&amp;quot; onclick = &amp;quot;alert(&amp;quot;clicked&amp;quot;)&amp;quot;&amp;gt;调用在页面其它地方 &amp;lt;script type=&amp;quot;text/ja">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事件处理程序和跨浏览器的事件处理程序">
+<meta property="og:url" content="http://yoursite.com/zsdf/en/事件处理程序和跨浏览器的事件处理程序/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="事件分为：HTML5、DOM0级、DOM2级、IE方法；1、HTML5事件处理程序: &amp;lt;input type = &amp;quot;button&amp;quot; value = &amp;quot;Click Me&amp;quot; onclick = &amp;quot;alert(&amp;quot;clicked&amp;quot;)&amp;quot;&amp;gt;调用在页面其它地方 &amp;lt;script type=&amp;quot;text/ja">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-08-23T03:36:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="事件处理程序和跨浏览器的事件处理程序">
+<meta name="twitter:description" content="事件分为：HTML5、DOM0级、DOM2级、IE方法；1、HTML5事件处理程序: &amp;lt;input type = &amp;quot;button&amp;quot; value = &amp;quot;Click Me&amp;quot; onclick = &amp;quot;alert(&amp;quot;clicked&amp;quot;)&amp;quot;&amp;gt;调用在页面其它地方 &amp;lt;script type=&amp;quot;text/ja">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-事件处理程序和跨浏览器的事件处理程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/事件处理程序和跨浏览器的事件处理程序/" class="article-date">
+  <time datetime="2017-03-17T10:04:36.000Z" itemprop="datePublished">2017-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      事件处理程序和跨浏览器的事件处理程序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>事件分为：HTML5、DOM0级、DOM2级、IE方法；<br><strong>1、HTML5事件处理程序:</strong></p>
+<p><code>&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;alert(&quot;clicked&quot;)&quot;&gt;</code><br>调用在页面其它地方</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+function showMessage(){
+alert(&quot;Hello World&quot;);
+}
+&lt;/scri&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;showMessage()&quot; /&gt;
+</code></pre><p>HTML5义的事件处理程序中有两个缺点：<br>1、存在一个时差问题。因为用户可能在HTML元素一出现在页面上时就触发相应的事件，但当时的事件处理程序有可能尚不具备执行条件。以上一个例子为例。假设showMessage函数在按钮下方、页面的最底部定义的。如果用户在页面解析前就单击了按钮，就会引发错误。因此很多HTML事件处理程序都封装在一个try-catch语句中。</p>
+<pre><code>&lt;input type = &quot;button&quot; value = &quot;Click Me&quot; onclick = &quot;try{
+showMessage();}catch(ex){}&quot; /&gt;
+
+2、HTML与JavaScript的耦合性太高，如果要更换事件处理程序就要更改两处的代码。HTML与JavaScript。而这也是许多开发人员摒弃HTML事件处理程序，转而使用JavaScript指定时间程序的原因所在。
+</code></pre><p><strong>2、DOM0级事件处理程序：</strong>至今仍为所有现代浏览器支持，一是简单，二是有跨浏览器的优势。<br>要使用JavaScript指定事件处理程序，首先要取得一个操作对象的引用：</p>
+<pre><code>var btn = document.getElementById(&quot;Mydiv&quot;);
+                btn.onclick = function(){
+                    alert(“hello world”);
+                }
+
+var btn = document.getElementById(&quot;Mydiv&quot;);
+                btn.onclick = function(){
+                    alert(thid.id); //Mydiv
+                }
+</code></pre><p>也可以删除通过DOM0级方法指定的事件处理程序，即将事件处理的属性值设为null。<br>btn.onclick = null;<br>将事件处理程序设置为null之后，单击按钮不会有任何反应。</p>
+<p><strong>3、DOM2级事件处理程序</strong>：<br>用于指定和删除事件处理程序 的操作addEventListener()、removeEventListener().它们都接受三个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。布尔值如果为true，则在捕获阶段调用事件处理程序，反之在冒泡阶段调用事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(this.id);
+},false);
+</code></pre><p>上面代码为一个按钮添加了onclick事件，且在冒泡阶段被触发（最后一个参数是false）与DOM0级方法一样，这里添加的事件处理程序也在其依附的元素的作用域中运行。DOM2级方法添加事件的处理程序的好处是可以添加多个事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(this.id);
+},false);
+btn.addEventListener (&quot;click&quot;, function(){
+            alert(&quot;Hello world&quot;);
+},false);
+</code></pre><p>首先会显示元素的id，其次会显示helloworld消息。<br>用.addEventListener()添加的事件只能用removeEventListener().移除，并且通过addEventListener()添加的匿名函数无法移除。如上面的函数就是匿名函数，通过removeEventListener()无法移除，此时需要将函数赋给变量，再执行以下函数：</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+        //excute code
+} 
+btn.addEventListener(&quot;click&quot;,handler,false);
+btn.removeEventListener(&quot;click&quot;,handler,false);
+注：addEventListener()、removeEventListener().必须使用相同的参数
+</code></pre><p><strong>4、IE事件处理程序</strong>用于指定和删除事件处理程序 的操作attachEvent()、detachEvent()<strong>接受两个参数：</strong>事件处理程序名称和事件处理函数。添加的事件处理程序都会被添加到冒泡阶段。<br>与DOM2级事件处理程序一样，可以为同一个元素添加多个事件处理程序。</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+btn.attachEvent (&quot;onclick&quot;, function(){
+            alert(this.id);
+});
+btn.attachEvent(&quot;onclick&quot;, function(){
+            alert(&quot;Hello world&quot;);
+});
+</code></pre><p><strong>注意第一个参数是onclick而不是DOM2中的click</strong><br>这两个事件是以相反的顺序被执行。即先输出Hello World 后输出元素的ID；<br>detachEvent()移除事件处理程序与DOM2中是一样的。都不能用来移除匿名函数</p>
+<pre><code>var btn = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+        //excute code
+} 
+btn.attachEvent(&quot;onclick&quot;,handler);
+btn.detachEvent(&quot;onclick&quot;,handler);
+</code></pre><p>在了解了以上四种事件处理程序，由于浏览器对事件处理程序的支持度不一样，所以写一个跨浏览器的事件处理程序是有必要的。<br>首先是添加事件处理程序的方法我们在这儿创建一个名为addHandler(),它的职责是视情况使用DOM0或者DOM2或者IE方法来添加事件（在这里不讨论HTML5事件处理程序）。这个方法属于一个名叫EventUtil(名字可以自己定义)的对象，addHandler()方法接受三个参数：要操作的元素、事件名称、和事件处理函数。<br>另一个函数是removeHandler(),它也接受相同的参数。职责是移除之前添加的事件处理程序（无论该事件处理程序采用什么方式添加到元素中的，如果其他方法无效，默认采用DOM0级方法）</p>
+<p>此时可以写一个跨浏览器的事件处理程序的添加和删除函数了。</p>
+<pre><code>var EventUtil = {
+        addHandler: function(element, type, handler){
+            //浏览器是否支持DOM2
+                if(elelment.addEventListener){
+                element.addEventListener(type, handler, false);
+        } 
+        //浏览器是否支持IE
+    else if(element.attachEvent){
+                element.attachEvent(&quot;on&quot;+type, handler);
+        }
+        //如果以上都不支持，采用DOM0级事件处理程序
+        else{
+                element[&quot;on&quot;+type] = handler;
+        }
+    },
+    、
+    removeHandler : function(element, type, handler){
+            if(element.removeEventListener){
+                element.removeEventListener(type, handler, false);
+            } else if(element.detachEvent){
+                element.detachEvent(&quot;on&quot;+type, handler);
+            }else{
+                    element[&quot;on&quot; + type] = null;
+        }
+    }
+};
+</code></pre><p>可以像下面这样使用EventUtil对象</p>
+<pre><code>var btn  = document.getElementById(&quot;myBtn&quot;);
+var handler= function（）{
+//excute code
+} ;
+//创建一个事件处理程序
+EventUtil.addHandler(btn, &quot;click&quot;, handler);
+//省略一些代码
+//删除一个事件处理程序
+EventUtil.removeHandler(btn, &quot;click&quot;, handler);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/事件处理程序和跨浏览器的事件处理程序/" data-id="cjl60q3k7000p75tf8xjq9ndc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/zsdf/en/事件对象/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          事件对象
+        
+      </div>
+    </a>
+  
+  
+    <a href="/zsdf/en/js闭包和作用域/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">js闭包和作用域</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

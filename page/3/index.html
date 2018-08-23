@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>zsdfBlog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="zsdf&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="zsdfBlog">
+<meta property="og:url" content="http://yoursite.com/zsdf/page/3/index.html">
+<meta property="og:site_name" content="zsdfBlog">
+<meta property="og:description" content="zsdf&apos;s blog">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="zsdfBlog">
+<meta name="twitter:description" content="zsdf&apos;s blog">
+  
+    <link rel="alternate" href="/zsdf/atom.xml" title="zsdfBlog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/zsdf/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/zsdf/" id="logo">zsdfBlog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/zsdf/" id="subtitle">zsdf</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/zsdf/">Home</a>
+        
+          <a class="main-nav-link" href="/zsdf/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/zsdf/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com/zsdf"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-jsp-javaBean-servlet-mysql完整的实现一个登录功能" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/" class="article-date">
+  <time datetime="2017-07-31T09:27:50.000Z" itemprop="datePublished">2017-07-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/">jsp+javaBean+servlet+mysql完整的实现一个登录功能</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>以前对于这种功能就只是复制粘贴，并没有真正的深入了解过，现在就来深入的一步一步的实现功能；<br>1.在eclipse中新建一个动态的web工程；<br>2.在webContent目录下创建一个jsp页面，命名为login.jsp<br>3.在JavaResource的src目录下创建一个servlet包，（com.arvin.servlet）,并在该包底下创建一个处理登录的servlet类(LoginServlet.java);<br>4.打开mysql创建相应的数据库和表，并插入数据；<br>5.利用jdbc连接数据库。<br>5.1 首先要下载connector/J地址：<a href="http://www.mysql.com/downloads/connector/j/" target="_blank" rel="noopener">http://www.mysql.com/downloads/connector/j/</a></p>
+<p>这是MySQL官方提供的连接方式：</p>
+<p>解压后得到jar库文件，需要在工程中导入该库文件,放在webContent/WEB-INF/lib目录下。<br>5.2. 也是重点，先创建一个关于数据库的包（com.arvin.db）,在该包底下创建一个用于打开关闭数据库操作的类(ConnDB.java),内容如下:</p>
+<pre><code> package com.arvin.db;
+
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Connection;
+import com.mysql.jdbc.Connection;
+import com.mysql.jdbc.Statement;
+
+public class ConnDB {
+
+    //数据库的用户名和密码
+    public static String username = &quot;root&quot;;
+    public static String password = &quot;150916&quot;;
+
+    //获得连接对象，statement对象和结果集
+    public static  Connection conn = null;
+    public static Statement state = null;
+    public static ResultSet  rs = null; 
+
+    //数据库驱动，在刚开始下载的文件中
+    public static String driver_class = &quot;com.mysql.jdbc.Driver&quot;;
+
+    //oilServer是数据库名，其他的不变
+        public static String url = &quot;jdbc:mysql://localhost/oilServer&quot;;
+
+
+    //获得数据库的连接的方法
+    public static Connection getConnection(){
+    try {
+        Class.forName(driver_class);//指定连接类型 
+        System.out.println(&quot;load db driver success......&quot;);
+        conn = DriverManager.getConnection(url,username,password);//获取连接 
+           System.out.println(&quot;get db connection success....&quot;);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return  conn;
+        }
+
+
+    //执行数据库的查询操作，返回的为结果集
+public static ResultSet excuteQuery(String sql){
+    try {
+        state = conn.createStatement();
+        rs = state.executeQuery(sql);
+        return rs;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return rs;
+    }
+
+
+    //关闭数据库
+    public static void closeDb(){
+        try {
+            if(rs != null)
+                rs.close();
+            if(conn != null)
+                conn.close();
+            if(state != null)
+                state.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><ol>
+<li><p>在servlet中进行事务处理。<br>在这里先将数据库的查询操作写在servlet中。</p>
+<p>6.1. 因为在 com.arvin.db.ConnDB定义了打开关闭数据库的操作，以及查询sql语句的操作，所以在servlet中引入<br>import com.arvin.db.ConnDB;</p>
+<pre><code>getConnection()方法和excuteQuery(sql)方法都在ConnDB类中创建了，在这里可以直接引用
+</code></pre></li>
+</ol>
+<pre><code>try {
+    //获得连接并执行sql语句
+    ConnDB.getConnection();
+    String sql = &quot;select * from t_userinfo&quot;;
+    ResultSet rs = ConnDB.excuteQuery(sql);
+
+    //通过结果集获得数据库中的username的值存在变量   db_username 中，password的值存在变量db_password 
+
+while(rs.next()){
+    db_username = rs.getString(&quot;username&quot;);
+    db_password = rs.getString(&quot;password&quot;);
+//进行逐条比对
+if((db_username.equals(key))&amp;&amp;(db_password.equals(value))){
+    System.out.println(&quot;匹配成功&quot;);
+    request.setAttribute(&quot;name&quot;, key);
+//比对成功后跳转成功页面                       request.getRequestDispatcher(&quot;/success.jsp&quot;).forward(request, response);
+    }
+
+//如果密码账号都不对而且是最后一个就跳转到登录失败页面
+if(!(db_username.equals(key))&amp;&amp;！(db_password.equals(value))&amp;&amp;(!rs.next())){             request.getRequestDispatcher(&quot;/failure.jsp&quot;).forward(request, response);
+                    }
+                }
+        } catch (Exception e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
+</code></pre><p>源码<br>在我的资源中可以看，我上传了文件</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/jsp-javaBean-servlet-mysql完整的实现一个登录功能/" data-id="cjl60q3jv000e75tfuoupooat" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-打印出如下图形" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/打印出如下图形/" class="article-date">
+  <time datetime="2017-07-24T14:03:03.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/打印出如下图形/">打印出如下图形</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p><img src="https://img-blog.csdn.net/20170724214739059?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>通过观察我们发现*的规律是每行的个数是2乘以行数-1，<br>如：第一行 2x1 - 1 = 1<br>第二行 2x2 - 1 = 3<br>….<br>以此类推</p>
+<p>但是仅仅通过控制星号生成的图像只会是直角三角形的样子，所以我们还要控制空格的数量，通过观察会有如下规律，稍后再代码中体现；<br>现在要求是行数是输入的，会生成如上的图形。</p>
+<p>首先写一个控制*数量的函数</p>
+<pre><code>public static void star(int m){
+    for(int i = 1; i&lt; m+1; i++){
+        space(m-i);
+        for(int j = 0; j &lt; 2*i-1; j++){
+            System.out.print(&quot;*&quot;);
+        }
+        space(m-i);
+        System.out.println();
+    }
+}
+
+public  static void space(int b){
+    for(int i = 0; i&lt; b; i++){
+        System.out.print(&quot; &quot;);
+    }
+}
+</code></pre><p>m为要输入的行数，space函数为空格函数，传入参数为m-i；如果有四行，第一行就会有3个空格，并且左右两边个数相等，所以就会调用两次</p>
+<p>最后在main函数中进行行数的输入，再调用star(行数)函数<br>就可以了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/打印出如下图形/" data-id="cjl60q3kg001375tfjrdqw5bw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java统计字符串中每个字符出现的次数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/java统计字符串中每个字符出现的次数/" class="article-date">
+  <time datetime="2017-07-24T13:25:45.000Z" itemprop="datePublished">2017-07-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/java统计字符串中每个字符出现的次数/">java统计字符串中每个字符出现的次数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>例如String str = “abcaaaefdabbhg”;<br>统计该字符串中每个字符出现的次数，输出：<br>a====5<br>b====3<br>c====1<br>d====1<br>e====1<br>f====1<br>g====1<br>h====1</p>
+<p>方法一:<br>采用HashMap</p>
+<pre><code>public static void count(String str){
+        //将字符串转化为字符数组
+        char[] chars = str.toCharArray();
+        //创建一个HashMap名为hm
+        HashMap&lt;Character,Integer&gt; hm = new HashMap();
+
+        //定义一个字符串c，循环遍历遍历chars数组
+        for(char c : chars){
+            //containsKey(c),当c不存在于hm中
+            if(!hm.containsKey(c)){
+            hm.put(c,1);
+          }else{ 
+          //否则获得c的值并且加1
+            hm.put(c, hm.get(c)+1);
+            }
+
+        //或者上面的if和else替换成下面这一行
+        /*  hm.put(c,hm.containsKey(c) ? hm.get(c)+1:1);*/
+        }
+
+
+        for(Character key: hm.keySet()){
+            //hm.keySet()代表所有键的集合,进行格式化输出
+            System.out.println(key + &quot;====&quot; + hm.get(key));
+        }
+    }
+
+    public static void main(String[] args) {
+        // TODO 自动生成的方法存根
+        String str = &quot;abcaaaefdabbhg&quot;;
+        count(str);
+    }
+
+}
+</code></pre><p>方法二:</p>
+<pre><code>public static void count(String str){
+    //创建26个空间大小的数组，存放26个字母
+        int[] nums = new int[26];
+        for(char i: str.toCharArray()){
+        //自动将char i转化成ascall码
+            if(i&gt;=97 &amp;&amp; i&lt;= 122){
+            //利用数组的索引进行存储
+                nums[i-97]++;
+            }
+        }
+
+        for(int i = 0; i&lt; nums.length; i++){
+            if(nums[i] != 0){
+                //i加上97并且再转化为char类型就可以显示相应的字符
+                char j = (char)(i+97);
+                System.out.println( j + &quot;====&quot; + nums[i]);
+            }
+        }
+    }
+</code></pre><p>和方法1一样在main函数中调用就可以啦!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/java统计字符串中每个字符出现的次数/" data-id="cjl60q3ju000d75tffboe2cmf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-AngularJS中的-http" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/AngularJS中的-http/" class="article-date">
+  <time datetime="2017-07-19T03:31:28.000Z" itemprop="datePublished">2017-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/AngularJS中的-http/">AngularJS中的$http</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>对于ajax应用（使用XMLHttpRequest）来说，向服务器发起请求的传统方式是：获取一个XMLHttpRequest对象的引用、发起请求、读取响应、检查状态码、最后处理服务端的响应，整个过程如下：</p>
+<pre><code>var xmlhttp = new XMLHttpRequest();
+
+xmlhttp.onreadystatechange = function(){
+    if(xmlhttp.readystate == 4 &amp;&amp; xmlhttp.status == 200){
+        var response = xmlhttp.responseText;
+    }else if(xmlhttp.status == 400){ //或者可以是任何以4开头的状态码
+                //优雅的处理错误
+    }
+}；
+//建立连接
+xmlhttp.open(&apos;GET&apos;, &apos;http://myserver/api&apos;, true);
+
+//发起请求
+xmlhttp.send();
+</code></pre><p>对于简单，而且经常重复的任务来说，这是一种很繁琐的工作。如果想复用以上过程，最好进行封装或者使用代码库。</p>
+<p>对于AngularJS来说要想从服务端获取一个用户的信息，假设请求后台的接口位于/api/user路径上，此接口可接受一个id属性 作为URL参数，那么使用AngularJS的核心$http服务发起XHR请求的方法示例如下：</p>
+<pre><code>$http.get(&apos;api/user&apos;, {params: {id: &apos;5&apos;}
+}).success(function(data, status, headers, config) {
+    //加载成功之后做一些事情
+
+}).error(function(data, status, headers, config) {
+    //处理错误
+});
+</code></pre><p>以上是AngularJS的get方法，如果你想使用post请求向同一个URL发送请求，且带上一些post数据，则：</p>
+<pre><code>var postData = {text: &apos;long blob of text&apos;};
+
+//下面这一行会被当成参数附加到URL后面，
+//所以POST请求最终会变成/api/user?id=5
+
+var config = {params: {id: &apos;5&apos;}};
+$http.post(&apos;api/user&apos;, postData， config)
+ .success(function(data, status, headers, config) {
+    //加载成功之后做一些事情
+
+}).error(function(data, status, headers, config) {
+    //处理错误
+});
+</code></pre><p>大多数常用的请求包括:<br>GET<br>HEAD<br>POST<br>DELETE<br>PUT<br>JSONP</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/AngularJS中的-http/" data-id="cjl60q3jd000175tfjoj5vcu7" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-angularJs中的CSS类和样式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/angularJs中的CSS类和样式/" class="article-date">
+  <time datetime="2017-07-13T10:19:39.000Z" itemprop="datePublished">2017-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/angularJs中的CSS类和样式/">angularJs中的CSS类和样式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>假设有以下的css代码：</p>
+<pre><code>.menu-disabled-true{
+    color:gray;
+}
+</code></pre><p>使用angular你就可以这样写：</p>
+<pre><code>&lt;div ng-controller = &quot;myController&quot;&gt;
+    &lt;ul&gt;
+        &lt;li class = &quot;menu-disabled-{{isdisabled}}&quot; ng-click = &quot;stun()&quot;&gt;Stun&lt;/li&gt;
+        .
+        .
+        .
+    &lt;/ul&gt;
+&lt;/div&gt;
+</code></pre><p>根据需要通过控制器来设置isdisabled属性了、、</p>
+<pre><code>function myController($scope){
+    $scope.isdisabled = false;
+$scope.stun = function(){
+    $scope.isdisabled  = !$scope.isdisabled ;
+    }
+}
+</code></pre><p>使用ng-class和ng-style这两个指令都可以接受一个表达式，表达式的结果可能是如下取值之一：<br>①. 表示css类名的字符串<br>②. css类名数组<br>③. css类名到布尔值的映射</p>
+<p>假设你现在希望在应用头部的固定位置向用户显示错误的警告信息，使用ng-class指令：</p>
+<pre><code>.error{
+    background-color: red;
+}
+
+.warning{
+    background-color: yellow;
+}
+
+&lt;div ng-controller = &quot;HeaderController&quot;&gt;
+    &lt;div ng-class = &quot;{error: isError, warning: isWarning}&quot;&gt;{{messageText}}&lt;/div&gt;
+    &lt;button ng-click = &quot;showError()&quot;&gt;Simulate Error&lt;/button&gt;
+    &lt;button ng-click = &quot;showWarning()&quot;&gt;Simulate Warning&lt;/button&gt;
+&lt;/div&gt;
+
+function HeaderController($scope){
+    $scope.isError = false;
+    $scope.isWarning = false;
+
+    $scope.showError = function(){
+    $scope.messageText = &quot;This is an error!&quot;;
+    $scope.isError = true;
+    $scope.isWarning = false;
+    };
+  $scope.showWarning = function(){
+    $scope.messageText = &quot;Just a warning, please carry on!&quot;;
+    $scope.isError = false;
+    $scope.isWarning = true;
+    };
+}
+</code></pre><p>还可以将选中的行高亮显示,比方说构建一个餐馆名录，想把用户点击的那一行高亮显示：</p>
+<pre><code>.selected{
+    background-color:lightgreen;
+}
+&lt;table ng-controller = &quot;RestaurantTableController&quot;&gt;
+    &lt;tr ng-repeat = &quot;restaurant in directory&quot; ng-click = &quot;selectedRestaurant($index)&quot; ng-class = &quot;{selected: $index == selectedRow}&quot;&gt;
+    &lt;td&gt;{{restaurant.name}}&lt;/td&gt;
+    &lt;td&gt;{{restaurant.cuisine}}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+function RestaurantTableController($scope){
+    $scope.directory = [
+    {name: &quot;restaurantA&quot;, cuisine: &quot;BBQ&quot;},
+    {name: &quot;restaurantB&quot;, cuisine: &quot;salads&quot;},
+    {name: &quot;restaurantC&quot;, cuisine: &quot;seafood&quot;}
+    ];
+
+    $scope.selectedRestaurant = function(index){
+        $scope.selectedRow = index;
+    };
+}
+</code></pre><p>把ng-class设置为{selected : index = selectedRow}.这样做的效果就是，当模型属性selectedRow的值等于ng-repeat中的index = selectedRow}.这样做的效果就是，当模型属性selectedRow的值等于ng-repeat中的index时，selected样式就会被设置到那一行上。还会设置一个ng-click指令，用来告诉控制器用户点击了哪一行。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/angularJs中的CSS类和样式/" data-id="cjl60q3jn000875tfa1rzmlub" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-jquery获取span标签下的第一个span子标签内容" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/jquery获取span标签下的第一个span子标签内容/" class="article-date">
+  <time datetime="2017-07-12T10:29:03.000Z" itemprop="datePublished">2017-07-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/jquery获取span标签下的第一个span子标签内容/">jquery获取span标签下的第一个span子标签内容</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>看了几本jquery的书之后，觉得对jQuery的dom操作部分应该是比较熟悉了，但是当正式用到的时候又忽然觉得什么也不知道，还得上网来搜，遇到的问题就是获取span标签下的第一个span标签中的内容。</p>
+<p>如</p>
+<pre><code>&lt;p class = &quot;local&quot;&gt;
+    &lt;span&gt;
+        &lt;span&gt;西安&lt;/span&gt;
+        &lt;span&gt;(xian)&lt;/span&gt;
+    &lt;/span&gt;
+&lt;/p&gt;
+</code></pre><p>想获取p标签底下的span标签中的第一个span标签中的内容，即：西安<br>可以有以下几种方法:</p>
+<pre><code>①.   $(&apos;.local span span:eq(0)&apos;).text();
+②.   $(&apos;.local span span:first-child&apos;).text();
+③.   $(&apos;.local span span:nth-child(1)&apos;).text();
+④.   $(&apos;.local span span:first&apos;).text();
+</code></pre><p>可能有人觉得是获得span标签下的第一个span标签，所以应该是这样的</p>
+<pre><code>$(&apos;.local span:first-child&apos;).text()
+</code></pre><p>这样获得的结是<strong>西安(xian)西安</strong>。是不正确的，所以须到注意一下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/jquery获取span标签下的第一个span子标签内容/" data-id="cjl60q3jw000f75tfrzglbydm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-更详细的天气预报接口" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/更详细的天气预报接口/" class="article-date">
+  <time datetime="2017-07-02T03:40:11.000Z" itemprop="datePublished">2017-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/更详细的天气预报接口/">更详细的天气预报接口</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在经过了昨天的研究学习，现在会请求数据并且处理，但是发现昨天找到的天气预报接口中的数据太少了，比如什么紫外线，湿度，穿衣指数，感冒指数什么都没有，所以今天偶然看到了一个新的免费的接口。</p>
+<p>网址 ： <a href="http://www.nowapi.com" target="_blank" rel="noopener">http://www.nowapi.com</a>；</p>
+<p>进入之后先免费注册一下，里面有大量的接口，天气预报查询，身份证号查询等等一系列想到想不到的。</p>
+<p>首先注册成功后我的账户–》账户设置 要你验证邮箱和手机号，照着步骤验证就好，之后保存。</p>
+<p>接下来左侧导航栏中有我接口，你发现里面什么都没有， 你点击上面的全部接口，找到自己想要的功能，点击使用数据，就进入了详情页，里面有使用说明，appkey和sign在参数说明中获取就好。</p>
+<p>详情页的右上角有使用数据，你在点击之后上面导航栏中有免费使用，点击之后，表格中有时长（月），你可以无限的加，最后点击提交。按照每个你使用功能的详细介绍，使用正确的url，附加上自己的数据，就可以进行数据获取了。</p>
+<p>其实每一个api都有请求示例，在api详情页，java，php，crul，JavaScript等等，其实只要复制粘贴就可以了。</p>
+<p>所以在了解了这个网站之后，以后找api接口就方便多了。</p>
+<p>言归正传，这个网站提供的api接口中数据很多，足够你去写一个完整的自己的天气预报了，如</p>
+<p><img src="https://img-blog.csdn.net/20170702113851558?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvY3Nkbl96c2Rm/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+<p>左侧这么多的api自己慢慢发掘，慢慢使用吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/更详细的天气预报接口/" data-id="cjl60q3ki001475tfdm4uo8z3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-利用气象局的接口写一个自己的天气预报" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/利用气象局的接口写一个自己的天气预报/" class="article-date">
+  <time datetime="2017-07-02T03:20:44.000Z" itemprop="datePublished">2017-07-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/利用气象局的接口写一个自己的天气预报/">利用气象局的接口写一个自己的天气预报</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>忽然写自己的一个天气预报，首先不知如何下手，首先想到的是不是讲script链接引入到文件头部就可以了，然而接下来又要怎么做？<br>在经过了半天的网上搜索后，明白了要写的流程，<br>①。找到合适得接口。</p>
+<p>在网上搜索说中国气象局提供了三个接口<br>国家气象局提供的天气预报接口</p>
+<p>接口地址：</p>
+<p><a href="http://www.weather.com.cn/data/sk/101010100.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/sk/101010100.html</a></p>
+<p><a href="http://www.weather.com.cn/data/cityinfo/101010100.html" target="_blank" rel="noopener">http://www.weather.com.cn/data/cityinfo/101010100.html</a></p>
+<p><a href="http://m.weather.com.cn/data/101010100.html" target="_blank" rel="noopener">http://m.weather.com.cn/data/101010100.html</a></p>
+<p>101010100为城市代码，是固定的，这里表示北京。然而并没有什么用，前两个可以访问，但是返回的数据太少了，最后一个说是最新的接口，数据比较多，但是我访问的却是403.</p>
+<p>最后在网上又找了一个接口<br><a href="http://wthrcdn.etouch.cn/weather_mini?citykey=101071201" target="_blank" rel="noopener">http://wthrcdn.etouch.cn/weather_mini?citykey=101071201</a>;<br>同样后面的数字为地区编号。</p>
+<p>②。使用ajax异步请求来获取数据。<br>在这里我使用了jquery的ajax来请求数据。success的function中的参数为请求到的数据，只需要进行第三步解析即可。</p>
+<pre><code>var url = &quot;http://wthrcdn.etouch.cn/weather_mini?citykey=101071201&quot;;
+        $.ajax({
+          url: url,
+          dataType: &quot;jsonp&quot;,
+          // scriptCharset: &quot;gbk&quot;,
+          method:&apos;GET&apos;,
+          crossDomain: true,
+         success: function (data) {
+
+     //请求无误，但是数据有误，desc为接口返回的数据中的一部分，往下看
+              if(desc != &quot;ok&quot;){
+            alert(&quot;请求地区有误&quot;);
+        }
+        //
+        //这儿写上正常处理的流程
+
+        var description = &quot;&quot;;
+            for(var i in data.data){
+                var property=data.data[i];
+                description+=i+&quot; = &quot;+property+&quot;\n&quot;;
+            }
+            alert(description);
+         }
+         error:function(){
+        console.log(&quot;请求失败&quot;);
+    }
+</code></pre><p>③ 对接口返回的数据进行处理<br>返回的数据格式</p>
+<p>{<br>“desc”: “OK”,<br>“status”: 1000,<br>“data”: {<br>“wendu”: “22”,<br>“ganmao”: “各项气象条件适宜，无明显降温过程，发生感冒机率较低。”,<br>“forecast”:<br>[{<br>“fengxiang”: “南风”,<br>“fengli”: “3-4级”,<br>“high”: “高温 26℃”,<br>“type”: “多云”,<br>“low”: “低温 13℃”,<br>“date”: “28日星期四”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 28℃”,<br>“type”: “多云”,<br>“low”: “低温 15℃”,<br>“date”: “29日星期五”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 31℃”,<br>“type”: “晴”,<br>“low”: “低温 15℃”,<br>“date”: “30日星期六”<br>},<br>{<br>“fengxiang”: “无持续风向”,<br>“fengli”: “微风级”,<br>“high”: “高温 29℃”,<br>“type”: “多云”,<br>“low”: “低温 20℃”,<br>“date”: “1日星期天”<br>},<br>{<br>“fengxiang”: “北风”,<br>“fengli”: “4-5级”,<br>“high”: “高温 26℃”,<br>“type”: “小到中雨”,<br>“low”: “低温 13℃”,<br>“date”: “2日星期一”<br>}],<br>“yesterday”: {<br>“fl”: “微风”,<br>“fx”: “无持续风向”,<br>“high”: “高温 19℃”,<br>“type”: “小雨”,<br>“low”: “低温 12℃”,<br>“date”: “27日星期三”<br>},<br>“aqi”: “118”,<br>“city”: “朝阳县”<br>}<br>}</p>
+<p>这是一个json格式的返回串，在js中只要将你所需要的数据解析出来就好了，<br>JavaScript代码：</p>
+<pre><code>var url = &quot;http://wthrcdn.etouch.cn/weather_mini?citykey=101071201&quot;;
+       $.ajax({
+         url: url,
+         dataType: &quot;jsonp&quot;,
+         // scriptCharset: &quot;gbk&quot;,
+         method:&apos;GET&apos;,
+         crossDomain: true,
+         success: function (data) {
+             if(desc != &quot;ok&quot;){
+           alert(&quot;请求地区有误&quot;);
+       }
+       //
+       //这儿写上正常处理的流程
+        }
+        error:function(){
+       console.log(&quot;请求失败&quot;);
+   }
+</code></pre><p>经过以上三步，一个请求天气预报接口的流程是出来了，页面布局及其里面的数据处理还需要花费更多的时间。</p>
+<p>注：尽量使用火狐浏览器，因为后续ajax的异步加载中需要web容器，火狐浏览器自带web容器。所以不需要你去再打开本地的服务器。</p>
+<p>或许我们发现以上的数据并不满足我们的需要，所以下一节给大家推荐一个数据更详细的接口。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/利用气象局的接口写一个自己的天气预报/" data-id="cjl60q3kb000v75tfuhxduf8b" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-express中的static中间件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/express中的static中间件/" class="article-date">
+  <time datetime="2017-06-27T11:27:15.000Z" itemprop="datePublished">2017-06-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/express中的static中间件/">express中的static中间件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>express.static中间件的作用主要是管理静态文件，如在使用express 包名生成的项目中，app.js文件中有这么一段代码：app.use(express.static(path.join(__dirname, ‘public’)))；<br>这段代码就是使用express.static中间件进行静态文件的托管。</p>
+<p>将静态资源文件所在的目录作为参数传递给 express.static 中间件就可以提供静态资源文件的访问了。例如，假设在 public 目录放置了图片、CSS 和 JavaScript 文件，你就可以：<br>app.use(express.static(path.join(__dirname, ‘public’)))；</p>
+<p>现在，public 目录下面的文件就可以访问了。</p>
+<p><a href="http://localhost:3000/images/11.jpg" target="_blank" rel="noopener">http://localhost:3000/images/11.jpg</a><br><a href="http://localhost:3000/css/style.css" target="_blank" rel="noopener">http://localhost:3000/css/style.css</a><br><a href="http://localhost:3000/js/app.js" target="_blank" rel="noopener">http://localhost:3000/js/app.js</a><br><a href="http://localhost:3000/hello.html" target="_blank" rel="noopener">http://localhost:3000/hello.html</a></p>
+<p>如果你的静态资源存放在多个目录下面，你可以多次调用 express.static 中间件：</p>
+<p>app.use(express.static(‘public’));<br>app.use(express.static(‘files’));<br>访问静态资源文件时，express.static 中间件会根据目录添加的顺序查找所需的文件。</p>
+<p>如果你希望所有通过 express.static 访问的文件都存放在一个“虚拟（virtual）”目录（即目录根本不存在）下面，可以通过为静态资源目录指定一个挂载路径的方式来实现，如下所示：</p>
+<p>app.use(‘/static’, express.static(‘public’));<br>现在，你就爱可以通过带有 “/static” 前缀的地址来访问 public 目录下面的文件了。</p>
+<p><a href="http://localhost:3000/static/images/kitten.jpg" target="_blank" rel="noopener">http://localhost:3000/static/images/kitten.jpg</a><br><a href="http://localhost:3000/static/css/style.css" target="_blank" rel="noopener">http://localhost:3000/static/css/style.css</a><br><a href="http://localhost:3000/static/js/app.js" target="_blank" rel="noopener">http://localhost:3000/static/js/app.js</a><br><a href="http://localhost:3000/static/images/bg.png" target="_blank" rel="noopener">http://localhost:3000/static/images/bg.png</a><br><a href="http://localhost:3000/static/hello.html" target="_blank" rel="noopener">http://localhost:3000/static/hello.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/express中的static中间件/" data-id="cjl60q3jt000c75tfdgjb5j67" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-nodejs-express生成的模板引擎jade改为html" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/zsdf/en/nodejs-express生成的模板引擎jade改为html/" class="article-date">
+  <time datetime="2017-06-22T06:01:18.000Z" itemprop="datePublished">2017-06-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/zsdf/en/nodejs-express生成的模板引擎jade改为html/">nodejs+express生成的模板引擎jade改为html</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <a id="more"></a>
+<p>在写项目时，使用express 项目名生成的应用程序默认是以jade为模板引擎的，但是我们似乎更偏向于html，所以将jade改为html是必须的。</p>
+<p>首先在app.js中的部分内容如下，</p>
+<p>app.use(favicon(path.join(<strong>dirname, ‘public’, ‘favicon.ico’)));<br>app.use(logger(‘dev’));<br>app.use(bodyParser.json());<br>app.use(bodyParser.urlencoded({ extended: false }));<br>app.use(cookieParser());<br>app.use(express.static(path.join(</strong>dirname, ‘public’)));<br>app.set(‘view engine’, ‘jade’);<br>app.use(‘/’, index);<br>app.use(‘/users’, users);</p>
+<p>将<br>app.set(‘view engine’, ‘jade’);<br>改为<br>app.set(‘view engine’, ‘html’);</p>
+<p>在views目录下写一个入口的 index.html文件.</p>
+<p>在routes文件下的index.js文件中这样写</p>
+<p>var express = require(‘express’);<br>var router = express.Router();</p>
+<p>/* GET home page. */<br>router.get(‘/’, function(req, res, next) {<br>//res.render(‘index’, { title: ‘Express’ });<br>res.sendfile(“./views/index.html”);<br>});</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/zsdf/en/nodejs-express生成的模板引擎jade改为html/" data-id="cjl60q3k1000k75tf22shu8fm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/zsdf/page/2/">&laquo; Prev</a><a class="page-number" href="/zsdf/">1</a><a class="page-number" href="/zsdf/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/zsdf/page/4/">4</a><a class="page-number" href="/zsdf/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/zsdf/page/8/">8</a><a class="extend next" rel="next" href="/zsdf/page/4/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/zsdf/archives/2017/03/">March 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/zsdf/tw/Hello-World/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/post-Asset-Folder/">post_Asset_Folder</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/My-Gallery/">My Gallery</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/firstBlog/">firstBlog</a>
+          </li>
+        
+          <li>
+            <a href="/zsdf/en/hello-world/">Hello World</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 zsdf<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/zsdf/" class="mobile-nav-link">Home</a>
+  
+    <a href="/zsdf/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/zsdf/fancybox/jquery.fancybox.css">
+  <script src="/zsdf/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/zsdf/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
